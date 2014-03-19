@@ -2,6 +2,8 @@ package com.inpeace;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +28,18 @@ public class InPeace extends JFrame {
 		setTitle("In Peace: A Ghost Story");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter()
+        {
+            /* (non-Javadoc)
+             * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+             */
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                //TODO: add confirmation box for save on exit
+                e.getWindow().dispose();
+            }
+        });
 	}
 	
 	/**
@@ -45,7 +59,9 @@ public class InPeace extends JFrame {
 
 				  } else {
 					  inpeace.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					  inpeace.setResizable(false);
 				  }
+				  
 				//} finally {
 				  //device.setFullScreenWindow(null);
 				//}

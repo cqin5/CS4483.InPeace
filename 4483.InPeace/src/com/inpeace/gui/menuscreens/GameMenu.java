@@ -2,7 +2,7 @@ package com.inpeace.gui.menuscreens;
 
 import javax.swing.JButton;
 
-import com.inpeace.gui.general.BackgroundFrame;
+import com.inpeace.gui.general.BackgroundPanel;
 
 /**
  * 
@@ -11,7 +11,7 @@ import com.inpeace.gui.general.BackgroundFrame;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class GameMenu extends BackgroundFrame {
+public class GameMenu extends BackgroundPanel {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 380393429392427520L;
@@ -27,4 +27,14 @@ public class GameMenu extends BackgroundFrame {
 	
 	/**   */
 	private JButton settings;
+	
+	/**
+	 * Constructs a new GameMenu object.
+	 *
+	 * @param relativePath
+	 */
+	public GameMenu(String relativePath) {
+		super(relativePath);
+		// TODO Auto-generated constructor stub
+	}
 }

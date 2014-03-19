@@ -7,11 +7,11 @@ import com.inpeace.gui.general.OverlayPanel;
  * 
  * @author  James Anderson
  * @version 0.0
- * @since   18 Mar 2014
+ * @since   19 Mar 2014
  */
-public class Settings extends OverlayPanel {
+public class Scroll extends OverlayPanel {
 
 	/** Eclipse generated version ID.  */
-	private static final long serialVersionUID = -2980944845421033628L;
+	private static final long serialVersionUID = -1494504445068361946L;
 
 }
