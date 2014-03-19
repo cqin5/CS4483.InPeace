@@ -1,6 +1,10 @@
 package com.inpeace;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * Main class for the game.
@@ -19,8 +23,8 @@ public class InPeace extends JFrame {
 	 *
 	 */
 	public InPeace() {
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setTitle("In Peace: A Ghost Story");
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
@@ -31,8 +35,19 @@ public class InPeace extends JFrame {
 	 */
 	public static void main(String[] args) {
 		//Create game window, centre it, and display it to the screen
-				InPeace game = new InPeace();
-				game.setLocationRelativeTo(null);
-				game.setVisible(true);
+				InPeace inpeace = new InPeace();
+				
+				GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+				//try {
+				  if (device.isFullScreenSupported()) {
+				    device.setFullScreenWindow(inpeace);
+					inpeace.add(new JLabel("TEST"));
+
+				  } else {
+					  inpeace.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				  }
+				//} finally {
+				  //device.setFullScreenWindow(null);
+				//}
 	}
 }

@@ -1,5 +1,7 @@
 package com.inpeace.player;
 
+import java.io.Serializable;
+
 /**
  * 
  * 
@@ -7,6 +9,9 @@ package com.inpeace.player;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class Player {
+public class Player implements Serializable {
+
+	/** Eclipse generated version ID.  */
+	private static final long serialVersionUID = 8771165689031839746L;
 
 }
