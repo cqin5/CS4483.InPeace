@@ -1,4 +1,4 @@
-package GUI;
+package cs4483.diplomaplus.inpeace.gui;
 
 /**
  * 

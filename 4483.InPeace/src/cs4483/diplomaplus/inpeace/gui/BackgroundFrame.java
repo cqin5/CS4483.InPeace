@@ -1,8 +1,8 @@
-package GUI;
+package cs4483.diplomaplus.inpeace.gui;
 
 import java.awt.Image;
 
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 /**
  * 
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class BackgroundPanel extends JPanel {
+public class BackgroundFrame extends JFrame {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -4604719672716018213L;

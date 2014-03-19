@@ -1,6 +1,8 @@
-package GUI;
+package cs4483.diplomaplus.inpeace.screens;
 
 import javax.swing.JButton;
+
+import cs4483.diplomaplus.inpeace.gui.BackgroundFrame;
 
 /**
  * 
@@ -9,7 +11,7 @@ import javax.swing.JButton;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class MainMenu extends BackgroundPanel {
+public class MainMenu extends BackgroundFrame {
 
 
 	/** Eclipse generated version ID.  */
