@@ -2,7 +2,7 @@ package cs4483.diplomaplus.inpeace.gui.menuscreens;
 
 import javax.swing.JButton;
 
-import cs4483.diplomaplus.inpeace.gui.BackgroundFrame;
+import cs4483.diplomaplus.inpeace.gui.general.BackgroundFrame;
 
 /**
  * 

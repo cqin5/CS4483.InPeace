@@ -1,4 +1,4 @@
-package cs4483.diplomaplus.inpeace.gui;
+package cs4483.diplomaplus.inpeace.gui.general;
 
 import javax.swing.JPanel;
 
