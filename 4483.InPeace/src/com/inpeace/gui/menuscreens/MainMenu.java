@@ -17,13 +17,13 @@ public class MainMenu extends BackgroundPanel {
 	private static final long serialVersionUID = 6545247443097818762L;
 
 	/**   */
-	protected JButton loadGame;
+	private JButton loadGame;
 	
 	/**   */
-	protected JButton newGame;
+	private JButton newGame;
 	
 	/**   */
-	protected JButton credits;
+	private JButton credits;
 	
 	/**
 	 * Constructs a new MainMenu object.
