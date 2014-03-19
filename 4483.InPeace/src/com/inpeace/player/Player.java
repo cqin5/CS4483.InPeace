@@ -2,6 +2,8 @@ package com.inpeace.player;
 
 import java.io.Serializable;
 
+import com.inpeace.level.Level;
+
 /**
  * 
  * 
@@ -13,5 +15,8 @@ public class Player implements Serializable {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 8771165689031839746L;
+	
+	/**   */
+	private Level currentLevel;
 
 }
