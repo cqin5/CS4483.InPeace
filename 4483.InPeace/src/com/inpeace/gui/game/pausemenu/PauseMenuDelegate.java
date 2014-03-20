@@ -1,5 +1,6 @@
-package com.inpeace.gui.gamescreens;
+package com.inpeace.gui.game.pausemenu;
 
+import com.inpeace.gui.GUIDelegate;
 import com.inpeace.gui.general.OverlayPanel;
 
 /**
@@ -9,7 +10,7 @@ import com.inpeace.gui.general.OverlayPanel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class PauseMenu extends OverlayPanel {
+public class PauseMenuDelegate extends OverlayPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -4478431460656248163L;

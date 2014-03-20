@@ -1,6 +1,7 @@
-package com.inpeace.gui.views;
+package com.inpeace.gui.shell.newgame;
 
-import com.inpeace.gui.GUIView;
+import com.inpeace.gui.GUIDelegate;
+import com.inpeace.gui.general.BackgroundPanel;
 
 /**
  * 
@@ -9,7 +10,7 @@ import com.inpeace.gui.GUIView;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class NewGame extends GUIView {
+public class NewGameDelegate extends BackgroundPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -6650387513933360913L;
@@ -19,7 +20,7 @@ public class NewGame extends GUIView {
 	 *
 	 * @param relativePath
 	 */
-	public NewGame(String relativePath) {
+	public NewGameDelegate(String relativePath) {
 		super(relativePath);
 		// TODO Auto-generated constructor stub
 	}

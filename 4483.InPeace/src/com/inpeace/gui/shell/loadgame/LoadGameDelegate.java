@@ -1,6 +1,7 @@
-package com.inpeace.gui.views;
+package com.inpeace.gui.shell.loadgame;
 
-import com.inpeace.gui.GUIView;
+import com.inpeace.gui.GUIDelegate;
+import com.inpeace.gui.general.BackgroundPanel;
 
 /**
  * 
@@ -9,7 +10,7 @@ import com.inpeace.gui.GUIView;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class LoadGame extends GUIView {
+public class LoadGameDelegate extends BackgroundPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -5587064083736890111L;
@@ -19,7 +20,7 @@ public class LoadGame extends GUIView {
 	 *
 	 * @param relativePath
 	 */
-	public LoadGame(String relativePath) {
+	public LoadGameDelegate(String relativePath) {
 		super(relativePath);
 		// TODO Auto-generated constructor stub
 	}

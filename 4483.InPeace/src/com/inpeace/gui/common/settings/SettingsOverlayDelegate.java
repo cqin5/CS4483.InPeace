@@ -1,5 +1,6 @@
-package com.inpeace.gui.gamescreens;
+package com.inpeace.gui.common.settings;
 
+import com.inpeace.gui.GUIDelegate;
 import com.inpeace.gui.general.OverlayPanel;
 
 /**
@@ -9,9 +10,11 @@ import com.inpeace.gui.general.OverlayPanel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class Settings extends OverlayPanel {
+public class SettingsOverlayDelegate extends OverlayPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -2980944845421033628L;
 
+	/**   */
+	private Settings settings;
 }

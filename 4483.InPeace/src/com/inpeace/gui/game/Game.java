@@ -1,4 +1,4 @@
-package com.inpeace.gui;
+package com.inpeace.gui.game;
 
 /**
  * 
@@ -7,7 +7,6 @@ package com.inpeace.gui;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class GUIController {
-	
-	
+public class Game {
+
 }

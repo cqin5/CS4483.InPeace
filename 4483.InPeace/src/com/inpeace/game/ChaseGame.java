@@ -1,5 +1,7 @@
 package com.inpeace.game;
 
+import com.inpeace.gui.game.Game;
+
 /**
  * 
  * 

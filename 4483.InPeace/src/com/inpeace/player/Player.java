@@ -18,5 +18,7 @@ public class Player implements Serializable {
 	
 	/**   */
 	private Level currentLevel;
+	
+	private Settings settings;
 
 }

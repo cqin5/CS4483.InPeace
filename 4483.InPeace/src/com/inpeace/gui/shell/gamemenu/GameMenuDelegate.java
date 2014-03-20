@@ -1,8 +1,9 @@
-package com.inpeace.gui.views;
+package com.inpeace.gui.shell.gamemenu;
 
 import javax.swing.JButton;
 
-import com.inpeace.gui.GUIView;
+import com.inpeace.gui.GUIDelegate;
+import com.inpeace.gui.general.BackgroundPanel;
 
 /**
  * 
@@ -11,7 +12,7 @@ import com.inpeace.gui.GUIView;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class GameMenu extends GUIView {
+public class GameMenuDelegate extends BackgroundPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 380393429392427520L;
@@ -33,7 +34,7 @@ public class GameMenu extends GUIView {
 	 *
 	 * @param relativePath
 	 */
-	public GameMenu(String relativePath) {
+	public GameMenuDelegate(String relativePath) {
 		super(relativePath);
 		// TODO Auto-generated constructor stub
 	}

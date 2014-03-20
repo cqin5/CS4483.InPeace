@@ -1,6 +1,7 @@
-package com.inpeace.gui.views;
+package com.inpeace.gui.shell.credits;
 
-import com.inpeace.gui.GUIView;
+import com.inpeace.gui.GUIDelegate;
+import com.inpeace.gui.general.BackgroundPanel;
 
 /**
  * 
@@ -9,7 +10,7 @@ import com.inpeace.gui.GUIView;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class Credits extends GUIView {
+public class CreditsDelegate extends BackgroundPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 896799834754327068L;
@@ -19,7 +20,7 @@ public class Credits extends GUIView {
 	 *
 	 * @param relativePath
 	 */
-	public Credits(String relativePath) {
+	public CreditsDelegate(String relativePath) {
 		super(relativePath);
 		// TODO Auto-generated constructor stub
 	}
