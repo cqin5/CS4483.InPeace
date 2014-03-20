@@ -1,8 +1,8 @@
-package com.inpeace.gui.menuscreens;
+package com.inpeace.gui.views;
 
 import javax.swing.JButton;
 
-import com.inpeace.gui.general.BackgroundPanel;
+import com.inpeace.gui.GUIView;
 
 /**
  * 
@@ -11,7 +11,7 @@ import com.inpeace.gui.general.BackgroundPanel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class GameMenu extends BackgroundPanel {
+public class GameMenu extends GUIView {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 380393429392427520L;

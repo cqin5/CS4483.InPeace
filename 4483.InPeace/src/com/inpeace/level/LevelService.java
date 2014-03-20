@@ -1,4 +1,4 @@
-package com.inpeace.player;
+package com.inpeace.level;
 
 /**
  * 
@@ -7,6 +7,6 @@ package com.inpeace.player;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class PlayerController {
+public class LevelService {
 
 }

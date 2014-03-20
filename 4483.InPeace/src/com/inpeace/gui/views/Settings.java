@@ -1,6 +1,6 @@
-package com.inpeace.gui.menuscreens;
+package com.inpeace.gui.views;
 
-import com.inpeace.gui.general.BackgroundPanel;
+import com.inpeace.gui.GUIView;
 
 /**
  * 
@@ -9,7 +9,7 @@ import com.inpeace.gui.general.BackgroundPanel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class Settings extends BackgroundPanel {
+public class Settings extends GUIView {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 5858586810936310001L;
