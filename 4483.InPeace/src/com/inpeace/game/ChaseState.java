@@ -9,6 +9,6 @@ import com.inpeace.gui.game.Game;
  * @version 0.0
  * @since   19 Mar 2014
  */
-public class ExplorerGame extends Game {
+public class ChaseState extends Game {
 
 }

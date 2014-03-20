@@ -15,4 +15,6 @@ public class ScrollDelegate extends OverlayPanel implements GUIDelegate {
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -1494504445068361946L;
 
+	/**   */
+	private Scroll scroll;
 }

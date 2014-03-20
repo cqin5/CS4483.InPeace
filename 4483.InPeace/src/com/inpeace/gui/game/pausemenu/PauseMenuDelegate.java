@@ -15,4 +15,5 @@ public class PauseMenuDelegate extends OverlayPanel implements GUIDelegate {
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -4478431460656248163L;
 
+	private PauseMenu pauseMenu;
 }

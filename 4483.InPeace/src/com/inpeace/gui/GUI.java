@@ -12,6 +12,7 @@ import java.util.Stack;
  */
 public class GUI {
 	
+	/**   */
 	Stack<GUIDelegate> views;
 	
 	/**
@@ -22,8 +23,11 @@ public class GUI {
 		return views.pop();
 	}
 	
+	/**
+	 * @param view
+	 */
 	public void registerView(GUIDelegate view) {
-		if (view.isRestorable) {
+		if (view.isRestorable()) {
 			views.push(view);
 		}
 	}
