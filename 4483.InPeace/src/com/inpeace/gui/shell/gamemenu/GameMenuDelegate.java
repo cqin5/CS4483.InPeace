@@ -2,8 +2,8 @@ package com.inpeace.gui.shell.gamemenu;
 
 import javax.swing.JButton;
 
-import com.inpeace.gui.GUIDelegate;
 import com.inpeace.gui.general.BackgroundPanel;
+import com.inpeace.gui.general.GUIDelegate;
 
 /**
  * 

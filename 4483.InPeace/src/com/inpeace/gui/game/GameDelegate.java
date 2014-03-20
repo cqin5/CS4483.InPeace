@@ -1,7 +1,7 @@
 package com.inpeace.gui.game;
 
-import com.inpeace.gui.GUIDelegate;
 import com.inpeace.gui.general.BackgroundPanel;
+import com.inpeace.gui.general.GUIDelegate;
 
 /**
  * 

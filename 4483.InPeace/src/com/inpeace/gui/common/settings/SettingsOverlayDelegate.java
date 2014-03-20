@@ -1,6 +1,6 @@
 package com.inpeace.gui.common.settings;
 
-import com.inpeace.gui.GUIDelegate;
+import com.inpeace.gui.general.GUIDelegate;
 import com.inpeace.gui.general.OverlayPanel;
 
 /**
