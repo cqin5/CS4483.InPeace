@@ -1,12 +1,22 @@
 package com.inpeace;
 
+import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
 
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.inpeace.gui.general.BackgroundPanel;
+import com.inpeace.gui.shell.splash.Splash;
+import com.inpeace.gui.shell.splash.SplashDelegate;
+import com.inpeace.gui.window.Window;
+import com.inpeace.images.BufferedImageLoader;
 
 /**
  * Main class for the game.
@@ -15,33 +25,14 @@ import javax.swing.JLabel;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class InPeace extends JFrame {
+public class InPeace extends JFrame{
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -526923973107606466L;
-
-	/**
-	 * Constructs a new InPeace object.
-	 *
-	 */
-	public InPeace() {
-		setTitle("In Peace: A Ghost Story");
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addWindowListener(new WindowAdapter()
-        {
-            /* (non-Javadoc)
-             * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-             */
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                //TODO: add confirmation box for save on exit
-                e.getWindow().dispose();
-            }
-        });
-	}
-	
+	private Object getContnetPane;
+public InPeace() {
+	super();
+}
 	/**
 	 * 
 	 * 
@@ -49,21 +40,33 @@ public class InPeace extends JFrame {
 	 */
 	public static void main(String[] args) {
 		//Create game window, centre it, and display it to the screen
-				InPeace inpeace = new InPeace();
-				
-				GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-				//try {
-				  if (device.isFullScreenSupported()) {
-				    device.setFullScreenWindow(inpeace);
-					inpeace.add(new JLabel("TEST"));
+		InPeace window = new InPeace();
+		window.setSize(600, 600);
+		window.getContentPane().removeAll();
+		try {
+			BufferedImage img = BufferedImageLoader.loadImage(Splash.getGraphicPath());
+			Graphics g = img.getGraphics();
+			g.drawImage(img, 0 , 0, null);
 
-				  } else {
-					  inpeace.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					  inpeace.setResizable(false);
-				  }
-				  
-				//} finally {
-				  //device.setFullScreenWindow(null);
-				//}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		window.setVisible(true);
+/*
+		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		//try {
+		if (device.isFullScreenSupported()) {
+			device.setFullScreenWindow(window);
+		} else {
+			window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			window.setResizable(false);
+		}
+		window.load(new SplashDelegate());
+		
+		//} finally {
+		//device.setFullScreenWindow(null);
+		//}
+		 */
 	}
 }

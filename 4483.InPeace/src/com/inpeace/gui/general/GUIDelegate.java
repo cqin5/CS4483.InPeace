@@ -9,6 +9,8 @@ package com.inpeace.gui.general;
  */
 public interface GUIDelegate {
 
-	public boolean isRestorable();
+	public boolean isHistorical();
+	
+	public void close();
 	
 }

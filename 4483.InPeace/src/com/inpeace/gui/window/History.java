@@ -1,4 +1,4 @@
-package com.inpeace.gui.navigator;
+package com.inpeace.gui.window;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -9,10 +9,10 @@ import com.inpeace.gui.general.GUIDelegate;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   18 Mar 2014
  */
-public class Navigator {
+public class History {
 
 	/**   */
 	private GUIDelegate current;
@@ -24,7 +24,7 @@ public class Navigator {
 	 * Constructs a new Navigator object.
 	 *
 	 */
-	public Navigator() {
+	public History() {
 		current = null;
 		history = new Stack<GUIDelegate>();
 	}
@@ -50,10 +50,17 @@ public class Navigator {
 	 */
 	public void registerView(GUIDelegate view) {
 		if (current != null) {
-			if (current.isRestorable()) {
+			if (current.isHistorical()) {
 				history.push(current);
 			}
 		}
 		current = view;
+	}
+	
+	/**
+	 * @return
+	 */
+	public int size() {
+		return history.size();
 	}
 }
