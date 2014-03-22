@@ -3,11 +3,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import com.inpeace.images.BufferedImageLoader;
+import com.inpeace.images.ImageScaler;
+import com.inpeace.images.ResourceAccessException;
 
 /**
  * The class BackgroundPanel, a JPanel with a graphic used as a backdrop for most GUI screens.
@@ -31,15 +32,14 @@ public class BackgroundPanel extends JPanel {
 
 		try	{
 			//Attempt to load the graphic and set the dimensions of the panel
-			background = BufferedImageLoader.loadImage(relativePath);
+			background = BufferedImageLoader.getInstance().loadImage(relativePath);
 			Dimension d = new Dimension(background.getWidth(null), background.getHeight(null));
 			setPreferredSize(d);
 			setMinimumSize(d);
 			setMaximumSize(d);
 			setSize(d);
-		} catch (IOException e) {
-			new GeneralDialogue("Oops! It seems we are having trouble locating the image!",
-					"Load Error", 1);
+		} catch (ResourceAccessException e) {
+			new GeneralDialogue(e.getMessage(), "Resource Access Error", 1);
 		}
 	}
 
@@ -63,10 +63,10 @@ public class BackgroundPanel extends JPanel {
 
 		//Attempt to load the background image, if can't throw exception
 		try	{
-			background = BufferedImageLoader.loadImage(relativePath);
-		} catch (IOException e) {
-			new GeneralDialogue("Oops! It seems we are having trouble locating the image!",
-					"Load Error", 1);
+			background = BufferedImageLoader.getInstance().loadImage(relativePath);
+			background = ImageScaler.qualityScale(background, width, height);
+		} catch (ResourceAccessException e) {
+			new GeneralDialogue(e.getMessage(), "Resource Access Error", 1);
 		}
 
 		//Set the layout manger to the specified type
@@ -99,11 +99,4 @@ public class BackgroundPanel extends JPanel {
 		g.drawImage(background, 0, 0, null);
 	}
 
-	/**
-	 * Close method, by default no action is performed on close. Subclasses must override
-	 * this method if they require actions to be performed on close.
-	 */
-	public void close() {
-		//Null method to be overwritten by screens requiring extra actions on close.
-	}
 }

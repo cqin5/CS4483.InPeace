@@ -2,7 +2,6 @@ package com.inpeace.images;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -15,14 +14,37 @@ import javax.imageio.ImageIO;
  */
 public class BufferedImageLoader {
 
+	/**   */
+	private static final BufferedImageLoader instance = new BufferedImageLoader();
+	
+	/**
+	 * Constructs a new BufferedImageLoader object.
+	 *
+	 */
+	private BufferedImageLoader() {
+		//NULL BODY
+	}
+	
+	/**
+	 * @return
+	 */
+	public static BufferedImageLoader getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * @param relativePath
 	 * @return
-	 * @throws IOException
+	 * @throws ResourceAccessException 
 	 */
-	public static BufferedImage loadImage(String relativePath) throws IOException {
-		URL url = BufferedImageLoader.class.getClassLoader().getResource(relativePath);
-		BufferedImage img = ImageIO.read(url);
+	public BufferedImage loadImage(String relativePath) throws ResourceAccessException {
+		BufferedImage img;
+		try {
+			img = ImageIO.read(getClass().getResource(relativePath));
+		} catch (IOException e) {
+			throw new ResourceAccessException("Opps! It appears we were "
+					+ "unable to load the image: " + relativePath + " (BufferedImageLoader");
+		}
 		return img;
 	}
 	
