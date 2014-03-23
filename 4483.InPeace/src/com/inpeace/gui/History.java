@@ -1,4 +1,4 @@
-package com.inpeace.gui.window;
+package com.inpeace.gui;
 
 import java.util.EmptyStackException;
 import java.util.Stack;

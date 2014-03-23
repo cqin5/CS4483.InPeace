@@ -2,8 +2,8 @@ package com.inpeace;
 
 import java.awt.Dimension;
 
+import com.inpeace.gui.Controller;
 import com.inpeace.gui.shell.splash.SplashDelegate;
-import com.inpeace.gui.window.Window;
 
 /**
  * Main class for the game.
@@ -21,8 +21,8 @@ public class InPeace {
 	 */
 	public static void main(String[] args) {
 		//Create game window, and display it to the screen
-		Window window = new Window("In Peace: A Ghost Story", new Dimension(900,600));
-		window.load(new SplashDelegate(window.getSize()));
+		Controller window = new Controller("In Peace: A Ghost Story", new Dimension(900,600));
+		window.load(new SplashDelegate(window));
 		
 		window.setVisible(true);
 		

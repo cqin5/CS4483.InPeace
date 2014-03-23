@@ -24,6 +24,22 @@ public class BackgroundPanel extends JPanel {
 	private BufferedImage background;
 
 	/**
+	 * Constructor requiring the image be passed as an argument.
+	 *
+	 * @param background	the background graphic.
+	 */
+	public BackgroundPanel(BufferedImage background) {
+
+		//Set the graphic and dimensions of the panel
+		this.background = background;
+		Dimension d = new Dimension(background.getWidth(null), background.getHeight(null));
+		setPreferredSize(d);
+		setMinimumSize(d);
+		setMaximumSize(d);
+		setSize(d);
+	}
+
+	/**
 	 * Constructor requiring the relative path of the image be passed as an argument.
 	 *
 	 * @param relativePath	the relative path of the background graphic.
@@ -44,7 +60,33 @@ public class BackgroundPanel extends JPanel {
 	}
 
 	/**
-	 * Constructor requiring the relative path of the image, the the dimensions and the
+	 * Constructor requiring the image, the the dimensions and the
+	 * layout be passed as arguments.
+	 *
+	 * @param background	the background image.
+	 * @param width			the desired width of the new background panel.
+	 * @param height		the desired height of the new background panel.
+	 * @param layout 		the layout for the new background panel.
+	 */
+	public BackgroundPanel(BufferedImage background, int width, int height, LayoutManager layout) {
+
+		//Set the panel dimensions based on the arguments passed
+		Dimension d = new Dimension(width, height);
+		setPreferredSize(d);
+		setMinimumSize(d);
+		setMaximumSize(d);
+		setSize(d);
+
+		//Set image and scale it
+		background = this.background;
+		background = ImageScaler.scale(background, width, height);
+
+		//Set the layout manger to the specified type
+		setLayout(layout);
+	}
+
+	/**
+	 * Constructor requiring the image, the the dimensions and the
 	 * layout be passed as arguments.
 	 *
 	 * @param relativePath	the relative path of the background image.
@@ -72,6 +114,18 @@ public class BackgroundPanel extends JPanel {
 		//Set the layout manger to the specified type
 		setLayout(layout);
 	}
+
+	/**
+	 * Constructor requiring the relative path of the image, the the dimensions and the
+	 * layout be passed as arguments.
+	 *
+	 * @param background	the background image.
+	 * @param dimensions	the desired dimensions of the new background panel.
+	 * @param layout 		the layout for the new background panel.
+	 */
+	public BackgroundPanel(BufferedImage background, Dimension dimensions, LayoutManager layout) {
+		this(background, dimensions.width, dimensions.height, layout);
+	}
 	
 	/**
 	 * Constructor requiring the relative path of the image, the the dimensions and the
@@ -88,6 +142,21 @@ public class BackgroundPanel extends JPanel {
 	/**
 	 * Instantiates a new background panel with graphic and specified layout.
 	 *
+	 * @param background	the background image.
+	 * @param layout		the layout for the new background panel.
+	 */
+	public BackgroundPanel(BufferedImage background, LayoutManager layout) {
+
+		//Call the basic constructor
+		this(background);
+
+		//Set the layout manager to the specified type
+		setLayout(layout);
+	}
+
+	/**
+	 * Instantiates a new background panel with graphic and specified layout.
+	 *
 	 * @param relativePath	the relative path of the background image.
 	 * @param layout		the layout for the new background panel.
 	 */
@@ -99,7 +168,7 @@ public class BackgroundPanel extends JPanel {
 		//Set the layout manager to the specified type
 		setLayout(layout);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)

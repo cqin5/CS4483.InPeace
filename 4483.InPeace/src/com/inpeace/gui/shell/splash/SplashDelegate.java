@@ -1,12 +1,12 @@
 package com.inpeace.gui.shell.splash;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridBagLayout;
 
+import com.inpeace.gui.Controller;
 import com.inpeace.gui.general.BackgroundPanel;
 import com.inpeace.gui.general.GUIDelegate;
+import com.inpeace.gui.shell.mainmenu.MainMenuDelegate;
 
 /**
  * 
@@ -19,15 +19,24 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 7655251010645403383L;
+	
+	/** Seconds to display the splash  */
+	private static final int duration = 1;
+	
+	/**   */
+	private static final String graphicPath = "backgrounds/test1.png";
+	
+	/**   */
+	private static Controller controller;
 
 	/**
 	 * Constructs a new SplashDelegate object.
 	 *
 	 * @param relativePath
 	 */
-	public SplashDelegate(Dimension dimensions) {
-		super(Splash.getGraphicPath(), dimensions, new GridBagLayout());
-		setBackground(Color.BLACK);
+	public SplashDelegate(Controller controller) {
+		super(graphicPath, controller.getSize(), new GridBagLayout());
+		this.controller = controller;
 	}
 
 	/* (non-Javadoc)
@@ -43,15 +52,23 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 	 */
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
+		//NULL BODY
+		//No action to be performed
 		
 	}
-	
+
 	/* (non-Javadoc)
-	 * @see com.inpeace.gui.general.BackgroundPanel#paintComponent(java.awt.Graphics)
+	 * @see java.lang.Runnable#run()
 	 */
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	@Override
+	public void run() {
+		MainMenuDelegate main = new MainMenuDelegate(controller);
+		try {
+			Thread.sleep(duration * 1000);
+		} catch (InterruptedException e) {
+			//NULL BODY
+		}
+		controller.load(main);
 	}
 
 }

@@ -6,18 +6,18 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+
+import com.inpeace.images.BufferedImageLoader;
+import com.inpeace.images.ResourceAccessException;
 
 /**
  * Dialogue of warning user before carrying out risky or irreversible actions, that is capable of
@@ -51,16 +51,16 @@ public class ConfirmDialogue extends JDialog {
 		try {
 			switch(type) {
 			case 1:
-				img = ImageIO.read(new URL("http://jbaron6.cs2212.ca/img/error.png"));
+				img = BufferedImageLoader.getInstance().loadImage("other/error.png");
 				break;
 			case 2:
-				img = ImageIO.read(new URL("http://jbaron6.cs2212.ca/img/warning.png"));
+				img = BufferedImageLoader.getInstance().loadImage("other/warning.png");
 				break;
 			case 3:
-				img = ImageIO.read(new URL("http://jbaron6.cs2212.ca/img/success.png"));
+				img = BufferedImageLoader.getInstance().loadImage("other/success.png");
 				break;
 			}
-		} catch (IOException e) {
+		} catch (ResourceAccessException e) {
 			//NULL BODY
 		}
 		JLabel label = new JLabel(new ImageIcon(img.getScaledInstance(90, 90, Image.SCALE_DEFAULT)));

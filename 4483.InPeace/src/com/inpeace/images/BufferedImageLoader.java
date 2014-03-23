@@ -17,6 +17,9 @@ public class BufferedImageLoader {
 	/**   */
 	private static final BufferedImageLoader instance = new BufferedImageLoader();
 	
+	/**   */
+	private static final String imageBasePath = "/com/inpeace/images/";
+	
 	/**
 	 * Constructs a new BufferedImageLoader object.
 	 *
@@ -40,7 +43,7 @@ public class BufferedImageLoader {
 	public BufferedImage loadImage(String relativePath) throws ResourceAccessException {
 		BufferedImage img;
 		try {
-			img = ImageIO.read(getClass().getResource(relativePath));
+			img = ImageIO.read(getClass().getResource(imageBasePath + relativePath));
 		} catch (IOException e) {
 			throw new ResourceAccessException("Opps! It appears we were "
 					+ "unable to load the image: " + relativePath + " (BufferedImageLoader");

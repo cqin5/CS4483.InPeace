@@ -1,4 +1,4 @@
-package com.inpeace.gui.window;
+package com.inpeace.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.inpeace.gui.general.GUIDelegate;
+import com.inpeace.gui.general.GeneralDialogue;
 
 
 /**
@@ -19,7 +20,7 @@ import com.inpeace.gui.general.GUIDelegate;
  * @version 1.0
  * @since   20 Mar 2014
  */
-public class Window extends JFrame {
+public class Controller extends JFrame {
 
 	/**   */
 	private static final long serialVersionUID = -769022227591869099L;
@@ -36,7 +37,7 @@ public class Window extends JFrame {
 	 * @param title
 	 * @param size
 	 */
-	public Window(String title, Dimension size) {
+	public Controller(String title, Dimension size) {
 		super();
 		history = new History();
 		this.size = size;
@@ -81,7 +82,7 @@ public class Window extends JFrame {
 	 * @param width
 	 * @param height
 	 */
-	public Window(String title, int width, int height) {
+	public Controller(String title, int width, int height) {
 		this(title, new Dimension(width, height));
 	}
 	
@@ -91,8 +92,18 @@ public class Window extends JFrame {
 	 */
 	public void load(GUIDelegate view) {
 		getContentPane().removeAll();
-		getContentPane().add((JPanel) view, BorderLayout.CENTER);
-		history.registerView(view);
+		try {
+			getContentPane().add((JPanel) view, BorderLayout.CENTER);
+			refresh();
+			history.registerView(view);
+			new Thread(view).start();
+		} catch (Exception e) {
+			if (history.getCurrentView() != null) {
+				load(history.getCurrentView());
+			}
+			new GeneralDialogue("Oops!", e.getMessage(), 1);
+
+		}
 	}
 	
 	/**
@@ -106,9 +117,13 @@ public class Window extends JFrame {
 	 * @throws Exception 
 	 * 
 	 */
-	public void back() throws Exception {
-		close();
-		load(history.back());
+	public void back() {
+		try {
+			close();
+		} catch (Exception e) {
+			new GeneralDialogue("Oops!", e.getMessage(), 1);
+		}
+			load(history.back());
 	}
 	
 	/**
