@@ -51,13 +51,13 @@ public class ConfirmDialogue extends JDialog {
 		try {
 			switch(type) {
 			case 1:
-				img = BufferedImageLoader.getInstance().loadImage("other/error.png");
+				img = BufferedImageLoader.loadImage("other/error.png");
 				break;
 			case 2:
-				img = BufferedImageLoader.getInstance().loadImage("other/warning.png");
+				img = BufferedImageLoader.loadImage("other/warning.png");
 				break;
 			case 3:
-				img = BufferedImageLoader.getInstance().loadImage("other/success.png");
+				img = BufferedImageLoader.loadImage("other/success.png");
 				break;
 			}
 		} catch (ResourceAccessException e) {

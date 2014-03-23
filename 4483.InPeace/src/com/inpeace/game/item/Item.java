@@ -1,5 +1,6 @@
 package com.inpeace.game.item;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -60,6 +61,23 @@ public abstract class Item {
 	public long getSpriteCode() {
 		return spriteCode;
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @param glowing
+	 * @return
+	 * @throws ResourceAccessException 
+	 */
+	public static Image getImage(Item item, boolean glowing) throws ResourceAccessException {
+		if (glowing) {
+			return item.getGlowing();
+		}
+		else {
+			return item.getNormal();
+		}
+	}
+	
 
 	/**
 	 * Get the normal
@@ -67,7 +85,7 @@ public abstract class Item {
 	 * @return the normal
 	 * @throws ResourceAccessException 
 	 */
-	public BufferedImage getNormal() throws ResourceAccessException {
+	private BufferedImage getNormal() throws ResourceAccessException {
 		if (normal == null) {
 			normal = SpriteLibrarian.getInstance().getSprite(spriteCode);
 		}
@@ -80,7 +98,7 @@ public abstract class Item {
 	 * @return the glowing
 	 * @throws ResourceAccessException 
 	 */
-	public BufferedImage getGlowing() throws ResourceAccessException {
+	private BufferedImage getGlowing() throws ResourceAccessException {
 		if (glowing == null) {
 			glowing = SpriteLibrarian.getInstance().getSprite(spriteCode +
 					((spriteCode / 1000000000000L) * 1000000));

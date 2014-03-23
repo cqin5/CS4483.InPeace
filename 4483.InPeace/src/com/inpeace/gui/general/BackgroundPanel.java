@@ -48,7 +48,7 @@ public class BackgroundPanel extends JPanel {
 
 		try	{
 			//Attempt to load the graphic and set the dimensions of the panel
-			background = BufferedImageLoader.getInstance().loadImage(relativePath);
+			background = BufferedImageLoader.loadImage(relativePath);
 			Dimension d = new Dimension(background.getWidth(null), background.getHeight(null));
 			setPreferredSize(d);
 			setMinimumSize(d);
@@ -105,7 +105,7 @@ public class BackgroundPanel extends JPanel {
 
 		//Attempt to load the background image, if can't throw exception
 		try	{
-			background = BufferedImageLoader.getInstance().loadImage(relativePath);
+			background = BufferedImageLoader.loadImage(relativePath);
 			background = ImageScaler.scaleProp(background, width, height);
 		} catch (ResourceAccessException e) {
 			new GeneralDialogue(e.getMessage(), "Resource Access Error", 1);

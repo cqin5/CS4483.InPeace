@@ -15,6 +15,10 @@ import javax.swing.SwingUtilities;
  */
 public class Mouse {
 
+	/**
+	 * @param relativeTo
+	 * @return
+	 */
 	public static Point getMouseLocation(Component relativeTo) {
 		Point point = new Point(MouseInfo.getPointerInfo().getLocation());
 		SwingUtilities.convertPointFromScreen(point, relativeTo);
