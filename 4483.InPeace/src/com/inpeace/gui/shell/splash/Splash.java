@@ -14,7 +14,7 @@ public final class Splash {
 	private static int duration = 50;
 	
 	/**   */
-	private static String graphicPath = "/Users/james/Documents/Programming/EclipseWorkspace/CS4483.InPeace/4483.InPeace/bin/com/inpeace/images/backgrounds/test.png";
+	private static String graphicPath = "/com/inpeace/images/backgrounds/test1.png";
 
 	/**
 	 * Get the duration

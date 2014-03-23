@@ -1,6 +1,9 @@
 package com.inpeace.gui.shell.splash;
 
-import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
 
 import com.inpeace.gui.general.BackgroundPanel;
 import com.inpeace.gui.general.GUIDelegate;
@@ -22,10 +25,9 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 	 *
 	 * @param relativePath
 	 */
-	public SplashDelegate() {
-		super(Splash.getGraphicPath());
-		add(new JLabel("Test"));
-		setVisible(true);
+	public SplashDelegate(Dimension dimensions) {
+		super(Splash.getGraphicPath(), dimensions, new GridBagLayout());
+		setBackground(Color.BLACK);
 	}
 
 	/* (non-Javadoc)
@@ -34,6 +36,22 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 	@Override
 	public boolean isHistorical() {
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.gui.general.GUIDelegate#close()
+	 */
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.inpeace.gui.general.BackgroundPanel#paintComponent(java.awt.Graphics)
+	 */
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 	}
 
 }

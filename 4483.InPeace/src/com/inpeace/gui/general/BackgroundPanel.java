@@ -64,13 +64,25 @@ public class BackgroundPanel extends JPanel {
 		//Attempt to load the background image, if can't throw exception
 		try	{
 			background = BufferedImageLoader.getInstance().loadImage(relativePath);
-			background = ImageScaler.qualityScale(background, width, height);
+			background = ImageScaler.scale(background, width, height);
 		} catch (ResourceAccessException e) {
 			new GeneralDialogue(e.getMessage(), "Resource Access Error", 1);
 		}
 
 		//Set the layout manger to the specified type
 		setLayout(layout);
+	}
+	
+	/**
+	 * Constructor requiring the relative path of the image, the the dimensions and the
+	 * layout be passed as arguments.
+	 *
+	 * @param relativePath	the relative path of the background image.
+	 * @param dimensions	the desired dimensions of the new background panel.
+	 * @param layout 		the layout for the new background panel.
+	 */
+	public BackgroundPanel(String relativePath, Dimension dimensions, LayoutManager layout) {
+		this(relativePath, dimensions.width, dimensions.height, layout);
 	}
 
 	/**

@@ -1,9 +1,8 @@
 package com.inpeace.gui.window;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -27,18 +26,27 @@ public class Window extends JFrame {
 	
 	/**   */
 	private History history;
-		
+	
+	/**   */
+	private Dimension size;
+
 	/**
-	 * Constructs a new NavigatorService object.
+	 * Constructs a new Window object.
 	 *
+	 * @param title
+	 * @param size
 	 */
-	public Window() {
+	public Window(String title, Dimension size) {
 		super();
 		history = new History();
+		this.size = size;
 		
-		setTitle("In Peace: A Ghost Story");
+		setTitle(title);
+		setSize(this.size);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
+		getContentPane().setBackground(Color.black);
 		addWindowListener(new WindowAdapter()
         {
             /* (non-Javadoc)
@@ -55,15 +63,26 @@ public class Window extends JFrame {
                 e.getWindow().dispose();
             }
         });
-		
+		/*
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		if (!device.isFullScreenSupported()) {
 			device.setFullScreenWindow(this);
 		} else {
 			setExtendedState(JFrame.MAXIMIZED_BOTH);
-			setResizable(false);
+			//setResizable(false);
 		}
-		
+		*/
+	}
+	
+	/**
+	 * Constructs a new Window object.
+	 *
+	 * @param title
+	 * @param width
+	 * @param height
+	 */
+	public Window(String title, int width, int height) {
+		this(title, new Dimension(width, height));
 	}
 	
 	/**
@@ -72,7 +91,7 @@ public class Window extends JFrame {
 	 */
 	public void load(GUIDelegate view) {
 		getContentPane().removeAll();
-		getContentPane().add((JPanel) view);
+		getContentPane().add((JPanel) view, BorderLayout.CENTER);
 		history.registerView(view);
 	}
 	

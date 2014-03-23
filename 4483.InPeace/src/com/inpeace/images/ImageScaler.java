@@ -27,7 +27,7 @@ public class ImageScaler {
 
 		double factor = 1.0;
 
-		if ((width / w) > (height / h)) {
+		if ((width / w) < (height / h)) {
 			factor = (double) width / w;
 		}
 		else {

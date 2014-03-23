@@ -1,14 +1,7 @@
 package com.inpeace;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.Dimension;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.inpeace.gui.general.BackgroundPanel;
 import com.inpeace.gui.shell.splash.SplashDelegate;
 import com.inpeace.gui.window.Window;
 
@@ -27,27 +20,11 @@ public class InPeace {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Create game window, centre it, and display it to the screen
-		//Window window = new Window();
-		//window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		//window.setResizable(false);
-
-
+		//Create game window, and display it to the screen
+		Window window = new Window("In Peace: A Ghost Story", new Dimension(900,600));
+		window.load(new SplashDelegate(window.getSize()));
 		
-		JFrame frame = new JFrame();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setResizable(false);
-		frame.pack();
-		
-		frame.setLayout(new BorderLayout());
-		frame.setTitle("Test");
-//		frame.setVisible(true);
-		
-		BackgroundPanel panel = new BackgroundPanel("/com/inpeace/images/backgrounds/test.png",
-				(frame.getSize()).width, (frame.getSize()).height, new BorderLayout());
-		frame.add(panel, BorderLayout.CENTER);
-
-		frame.setVisible(true);
+		window.setVisible(true);
 		
 	}
 }
