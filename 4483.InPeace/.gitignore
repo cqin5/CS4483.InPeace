@@ -1,2 +1,3 @@
 /bin
-*/.gitignore
+/.gitignore
+.DS_Store
