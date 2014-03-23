@@ -1,131 +1,117 @@
 package com.inpeace.game.item;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.inpeace.game.action.Action;
+import com.inpeace.images.ResourceAccessException;
+import com.inpeace.images.SpriteLibrarian;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   18 Mar 2014
  */
 public abstract class Item {
 
+	/**
+	 * Unique code identifying sprite location for the normal graphic of the item.
+	 * 
+	 * Broken into chunks of 4 digits each, from right to left:
+	 * 		Sheet code = the code for the sheet on which the sprite is found
+	 * 		x = horizontal position on sheet for top left corner
+	 * 		y = vertical position on sheet for top left corner
+	 * 		width = sprite box width
+	 * 		height = sprite box height
+	 * 
+	 * NB:	the glowing graphic has to be directly below the normal one on the same
+	 * 		sprite sheet
+	 */
+	private long spriteCode;
+
 	/**   */
-	private int id;
-	
+	private BufferedImage normal = null;
+
 	/**   */
-	private Image normal = null;
-	
-	/**   */
-	private Image glowing = null;
-	
+	private BufferedImage glowing = null;
+
 	/**   */
 	ArrayList<Action> actions;
-	
+
 	/**
 	 * Constructs a new Item object.
 	 *
 	 * @param id
 	 * @param actions
 	 */
-	public Item(int id, ArrayList<Action> actions) {
-		setId(id);
-		setActions(actions);
-		
-	}
-	
-	/**
-	 * Get the id
-	 *
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
+	public Item(long spriteCode, ArrayList<Action> actions) {
+		this.spriteCode = spriteCode;
+		this.actions.addAll(actions);
 	}
 
 	/**
-	 * Set the id
+	 * Get the sprite code
 	 *
-	 * @param id the id to set
+	 * @return the sprite code
 	 */
-	protected void setId(int id) {
-		this.id = id;
+	public long getSpriteCode() {
+		return spriteCode;
 	}
 
 	/**
 	 * Get the normal
 	 *
 	 * @return the normal
+	 * @throws ResourceAccessException 
 	 */
-	public Image getNormal() {
+	public BufferedImage getNormal() throws ResourceAccessException {
 		if (normal == null) {
-			setNormal(null); //TODO: add proper image parameter to this line
+			normal = SpriteLibrarian.getInstance().getSprite(spriteCode);
 		}
 		return normal;
 	}
 
 	/**
-	 * Set the normal
-	 *
-	 * @param normal the normal to set
-	 */
-	private void setNormal(Image normal) {
-		this.normal = normal;
-	}
-	
-	/**
 	 * Get the glowing
 	 *
 	 * @return the glowing
+	 * @throws ResourceAccessException 
 	 */
-	public Image getGlowing() {
+	public BufferedImage getGlowing() throws ResourceAccessException {
 		if (glowing == null) {
-			setGlowing(null); //TODO: add proper image parameter to this line
+			glowing = SpriteLibrarian.getInstance().getSprite(spriteCode +
+					((spriteCode / 1000000000000L) * 1000000));
 		}
 		return glowing;
 	}
 
-	/**
-	 * Set the glowing
-	 *
-	 * @param glowing the glowing to set
-	 */
-	private void setGlowing(Image glowing) {
-		this.glowing = glowing;
-	}
-	
 	/**
 	 * 
 	 * @param index
 	 * @return
 	 * @throws
 	 */
-	public Action getAction(int index) {
+	public Action getAction(int index) throws IndexOutOfBoundsException {
 		if (index > 0 && index < actions.size()) {
 			return actions.get(index);
 		}
-		throw new IndexOutOfBoundsException();
+		throw new IndexOutOfBoundsException("Unable to get action: index out of bounds");
 	}
 
-
 	/**
-	 * Set the actions
 	 * 
-	 * @param actions the actions to set
+	 * @return
 	 */
-	public void setActions(ArrayList<Action> actions) {
-		for (int i = 0; i < actions.size(); i++) {
-			this.actions.add(actions.get(i));
-		}
+	public Iterator<Action> actionIterator() {
+		return actions.iterator();
 	}
 
 	/**
 	 * @return
 	 */
 	public abstract boolean isCollectible();
-	
+
 }

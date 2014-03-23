@@ -79,7 +79,7 @@ public class BackgroundPanel extends JPanel {
 
 		//Set image and scale it
 		background = this.background;
-		background = ImageScaler.scale(background, width, height);
+		background = ImageScaler.scaleProp(background, width, height);
 
 		//Set the layout manger to the specified type
 		setLayout(layout);
@@ -106,7 +106,7 @@ public class BackgroundPanel extends JPanel {
 		//Attempt to load the background image, if can't throw exception
 		try	{
 			background = BufferedImageLoader.getInstance().loadImage(relativePath);
-			background = ImageScaler.scale(background, width, height);
+			background = ImageScaler.scaleProp(background, width, height);
 		} catch (ResourceAccessException e) {
 			new GeneralDialogue(e.getMessage(), "Resource Access Error", 1);
 		}

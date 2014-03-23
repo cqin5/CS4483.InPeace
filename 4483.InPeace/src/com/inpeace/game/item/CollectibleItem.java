@@ -8,7 +8,7 @@ import com.inpeace.game.action.Action;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   18 Mar 2014
  */
 public class CollectibleItem extends Item {
