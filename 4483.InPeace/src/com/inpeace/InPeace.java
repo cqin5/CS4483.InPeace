@@ -14,6 +14,10 @@ import com.inpeace.gui.shell.splash.SplashDelegate;
  */
 public class InPeace {
 
+	/**   */
+	private final static double aspectRatio = 1.778;
+
+	
 	/**
 	 * 
 	 * 
@@ -21,10 +25,10 @@ public class InPeace {
 	 */
 	public static void main(String[] args) {
 		//Create game window, and display it to the screen
-		Controller window = new Controller("In Peace: A Ghost Story", new Dimension(900,600));
-		window.load(new SplashDelegate(window));
+		Controller controller = new Controller("In Peace: A Ghost Story", new Dimension((int) (aspectRatio * 600), 600));
+		controller.load(new SplashDelegate(controller));
 		
-		window.setVisible(true);
+		controller.setVisible(true);
 		
 	}
 }

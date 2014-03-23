@@ -1,6 +1,5 @@
 package com.inpeace.gui.shell.splash;
 
-import java.awt.Color;
 import java.awt.GridBagLayout;
 
 import com.inpeace.gui.Controller;
@@ -24,10 +23,10 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 	private static final int duration = 1;
 	
 	/**   */
-	private static final String graphicPath = "backgrounds/test1.png";
+	private static final String graphicPath = "backgrounds/splash.jpg";
 	
 	/**   */
-	private static Controller controller;
+	private Controller controller;
 
 	/**
 	 * Constructs a new SplashDelegate object.
@@ -62,13 +61,12 @@ public class SplashDelegate extends BackgroundPanel implements GUIDelegate {
 	 */
 	@Override
 	public void run() {
-		MainMenuDelegate main = new MainMenuDelegate(controller);
 		try {
 			Thread.sleep(duration * 1000);
 		} catch (InterruptedException e) {
 			//NULL BODY
 		}
-		controller.load(main);
+		controller.load(new MainMenuDelegate(controller));
 	}
 
 }

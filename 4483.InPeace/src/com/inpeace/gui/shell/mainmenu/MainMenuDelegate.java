@@ -21,7 +21,7 @@ public class MainMenuDelegate extends BackgroundPanel implements GUIDelegate {
 	private static final long serialVersionUID = 6545247443097818762L;
 	
 	/**   */
-	private static final String backgroundPath = "backgrounds/test.png";
+	private static final String backgroundPath = "backgrounds/test.jpg";
 	
 	/**   */
 	private static final String buttonImages = "buttons/mainmenu.png";
