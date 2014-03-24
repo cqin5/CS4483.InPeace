@@ -2,8 +2,8 @@ package com.inpeace.objects;
 
 import java.util.ArrayList;
 
-import com.inpeace.game.action.Action;
-import com.inpeace.game.action.CollectAction;
+import com.inpeace.actions.Action;
+import com.inpeace.actions.CollectAction;
 
 /**
  * 

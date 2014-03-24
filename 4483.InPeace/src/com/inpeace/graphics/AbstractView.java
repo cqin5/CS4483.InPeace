@@ -1,4 +1,6 @@
-package com.inpeace.gui;
+package com.inpeace.graphics;
+
+import java.beans.PropertyChangeEvent;
 
 /**
  * 
@@ -7,8 +9,12 @@ package com.inpeace.gui;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public interface AbstractView {
+public abstract class AbstractView {
 	
-	public void paint();
+	public void update(PropertyChangeEvent e) {
+		//TODO
+	}
+	
+	public abstract void paint();
 	
 }

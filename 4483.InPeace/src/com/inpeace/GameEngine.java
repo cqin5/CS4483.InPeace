@@ -1,10 +1,10 @@
 package com.inpeace;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 
-import com.inpeace.gui.AbstractState;
-import com.inpeace.gui.GraphicsManager;
+import com.inpeace.audio.AudioManager;
+import com.inpeace.graphics.GraphicsManager;
+import com.inpeace.states.AbstractState;
 
 /**
  * 

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.inpeace.Librarian;
-import com.inpeace.game.action.Action;
+import com.inpeace.actions.Action;
 import com.inpeace.images.ResourceAccessException;
 
 /**

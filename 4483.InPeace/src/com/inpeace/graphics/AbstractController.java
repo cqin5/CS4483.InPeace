@@ -1,4 +1,4 @@
-package com.inpeace.gui;
+package com.inpeace.graphics;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,6 +43,7 @@ public class AbstractController implements PropertyChangeListener {
 	//  Use this to observe property changes from registered models
 	//  and propagate them on to all the views.
 
+	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 
 		for (AbstractView view: registeredViews) {

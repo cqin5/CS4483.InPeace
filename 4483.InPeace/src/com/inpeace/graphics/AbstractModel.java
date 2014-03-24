@@ -1,4 +1,4 @@
-package com.inpeace.gui;
+package com.inpeace.graphics;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

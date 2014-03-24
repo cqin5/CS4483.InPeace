@@ -2,7 +2,7 @@ package com.inpeace.objects;
 
 import java.util.ArrayList;
 
-import com.inpeace.game.action.Action;
+import com.inpeace.actions.Action;
 
 /**
  * 
@@ -28,6 +28,15 @@ public class UsableItem extends Object {
 	 */
 	@Override
 	public boolean isCollectible() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.objects.Object#isInstant()
+	 */
+	@Override
+	public boolean isInstant() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

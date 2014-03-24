@@ -1,4 +1,4 @@
-package com.inpeace.gui;
+package com.inpeace.graphics;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -8,6 +8,8 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.inpeace.states.AbstractState;
 
 
 /**
@@ -61,6 +63,7 @@ public class GraphicsManager extends Canvas {
 		
 	}
 	
+	@Override
 	public void repaint() {
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 		g.setColor(Color.black);
@@ -89,6 +92,7 @@ public class GraphicsManager extends Canvas {
 	 *
 	 * @return the dimensions
 	 */
+	@Override
 	public Dimension getSize() {
 		return getSize();
 	}

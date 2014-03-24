@@ -8,8 +8,5 @@ package com.inpeace.objects;
  * @since   23 Mar 2014
  */
 public class ObjectLibrary {
-
-	private final String itemsFile = "/com/inpeace/game/item/items.xml";
-	
 	
 }

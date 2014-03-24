@@ -1,7 +1,9 @@
-package com.inpeace.gui;
+package com.inpeace.graphics;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
+
+import com.inpeace.states.AbstractState;
 
 /**
  * 
