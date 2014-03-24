@@ -1,5 +1,6 @@
 package com.inpeace.graphics;
 
+import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * @version 0.0
  * @since   24 Mar 2014
  */
-public class AbstractController implements PropertyChangeListener {
+public abstract class AbstractController implements PropertyChangeListener {
 
 	private ArrayList<AbstractView> registeredViews;
 	private ArrayList<AbstractModel> registeredModels;
@@ -73,5 +74,10 @@ public class AbstractController implements PropertyChangeListener {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	public abstract void repaint(Graphics2D g);
 
 }

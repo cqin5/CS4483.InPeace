@@ -10,7 +10,7 @@ import java.beans.PropertyChangeSupport;
  * @version 1.0
  * @since   23 Mar 2014
  */
-public class AbstractModel {
+public abstract class AbstractModel {
 
 	/**   */
 	protected PropertyChangeSupport propertyChangeSupport;

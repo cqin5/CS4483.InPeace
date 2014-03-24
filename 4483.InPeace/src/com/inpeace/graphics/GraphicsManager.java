@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import com.inpeace.states.AbstractState;
 
-
 /**
  * 
  * 
