@@ -1,6 +1,6 @@
 package com.inpeace.game.action;
 
-import com.inpeace.game.item.Item;
+import com.inpeace.objects.Object;
 
 /**
  * 
@@ -11,7 +11,7 @@ import com.inpeace.game.item.Item;
  */
 public class CollectAction extends Action {
 	
-	CollectAction(Item item) {
+	public CollectAction(Object item) {
 		super(item);
 	}
 	

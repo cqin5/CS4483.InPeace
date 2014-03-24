@@ -1,6 +1,6 @@
 package com.inpeace.game.action;
 
-import com.inpeace.game.item.Item;
+import com.inpeace.objects.Object;
 
 /**
  * 
@@ -12,14 +12,14 @@ import com.inpeace.game.item.Item;
 public abstract class Action {
 	
 	/**   */
-	protected Item item;
+	protected Object item;
 	
 	/**
 	 * Constructs a new Action object.
 	 *
 	 * @param item
 	 */
-	public Action(Item item) {
+	public Action(Object item) {
 		setItem(item);
 	}
 	
@@ -33,7 +33,7 @@ public abstract class Action {
 	 *
 	 * @return the item
 	 */
-	public Item getItem() {
+	public Object getItem() {
 		return item;
 	}
 	
@@ -42,7 +42,7 @@ public abstract class Action {
 	 *
 	 * @param item the item to set
 	 */
-	public void setItem(Item item) {
+	public void setItem(Object item) {
 		this.item = item;
 	}
 }

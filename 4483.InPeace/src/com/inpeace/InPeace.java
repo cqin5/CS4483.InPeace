@@ -2,7 +2,7 @@ package com.inpeace;
 
 import java.awt.Dimension;
 
-import com.inpeace.gui.Controller;
+import com.inpeace.gui.GraphicsManager;
 import com.inpeace.gui.shell.splash.SplashDelegate;
 
 /**
@@ -16,7 +16,6 @@ public class InPeace {
 
 	/**   */
 	private final static double aspectRatio = 1.778;
-
 	
 	/**
 	 * 
@@ -25,8 +24,8 @@ public class InPeace {
 	 */
 	public static void main(String[] args) {
 		//Create game window, and display it to the screen
-		Controller controller = new Controller("In Peace: A Ghost Story", new Dimension((int) (aspectRatio * 600), 600));
-		controller.load(new SplashDelegate(controller));
+		GraphicsManager controller = new GraphicsManager("In Peace: A Ghost Story", new Dimension((int) (aspectRatio * 600), 600));
+		controller.setState(new SplashDelegate(controller));
 		
 		controller.setVisible(true);
 		

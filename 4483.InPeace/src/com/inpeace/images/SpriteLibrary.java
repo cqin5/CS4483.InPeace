@@ -12,17 +12,17 @@ import java.util.HashMap;
 public class SpriteLibrary {
 	
 	/**   */
-	private final String spritePath = "/com/inpeace/images/sprites";
+	private final String spritePath = "/com/inpeace/images/sprites/";
 	
 	/**   */
-	HashMap<Integer, SpriteSheet> sheets;
+	HashMap<Integer, SpriteSheet> library;
 		
 	/**
 	 * Constructs a new SpriteLibrary object.
 	 *
 	 */
 	public SpriteLibrary() {
-		sheets = new HashMap<Integer, SpriteSheet>();
+		library = new HashMap<Integer, SpriteSheet>();
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class SpriteLibrary {
 	 */
 	public SpriteSheet getSheet(int sheetCode) throws ResourceAccessException {
 		SpriteSheet sheet = null;
-		sheet = sheets.get(sheetCode);
+		sheet = library.get(sheetCode);
 		if (sheet == null) {
 			add(sheetCode);
 			return getSheet(sheetCode);
@@ -57,7 +57,7 @@ public class SpriteLibrary {
 	 * @throws ResourceAccessException
 	 */
 	private void add(int sheetCode) throws ResourceAccessException {
-		sheets.put(sheetCode, new SpriteSheet(BufferedImageLoader.loadImage(
+		library.put(sheetCode, new SpriteSheet(BufferedImageLoader.loadImage(
 				spritePath + sheetCode + ".png")));
 	}
 	

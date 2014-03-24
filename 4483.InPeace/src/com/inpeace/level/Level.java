@@ -3,7 +3,7 @@ package com.inpeace.level;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.inpeace.game.item.Item;
+import com.inpeace.objects.Object;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class Level implements Serializable {
 	private ArrayList<Character> characters;
 	
 	/**   */
-	private ArrayList<Item> items;
+	private ArrayList<Object> items;
 
 	/**
 	 * Get the backgroundPath
@@ -67,7 +67,7 @@ public class Level implements Serializable {
 	 *
 	 * @return the items
 	 */
-	public ArrayList<Item> getItems() {
+	public ArrayList<Object> getItems() {
 		return items;
 	}
 
@@ -76,7 +76,7 @@ public class Level implements Serializable {
 	 *
 	 * @param items the items to set
 	 */
-	public void setItems(ArrayList<Item> items) {
+	public void setItems(ArrayList<Object> items) {
 		this.items = items;
 	}
 	
