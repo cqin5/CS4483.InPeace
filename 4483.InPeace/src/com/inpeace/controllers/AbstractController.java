@@ -1,9 +1,12 @@
-package com.inpeace.graphics;
+package com.inpeace.controllers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
+import com.inpeace.models.AbstractModel;
+import com.inpeace.views.AbstractView;
 
 /**
  * 

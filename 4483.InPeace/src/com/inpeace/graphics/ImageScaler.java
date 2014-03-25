@@ -1,4 +1,4 @@
-package com.inpeace.images;
+package com.inpeace.graphics;
 
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;

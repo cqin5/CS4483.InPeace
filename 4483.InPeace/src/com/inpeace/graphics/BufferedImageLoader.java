@@ -1,9 +1,11 @@
-package com.inpeace.images;
+package com.inpeace.graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import com.inpeace.exceptions.ResourceAccessException;
 
 /**
  * Loads bundled project resource images as buffered images.

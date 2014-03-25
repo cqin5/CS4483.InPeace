@@ -1,5 +1,7 @@
 package com.inpeace;
 
+import com.inpeace.engine.GameEngine;
+
 /**
  * 
  * 

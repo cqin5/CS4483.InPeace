@@ -1,9 +1,6 @@
-package com.inpeace.graphics;
-
-import java.awt.Graphics2D;
+package com.inpeace.controllers;
 
 import com.inpeace.states.AbstractState;
-
 
 /**
  * 
@@ -12,15 +9,16 @@ import com.inpeace.states.AbstractState;
  * @version 0.0
  * @since   23 Mar 2014
  */
-public class HUDController extends AbstractController {
-
-	public void repaint(Graphics2D g) {
-		// TODO
-		
-	}
+public class GraphicsController extends AbstractController {
 	
 	public void loadState(AbstractState state) {
 		//TODO
 	}
+	
+	public void setScrollPosition(int scrollPosition) {
+		//TODO
+	}
+	
+	
 
 }

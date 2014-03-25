@@ -1,8 +1,12 @@
-package com.inpeace.graphics;
+package com.inpeace.models;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import com.inpeace.exceptions.IncompatibleObjectException;
+import com.inpeace.graphics.AbstractEntityGraphic;
+import com.inpeace.graphics.ImageEntityGraphic;
 
 /**
  * 

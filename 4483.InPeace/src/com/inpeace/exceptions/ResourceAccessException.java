@@ -1,4 +1,4 @@
-package com.inpeace.images;
+package com.inpeace.exceptions;
 
 /**
  * 

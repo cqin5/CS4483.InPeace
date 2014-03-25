@@ -1,14 +1,17 @@
-package com.inpeace.graphics;
+package com.inpeace.models;
 
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import com.inpeace.exceptions.IncompatibleObjectException;
+import com.inpeace.graphics.AbstractEntityGraphic;
+
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   18 Mar 2014
  */
 public class OverlayModel extends AbstractModel {

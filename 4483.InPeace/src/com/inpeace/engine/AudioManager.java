@@ -1,6 +1,4 @@
-package com.inpeace.graphics;
-
-import java.awt.Graphics2D;
+package com.inpeace.engine;
 
 import com.inpeace.states.AbstractState;
 
@@ -11,15 +9,9 @@ import com.inpeace.states.AbstractState;
  * @version 0.0
  * @since   23 Mar 2014
  */
-public class OverlayController {
+public class AudioManager {
 
-	public void repaint(Graphics2D g) {
-		// TODO
+	public void loadState(AbstractState state) {
 		
 	}
-	
-	public void loadState(AbstractState state) {
-		//TODO
-	}
-	
 }

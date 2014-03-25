@@ -18,8 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import com.inpeace.images.BufferedImageLoader;
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.BufferedImageLoader;
 
 /**
  * Dialogue for display of general messages such as success/error display. Program execution

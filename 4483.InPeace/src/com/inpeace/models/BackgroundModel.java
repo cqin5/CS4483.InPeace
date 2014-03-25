@@ -1,9 +1,9 @@
-package com.inpeace.graphics;
+package com.inpeace.models;
 
 import java.awt.image.BufferedImage;
 
-import com.inpeace.Librarian;
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.library.Librarian;
 
 /**
  * 

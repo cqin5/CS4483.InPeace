@@ -1,4 +1,4 @@
-package com.inpeace.graphics;
+package com.inpeace.models;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.inpeace.Librarian;
 import com.inpeace.actions.Action;
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.library.Librarian;
 
 /**
  * 

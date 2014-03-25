@@ -1,6 +1,10 @@
-package com.inpeace.images;
+package com.inpeace.library;
 
 import java.util.HashMap;
+
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.BufferedImageLoader;
+import com.inpeace.graphics.SpriteSheet;
 
 /**
  * 

@@ -17,8 +17,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-import com.inpeace.images.BufferedImageLoader;
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.BufferedImageLoader;
 
 /**
  * Dialogue of warning user before carrying out risky or irreversible actions, that is capable of

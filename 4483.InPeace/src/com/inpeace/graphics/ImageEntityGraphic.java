@@ -4,8 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import com.inpeace.Librarian;
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.IncompatibleObjectException;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.library.Librarian;
 
 /**
  * 

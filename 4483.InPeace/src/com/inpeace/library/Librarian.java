@@ -1,11 +1,9 @@
-package com.inpeace;
+package com.inpeace.library;
 
 import java.awt.image.BufferedImage;
 
-import com.inpeace.images.BackgroundLibrary;
-import com.inpeace.images.ResourceAccessException;
-import com.inpeace.images.SpriteLibrary;
-import com.inpeace.images.SpriteSheet;
+import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.SpriteSheet;
 
 /**
  * 

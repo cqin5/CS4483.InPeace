@@ -2,7 +2,8 @@ package com.inpeace.graphics;
 
 import java.awt.Graphics2D;
 
-import com.inpeace.images.ResourceAccessException;
+import com.inpeace.exceptions.IncompatibleObjectException;
+import com.inpeace.exceptions.ResourceAccessException;
 
 /**
  * 
