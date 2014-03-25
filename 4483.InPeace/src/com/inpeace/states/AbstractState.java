@@ -1,5 +1,13 @@
 package com.inpeace.states;
 
+import java.util.AbstractMap.SimpleEntry;
+
+import com.inpeace.engine.AudioManager;
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.GraphicsManager;
+import com.inpeace.engine.LogicManager;
+import com.inpeace.graphics.AbstractEntityGraphic;
+
 /**
  * 
  * 
@@ -20,6 +28,8 @@ public abstract class AbstractState {
 	
 	/**   */
 	private String backgroundName;
+	
+	public abstract void load(GraphicsManager graphics, AudioManager audio, LogicManager logic, DataManager data);
 	
 	/**
 	 * @return
@@ -77,6 +87,37 @@ public abstract class AbstractState {
 	
 	public String getBackgroundName() {
 		return backgroundName;
+	}
+	
+	/**
+	 * @param scrollPosition
+	 */
+	public void setScrollPosition(int scrollPosition) {
+		setModelProperty(HORIZONTAL_SCROLL_POSITION, scrollPosition);
+	}
+	
+	/**
+	 * @param name
+	 */
+	public void setBackground(String name) {
+		setModelProperty(BACKGROUND_IMAGE_NAME, name);
+	}
+	
+	/**
+	 * @param spriteCode
+	 */
+	public void setGraphic(long spriteCode, String graphicName) {
+		setModelProperty(graphicName, spriteCode);
+	}
+	
+	/**
+	 * @param entity		set to null to remove entity
+	 * @param depth
+	 * @param entityName
+	 */
+	public void setEntity(AbstractEntityGraphic entity, int depth, String entityName) {
+		setModelProperty(entityName, new SimpleEntry<Integer,
+				AbstractEntityGraphic>(depth, entity));
 	}
 	
 }

@@ -1,5 +1,8 @@
 package com.inpeace.engine;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.models.BackgroundModel;
 import com.inpeace.models.ForegroundModel;
@@ -23,7 +26,7 @@ public class GraphicsManager implements Runnable {
 	private boolean running;
 	
 	/**   */
-	private int stateID;
+	private Queue<ChangeRequest> requests;
 
 	/**
 	 * Constructs a new GraphicsManager object.
@@ -34,6 +37,7 @@ public class GraphicsManager implements Runnable {
 	public GraphicsManager() {
 		controller = new GraphicsController();
 		running = false;
+		requests = new LinkedList<ChangeRequest>();
 		initialiser();
 	}
 	
@@ -49,13 +53,6 @@ public class GraphicsManager implements Runnable {
 		controller.addView(new MainView(controller));
 	}
 
-	/**
-	 * @param newStateID
-	 */
-	public void requestStateChange(int newStateID) {
-		stateID = newStateID;
-	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
@@ -63,13 +60,10 @@ public class GraphicsManager implements Runnable {
 	public void run() {
 		running = true;
 		
-		int loopStateID = stateID;
-		
 		while (running) {
 			
-			if (loopStateID != stateID) {
-				controller.loadState(StateManager.getInstance().getCurrentState());
-				loopStateID = stateID;
+			while (!requests.isEmpty()) {
+				controller.processRequest(requests.remove());
 			}
 			
 			controller.refresh();
@@ -79,8 +73,14 @@ public class GraphicsManager implements Runnable {
 			} catch (Exception e) {
 				//NULL BODY
 			}
-		}
-		
+		}		
+	}
+	
+	/**
+	 * @param request
+	 */
+	public void makeChangeRequest(ChangeRequest request) {
+		requests.add(request);
 	}
 
 }

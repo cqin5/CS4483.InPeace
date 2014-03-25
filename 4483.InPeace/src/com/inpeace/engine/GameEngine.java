@@ -1,7 +1,7 @@
 package com.inpeace.engine;
 
 import com.inpeace.controls.ControlManager;
-import com.inpeace.states.AbstractState;
+import com.inpeace.exceptions.StateException;
 
 /**
  * 
@@ -16,19 +16,22 @@ public class GameEngine implements Runnable {
 	private boolean running;
 	
 	/**   */
-	private long lastTime, loopTime;
+	private long runTime, startTime;
 		
 	/**   */
 	private GraphicsManager graphics;
-	
+		
 	/**   */
 	private AudioManager audio;
 	
 	/**   */
-	private ControlManager controls;
+	private LogicManager logic;
 	
 	/**   */
-	private LogicManager ai;
+	private DataManager data;
+	
+	/**   */
+	private ControlManager controls;
 	
 	/**
 	 * Constructs a new GameEngine object.
@@ -36,12 +39,12 @@ public class GameEngine implements Runnable {
 	 */
 	public GameEngine() {
 		running = false;
-		lastTime = 0;
-		loopTime = 0;
+		runTime = 0;
+		startTime = 0;
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
 		controls = new ControlManager();
-		ai = new LogicManager();
+		logic = new LogicManager();
 	}
 	
 	/* (non-Javadoc)
@@ -50,16 +53,18 @@ public class GameEngine implements Runnable {
 	@Override
 	public void run() {
 		running = true;
-		lastTime = System.currentTimeMillis();
-		
+		startTime = System.currentTimeMillis();
+
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
+		
+		Thread audioThread = new Thread(audio);
+		audioThread.start();
 
 		while (running) {
-			loopTime = System.currentTimeMillis() - lastTime;
-			lastTime = System.currentTimeMillis();
+			runTime = System.currentTimeMillis() - startTime;
 			
-			ai.act(loopTime); //TODO: AI code
+			logic.act(runTime);
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);
@@ -69,6 +74,7 @@ public class GameEngine implements Runnable {
 		}
 		running = false;
 		graphicsThread.interrupt();
+		audioThread.interrupt();
 		
 	}
 	
@@ -76,15 +82,16 @@ public class GameEngine implements Runnable {
 	 * @return
 	 */
 	public long getLoopTime() {
-		return loopTime;
+		return startTime;
 	}
 	
-	/**
-	 * @param state
-	 */
-	public void changeState(AbstractState state) {
-		graphics.requestStateChange(state.getStateID());
-		audio.requestStateChange(state.getStateID());
+	public void changeState(int id) {
+		try {
+			StateManager.getInstance().loadState(graphics, audio, logic, data, id);
+		} catch (StateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

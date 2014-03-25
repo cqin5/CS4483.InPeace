@@ -16,7 +16,7 @@ import com.inpeace.library.Librarian;
  * @since   24 Mar 2014
  */
 public class ImageEntityGraphic implements AbstractEntityGraphic {
-
+	
 	/**   */
 	private long spriteCode;
 	

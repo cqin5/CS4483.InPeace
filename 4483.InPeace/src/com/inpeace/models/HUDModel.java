@@ -1,12 +1,14 @@
 package com.inpeace.models;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.graphics.AbstractEntityGraphic;
+import com.inpeace.graphics.ImageEntityGraphic;
 
 /**
  * 
@@ -51,10 +53,29 @@ public class HUDModel extends AbstractModel {
 	}
 	
 	/**
+	 * @param entity
+	 * @throws IncompatibleObjectException
+	 */
+	public void setHUDObjectEntity(SimpleEntry<Integer, ImageEntityGraphic> entity)
+			throws IncompatibleObjectException {
+		if (objects.containsKey(entity.getKey())) {
+			addObjectEntity(entity.getValue(), entity.getKey());
+		}
+		else {
+			if (entity.getValue() == null) {
+				removeObjectEntity(entity.getKey());
+			}
+			else {
+				updateObjectEntity(entity.getValue(), entity.getKey());
+			}
+		}
+	}
+	
+	/**
 	 * @param graphic
 	 * @param depth
 	 */
-	public void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
+	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		objects.put(depth, graphic);
 		fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
@@ -65,7 +86,18 @@ public class HUDModel extends AbstractModel {
 	 * @param depth
 	 * @throws IncompatibleObjectException 
 	 */
-	public void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
+	private void removeObjectEntity(int depth) {
+		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		objects.remove(depth);
+		fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
+	}
+	
+	/**
+	 * @param graphic
+	 * @param depth
+	 * @throws IncompatibleObjectException 
+	 */
+	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
 			throws IncompatibleObjectException {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		if (objects.get(depth).update(graphic)) {

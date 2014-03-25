@@ -8,7 +8,7 @@ package com.inpeace.states;
  * @version 0.0
  * @since   18 Mar 2014
  */
-public class SettingsForegroundState extends AbstractState {
+public class SettingsScreenState extends AbstractState {
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.states.AbstractState#isHistorical()
