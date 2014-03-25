@@ -1,6 +1,5 @@
 package com.inpeace.engine;
 
-import com.inpeace.states.AbstractState;
 
 /**
  * 
@@ -11,7 +10,7 @@ import com.inpeace.states.AbstractState;
  */
 public class AudioManager {
 
-	public void loadState(AbstractState state) {
+	public void requestStateChange(int newStateID) {
 		
 	}
 }

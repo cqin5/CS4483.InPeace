@@ -7,7 +7,7 @@ package com.inpeace.engine;
  * @version 0.0
  * @since   25 Mar 2014
  */
-public class AIManager {
+public class LogicManager {
 
 	public void act(long loopTime) {
 		

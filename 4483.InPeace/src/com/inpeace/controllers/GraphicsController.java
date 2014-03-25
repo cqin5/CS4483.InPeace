@@ -22,13 +22,18 @@ public class GraphicsController extends AbstractController {
 	
 	
 	public void loadState(AbstractState state) {
-		//TODO
-	}
-	
-	public void setScrollPosition(int scrollPosition) {
-		//TODO
-	}
-	
-	
+		setModelProperty(GraphicsController.HORIZONTAL_SCROLL_POSITION, state.getScrollPosition());
+		setModelProperty(GraphicsController.BACKGROUND_IMAGE_NAME, state.getBackgroundName());
+		
 
+		//TODO
+	}
+	
+	/**
+	 * @param scrollPosition
+	 */
+	public void setScrollPosition(int scrollPosition) {
+		setModelProperty(GraphicsController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
+	}
+	
 }

@@ -11,7 +11,7 @@ import com.inpeace.states.AbstractState;
  * @since   23 Mar 2014
  */
 public class GameEngine implements Runnable {
-
+	
 	/**   */
 	private boolean running;
 	
@@ -28,7 +28,7 @@ public class GameEngine implements Runnable {
 	private ControlManager controls;
 	
 	/**   */
-	private AIManager ai;
+	private LogicManager ai;
 	
 	/**
 	 * Constructs a new GameEngine object.
@@ -41,7 +41,7 @@ public class GameEngine implements Runnable {
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
 		controls = new ControlManager();
-		ai = new AIManager();
+		ai = new LogicManager();
 	}
 	
 	/* (non-Javadoc)
@@ -51,6 +51,9 @@ public class GameEngine implements Runnable {
 	public void run() {
 		running = true;
 		lastTime = System.currentTimeMillis();
+		
+		Thread graphicsThread = new Thread(graphics);
+		graphicsThread.start();
 
 		while (running) {
 			loopTime = System.currentTimeMillis() - lastTime;
@@ -58,8 +61,15 @@ public class GameEngine implements Runnable {
 			
 			ai.act(loopTime); //TODO: AI code
 
-			try { Thread.sleep(10); } catch (Exception e) {}
+			try {
+				Thread.sleep(1000 / GameProperties.FPS);
+			} catch (Exception e) {
+				//NULL BODY
+			}
 		}
+		running = false;
+		graphicsThread.interrupt();
+		
 	}
 	
 	/**
@@ -72,9 +82,9 @@ public class GameEngine implements Runnable {
 	/**
 	 * @param state
 	 */
-	public void setState(AbstractState state) {
-		graphics.loadState(state);
-		audio.loadState(state);
+	public void changeState(AbstractState state) {
+		graphics.requestStateChange(state.getStateID());
+		audio.requestStateChange(state.getStateID());
 	}
 	
 }

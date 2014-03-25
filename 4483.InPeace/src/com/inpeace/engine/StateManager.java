@@ -1,5 +1,7 @@
 package com.inpeace.engine;
 
+import com.inpeace.states.AbstractState;
+
 /**
  * 
  * 
@@ -9,4 +11,22 @@ package com.inpeace.engine;
  */
 public class StateManager {
 
+	private static StateManager instance = null;
+	
+	private AbstractState currentState;
+	
+	private StateManager() {
+		currentState = null;
+	}
+	
+	public static StateManager getInstance() {
+		if (instance == null) {
+			instance = new StateManager();
+		}
+		return instance;
+	}
+	
+	public AbstractState getCurrentState() {
+		return currentState;
+	}
 }

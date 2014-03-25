@@ -5,7 +5,6 @@ import com.inpeace.models.BackgroundModel;
 import com.inpeace.models.ForegroundModel;
 import com.inpeace.models.HUDModel;
 import com.inpeace.models.OverlayModel;
-import com.inpeace.states.AbstractState;
 import com.inpeace.views.MainView;
 
 /**
@@ -15,10 +14,16 @@ import com.inpeace.views.MainView;
  * @version 1.0
  * @since   20 Mar 2014
  */
-public class GraphicsManager {
-
+public class GraphicsManager implements Runnable {
+	
 	/**   */
 	private GraphicsController controller;
+	
+	/**   */
+	private boolean running;
+	
+	/**   */
+	private int stateID;
 
 	/**
 	 * Constructs a new GraphicsManager object.
@@ -28,6 +33,7 @@ public class GraphicsManager {
 	 */
 	public GraphicsManager() {
 		controller = new GraphicsController();
+		running = false;
 		initialiser();
 	}
 	
@@ -44,11 +50,37 @@ public class GraphicsManager {
 	}
 
 	/**
-	 * 
-	 * @param state
+	 * @param newStateID
 	 */
-	public void loadState(AbstractState state) {
-		controller.loadState(state);
+	public void requestStateChange(int newStateID) {
+		stateID = newStateID;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
+	@Override
+	public void run() {
+		running = true;
+		
+		int loopStateID = stateID;
+		
+		while (running) {
+			
+			if (loopStateID != stateID) {
+				controller.loadState(StateManager.getInstance().getCurrentState());
+				loopStateID = stateID;
+			}
+			
+			controller.refresh();
+
+			try {
+				Thread.sleep(1000 / GameProperties.FPS);
+			} catch (Exception e) {
+				//NULL BODY
+			}
+		}
+		
 	}
 
 }

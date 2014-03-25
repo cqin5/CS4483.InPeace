@@ -9,7 +9,18 @@ package com.inpeace.states;
  */
 public abstract class AbstractState {
 
+	/**   */
 	private int type; //0 = splash, 1 = menu, 2 = in game, 3 = overlay
+	
+	/**   */
+	private int stateID;
+	
+	/**   */
+	private int scrollPostion;
+	
+	/**   */
+	private String backgroundName;
+	
 	/**
 	 * @return
 	 */
@@ -37,6 +48,35 @@ public abstract class AbstractState {
 	 */
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	/**
+	 * Get the stateID
+	 *
+	 * @return the stateID
+	 */
+	public int getStateID() {
+		return stateID;
+	}
+
+	/**
+	 * Set the stateID
+	 *
+	 * @param stateID the stateID to set
+	 */
+	public void setStateID(int stateID) {
+		this.stateID = stateID;
+	}
+	
+	/**
+	 * @return
+	 */
+	public int getScrollPosition() {
+		return scrollPostion;
+	}
+	
+	public String getBackgroundName() {
+		return backgroundName;
 	}
 	
 }

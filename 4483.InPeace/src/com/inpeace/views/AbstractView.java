@@ -16,4 +16,9 @@ public interface AbstractView  {
 	 */
 	public void update(PropertyChangeEvent e);
 	
+	/**
+	 * 
+	 */
+	public void refresh();
+	
 }

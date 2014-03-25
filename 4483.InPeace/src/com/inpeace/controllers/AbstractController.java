@@ -95,5 +95,14 @@ public abstract class AbstractController implements PropertyChangeListener {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	public void refresh() {
+		for (AbstractView view: registeredViews) {
+			view.refresh();
+		}
+	}
 
 }
