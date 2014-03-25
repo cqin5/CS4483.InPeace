@@ -1,6 +1,6 @@
 package com.inpeace.actions;
 
-import com.inpeace.objects.Object;
+import com.inpeace.entities.Object;
 
 
 /**

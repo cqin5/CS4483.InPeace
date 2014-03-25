@@ -1,4 +1,4 @@
-package com.inpeace.objects;
+package com.inpeace.entities;
 
 /**
  * 

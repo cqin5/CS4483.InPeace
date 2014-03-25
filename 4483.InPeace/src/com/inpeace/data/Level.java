@@ -3,7 +3,7 @@ package com.inpeace.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.inpeace.objects.Object;
+import com.inpeace.entities.Object;
 
 /**
  * 
@@ -16,33 +16,12 @@ public class Level implements Serializable {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -7604971177826975662L;
-
-	/**   */
-	private String backgroundPath;
 	
 	/**   */
 	private ArrayList<Character> characters;
 	
 	/**   */
-	private ArrayList<Object> items;
-
-	/**
-	 * Get the backgroundPath
-	 *
-	 * @return the backgroundPath
-	 */
-	public String getBackgroundPath() {
-		return backgroundPath;
-	}
-
-	/**
-	 * Set the backgroundPath
-	 *
-	 * @param backgroundPath the backgroundPath to set
-	 */
-	public void setBackgroundPath(String backgroundPath) {
-		this.backgroundPath = backgroundPath;
-	}
+	private ArrayList<Object> objects;
 
 	/**
 	 * Get the characters
@@ -68,7 +47,7 @@ public class Level implements Serializable {
 	 * @return the items
 	 */
 	public ArrayList<Object> getItems() {
-		return items;
+		return objects;
 	}
 
 	/**
@@ -77,7 +56,7 @@ public class Level implements Serializable {
 	 * @param items the items to set
 	 */
 	public void setItems(ArrayList<Object> items) {
-		this.items = items;
+		this.objects = items;
 	}
 	
 	

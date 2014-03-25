@@ -3,6 +3,7 @@ package com.inpeace;
 import java.awt.Dimension;
 
 import com.inpeace.audio.AudioManager;
+import com.inpeace.controls.ControlManager;
 import com.inpeace.graphics.GraphicsManager;
 import com.inpeace.states.AbstractState;
 
@@ -15,19 +16,32 @@ import com.inpeace.states.AbstractState;
  */
 public class GameEngine implements Runnable {
 
+	/**   */
 	private boolean running;
 	
+	/**   */
 	private long lastTime, loopTime;
 		
+	/**   */
 	private GraphicsManager graphics;
 	
+	/**   */
 	private AudioManager audio;
 	
+	/**   */
+	private ControlManager controls;
+	
+	/**
+	 * Constructs a new GameEngine object.
+	 *
+	 */
 	public GameEngine() {
 		running = false;
 		lastTime = 0;
 		loopTime = 0;
 		graphics = new GraphicsManager("In Peace: A Ghost Story", new Dimension(900,600)); //TODO: eliminate hard coded parameters
+		audio = new AudioManager();
+		controls = new ControlManager();
 	}
 	
 	/* (non-Javadoc)
@@ -62,5 +76,5 @@ public class GameEngine implements Runnable {
 		graphics.setState(state);
 		audio.setState(state);
 	}
-
+	
 }

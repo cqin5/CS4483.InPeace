@@ -2,6 +2,8 @@ package com.inpeace.graphics;
 
 import java.awt.Graphics2D;
 
+import com.inpeace.states.AbstractState;
+
 /**
  * 
  * 
@@ -12,6 +14,12 @@ import java.awt.Graphics2D;
 public class OverlayController {
 
 	public void repaint(Graphics2D g) {
+		// TODO
+		
+	}
+	
+	public void loadState(AbstractState state) {
 		//TODO
 	}
+	
 }

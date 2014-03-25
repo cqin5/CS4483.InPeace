@@ -1,4 +1,4 @@
-package com.inpeace.objects;
+package com.inpeace.entities;
 
 import java.util.ArrayList;
 
@@ -8,28 +8,26 @@ import com.inpeace.actions.Action;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
- * @since   23 Mar 2014
+ * @version 1.0
+ * @since   18 Mar 2014
  */
-public class ButtonObject extends Object {
+public class UsableItem extends Object {
 
 	/**
-	 * Constructs a new ButtonObject object.
+	 * Constructs a new ActionableItem object.
 	 *
-	 * @param spriteCode
+	 * @param id
 	 * @param actions
 	 */
-	public ButtonObject(long spriteCode, ArrayList<Action> actions) {
-		super(spriteCode, actions);
-		// TODO Auto-generated constructor stub
+	public UsableItem(int id, ArrayList<Action> actions) {
+		super(id, actions);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.objects.Object#isCollectible()
+	 * @see com.inpeace.game.item.Item#isCollectible()
 	 */
 	@Override
 	public boolean isCollectible() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

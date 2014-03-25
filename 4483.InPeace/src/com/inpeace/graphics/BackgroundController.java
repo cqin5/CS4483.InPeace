@@ -2,6 +2,8 @@ package com.inpeace.graphics;
 
 import java.awt.Graphics2D;
 
+import com.inpeace.states.AbstractState;
+
 /**
  * 
  * 
@@ -11,13 +13,13 @@ import java.awt.Graphics2D;
  */
 public class BackgroundController extends AbstractController {
 
-	/* (non-Javadoc)
-	 * @see com.inpeace.graphics.AbstractController#repaint(java.awt.Graphics2D)
-	 */
-	@Override
 	public void repaint(Graphics2D g) {
-		// TODO Auto-generated method stub
+		// TODO
 		
+	}
+	
+	public void loadState(AbstractState state) {
+		//TODO
 	}
 
 }

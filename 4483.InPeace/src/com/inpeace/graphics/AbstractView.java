@@ -15,6 +15,6 @@ public abstract class AbstractView {
 		//TODO
 	}
 	
-	public abstract void paint();
+	public abstract void repaint();
 	
 }

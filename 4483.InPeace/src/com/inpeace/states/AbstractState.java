@@ -9,7 +9,7 @@ package com.inpeace.states;
  */
 public abstract class AbstractState {
 
-	private int type; //0 = normal, 1 = overlay, 2 = splash
+	private int type; //0 = splash, 1 = menu, 2 = in game, 3 = overlay
 	/**
 	 * @return
 	 */
