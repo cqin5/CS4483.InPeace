@@ -3,8 +3,6 @@ package com.inpeace.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.inpeace.entities.Object;
-
 /**
  * 
  * 

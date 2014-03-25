@@ -15,10 +15,7 @@ import com.inpeace.images.ResourceAccessException;
 public class BackgroundModel extends AbstractModel {
 	
 	/** The name of the background image.  */
-	private String name;
-
-	/** The background image graphic.  */
-	private BufferedImage background;
+	private String background;
 	
 	/** The horizontal position for scrollable backgrounds.  */
 	private int scrollPosition;
@@ -28,8 +25,7 @@ public class BackgroundModel extends AbstractModel {
 	 *
 	 */
 	public BackgroundModel() {
-		name = "";
-		background = null;
+		background = "";
 		scrollPosition = 0;
 	}
 
@@ -38,8 +34,8 @@ public class BackgroundModel extends AbstractModel {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
-		return name;
+	public String getBackgroundName() {
+		return background;
 	}
 
 	/**
@@ -47,13 +43,12 @@ public class BackgroundModel extends AbstractModel {
 	 *
 	 * @param name the name to set
 	 */
-	public void setBackgroundName(String name) {
-		if (this.name != name) {
-			String old = this.name;
-			this.name = name;
+	public void setBackground(String name) {
+		if (this.background != name) {
+			String old = this.background;
+			this.background = name;
 			setScrollPosition(0);
-			background = null;
-			fireChange("BackgroundName", old, name);
+			fireChange("Background", old, name);
 		}
 	}
 
@@ -64,10 +59,7 @@ public class BackgroundModel extends AbstractModel {
 	 * @throws ResourceAccessException 
 	 */
 	public BufferedImage getBackground() throws ResourceAccessException {
-		if (background == null) {
-			Librarian.getInstance().getBackground(name);
-		}
-		return background;
+		return Librarian.getInstance().getBackground(background);
 	}
 
 	/**
@@ -88,7 +80,7 @@ public class BackgroundModel extends AbstractModel {
 		if (this.scrollPosition != scrollPosition) {
 			int old = this.scrollPosition;
 			this.scrollPosition = scrollPosition;
-			fireChange("BackgroundName", old, name);
+			fireChange("ScrollPosition", old, scrollPosition);
 		}
 	}
 	
