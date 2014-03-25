@@ -2,6 +2,7 @@ package com.inpeace.models;
 
 import java.awt.image.BufferedImage;
 
+import com.inpeace.controllers.GraphicsController;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
 
@@ -15,7 +16,7 @@ import com.inpeace.library.Librarian;
 public class BackgroundModel extends AbstractModel {
 	
 	/** The name of the background image.  */
-	private String background;
+	private String backgroundName;
 	
 	/** The horizontal position for scrollable backgrounds.  */
 	private int scrollPosition;
@@ -25,7 +26,7 @@ public class BackgroundModel extends AbstractModel {
 	 *
 	 */
 	public BackgroundModel() {
-		background = "";
+		backgroundName = "";
 		scrollPosition = 0;
 	}
 
@@ -35,7 +36,7 @@ public class BackgroundModel extends AbstractModel {
 	 * @return the name
 	 */
 	public String getBackgroundName() {
-		return background;
+		return backgroundName;
 	}
 
 	/**
@@ -43,12 +44,12 @@ public class BackgroundModel extends AbstractModel {
 	 *
 	 * @param name the name to set
 	 */
-	public void setBackground(String name) {
-		if (this.background != name) {
-			String old = this.background;
-			this.background = name;
+	public void setBackgroundName(String name) {
+		if (this.backgroundName != name) {
+			String old = this.backgroundName;
+			this.backgroundName = name;
 			setScrollPosition(0);
-			fireChange("Background", old, name);
+			fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, old, name);
 		}
 	}
 
@@ -59,7 +60,7 @@ public class BackgroundModel extends AbstractModel {
 	 * @throws ResourceAccessException 
 	 */
 	public BufferedImage getBackground() throws ResourceAccessException {
-		return Librarian.getInstance().getBackground(background);
+		return Librarian.getInstance().getBackground(backgroundName);
 	}
 
 	/**
@@ -80,7 +81,7 @@ public class BackgroundModel extends AbstractModel {
 		if (this.scrollPosition != scrollPosition) {
 			int old = this.scrollPosition;
 			this.scrollPosition = scrollPosition;
-			fireChange("ScrollPosition", old, scrollPosition);
+			fireChange(GraphicsController.HORIZONTAL_SCROLL_POSITION, old, scrollPosition);
 		}
 	}
 	

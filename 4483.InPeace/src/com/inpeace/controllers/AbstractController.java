@@ -91,7 +91,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 				method.invoke(model, newValue);
 
 			} catch (Exception e) {
-				//TODO or NULL BODY???
+				//NULL BODY
 			}
 		}
 	}

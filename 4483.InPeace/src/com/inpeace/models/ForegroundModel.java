@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import com.inpeace.controllers.GraphicsController;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.graphics.AbstractEntityGraphic;
 import com.inpeace.graphics.ImageEntityGraphic;
@@ -39,7 +40,7 @@ public class ForegroundModel extends AbstractModel {
 	public void addCharacterEntity(ImageEntityGraphic graphic, int depth) {
 		Iterator<Entry<Integer, ImageEntityGraphic>> old = getCharacterIterator();
 		characters.put(depth, graphic);
-		fireChange("CharacterIterator", old, getCharacterIterator());
+		fireChange(GraphicsController.CHARACTER_ITERATOR, old, getCharacterIterator());
 	}
 	
 	/**
@@ -51,7 +52,7 @@ public class ForegroundModel extends AbstractModel {
 			throws IncompatibleObjectException {
 		Iterator<Entry<Integer, ImageEntityGraphic>> old = getCharacterIterator();
 		if (characters.get(depth).update(graphic)) {
-			fireChange("CharacterIterator", old, getCharacterIterator());
+			fireChange(GraphicsController.CHARACTER_ITERATOR, old, getCharacterIterator());
 		}
 	}
 	
@@ -69,7 +70,7 @@ public class ForegroundModel extends AbstractModel {
 	public void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		objects.put(depth, graphic);
-		fireChange("ObjectIterator", old, getObjectIterator());
+		fireChange(GraphicsController.FOREGROUND_OBJECT_ITERATOR, old, getObjectIterator());
 	}
 	
 	/**
@@ -81,7 +82,7 @@ public class ForegroundModel extends AbstractModel {
 			throws IncompatibleObjectException {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		if (objects.get(depth).update(graphic)) {
-			fireChange("ObjectIterator", old, getObjectIterator());
+			fireChange(GraphicsController.FOREGROUND_OBJECT_ITERATOR, old, getObjectIterator());
 		}
 	}
 	

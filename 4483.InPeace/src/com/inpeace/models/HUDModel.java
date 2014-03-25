@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import com.inpeace.controllers.GraphicsController;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.graphics.AbstractEntityGraphic;
 
@@ -45,7 +46,7 @@ public class HUDModel extends AbstractModel {
 		if (this.spriteCode != name) {
 			long old = this.spriteCode;
 			this.spriteCode = name;
-			fireChange("HUDSpriteCode", old, name);
+			fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, old, name);
 		}
 	}
 	
@@ -56,7 +57,7 @@ public class HUDModel extends AbstractModel {
 	public void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		objects.put(depth, graphic);
-		fireChange("ObjectIterator", old, getObjectIterator());
+		fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
 	}
 	
 	/**
@@ -68,7 +69,7 @@ public class HUDModel extends AbstractModel {
 			throws IncompatibleObjectException {
 		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
 		if (objects.get(depth).update(graphic)) {
-			fireChange("ObjectIterator", old, getObjectIterator());
+			fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
 		}
 	}
 	

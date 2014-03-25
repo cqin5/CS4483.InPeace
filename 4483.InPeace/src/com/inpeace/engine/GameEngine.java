@@ -27,6 +27,9 @@ public class GameEngine implements Runnable {
 	/**   */
 	private ControlManager controls;
 	
+	/**   */
+	private AIManager ai;
+	
 	/**
 	 * Constructs a new GameEngine object.
 	 *
@@ -38,6 +41,7 @@ public class GameEngine implements Runnable {
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
 		controls = new ControlManager();
+		ai = new AIManager();
 	}
 	
 	/* (non-Javadoc)
@@ -52,7 +56,7 @@ public class GameEngine implements Runnable {
 			loopTime = System.currentTimeMillis() - lastTime;
 			lastTime = System.currentTimeMillis();
 			
-			//TODO: type AI code
+			ai.act(loopTime); //TODO: AI code
 
 			try { Thread.sleep(10); } catch (Exception e) {}
 		}
