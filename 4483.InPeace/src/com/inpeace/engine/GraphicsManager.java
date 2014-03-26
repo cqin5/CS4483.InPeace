@@ -5,8 +5,8 @@ import java.util.Queue;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.models.DefaultGraphicsModel;
-import com.inpeace.models.HUDModel;
-import com.inpeace.models.OverlayModel;
+import com.inpeace.models.HUDGraphicsModel;
+import com.inpeace.models.OverlayGraphicsModel;
 import com.inpeace.views.DefaultView;
 
 /**
@@ -45,8 +45,8 @@ public class GraphicsManager implements Runnable {
 	 */
 	public void initialiser() {
 		controller.addModel(new DefaultGraphicsModel());
-		controller.addModel(new HUDModel());
-		controller.addModel(new OverlayModel());
+		controller.addModel(new HUDGraphicsModel());
+		controller.addModel(new OverlayGraphicsModel());
 		
 		controller.addView(new DefaultView(controller));
 	}

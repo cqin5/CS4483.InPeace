@@ -1,9 +1,6 @@
 package com.inpeace.states;
 
-import com.inpeace.engine.AudioManager;
-import com.inpeace.engine.DataManager;
-import com.inpeace.engine.GraphicsManager;
-import com.inpeace.engine.LogicManager;
+import com.inpeace.engine.GameEngine;
 
 
 /**
@@ -20,6 +17,20 @@ public class MainMenuState extends AbstractState {
 	
 	/**   */
 	private String[] buttonSpriteCodes;
+	
+	/**
+	 * Constructs a new MainMenuState object.
+	 *
+	 * @param type
+	 * @param stateID
+	 * @param historical
+	 */
+	public MainMenuState() {
+		super(0, 0, false);
+		backgroundName = "main";
+		buttonSpriteCodes[0] =  "";
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Get the buttonSpriteCodes
@@ -48,21 +59,12 @@ public class MainMenuState extends AbstractState {
 		return backgroundName;
 	}
 
-	/**
-	 * Constructs a new MainMenuState object.
-	 *
-	 */
-	public MainMenuState() {
-		backgroundName = "main";
-		buttonSpriteCodes[0] =  "";
-	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
 	 */
 	@Override
-	public void load(GraphicsManager graphics, AudioManager audio,
-			LogicManager logic, DataManager data) {
+	public void load(GameEngine engine) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -81,6 +83,15 @@ public class MainMenuState extends AbstractState {
 	 */
 	@Override
 	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#initialiseGraphicsModels()
+	 */
+	@Override
+	public void initialiseGraphicsModels() {
 		// TODO Auto-generated method stub
 		
 	}

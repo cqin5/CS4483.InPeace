@@ -62,7 +62,8 @@ public class GameEngine implements Runnable {
 */
 		//TODO:remove above test code
 
-		changeState(StateManager.UWO_SPLASH);
+		postRequest(new Request(StateManager.LOAD_STATE, StateManager.UWO_SPLASH,
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
 		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
@@ -93,34 +94,27 @@ public class GameEngine implements Runnable {
 	public long getLoopTime() {
 		return startTime;
 	}
-
-	public void changeState(int id) {
-		try {
-			states.loadState(graphics, audio, logic, data, id);
-		} catch (StateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+	/**
+	 * @param request
+	 */
+	public void postRequest(Request request) {
+		switch (request.routingCode) {
+		case Request.ROUTE_TO_GRAPHICS:
+			graphics.makeChangeRequest(request);
+			break;
+		case Request.ROUTE_TO_STATES:
+			try {
+				states.loadState(this, (Integer) request.value);
+			} catch (StateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case Request.ROUTE_TO_AUDIO:
+			audio.makeChangeRequest(request);
+			break;
 		}
-	}
-	
-	/**
-	 * @param request
-	 */
-	public void postGraphicsRequest(Request request) {
-		graphics.makeChangeRequest(request);
-	}
-	
-	/**
-	 * @param request
-	 */
-	public void postAudioRequest(Request request) {
-		audio.makeChangeRequest(request);
-	}
-
-	/**
-	 * @param request
-	 */
-	public void postLocicRequest(Request request) {
 		logic.makeChangeRequest(request);
 	}
 }

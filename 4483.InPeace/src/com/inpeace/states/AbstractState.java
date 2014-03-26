@@ -1,45 +1,50 @@
 package com.inpeace.states;
 
-import com.inpeace.engine.AudioManager;
-import com.inpeace.engine.DataManager;
-import com.inpeace.engine.GraphicsManager;
-import com.inpeace.engine.LogicManager;
+import com.inpeace.engine.GameEngine;
+import com.inpeace.models.DefaultGraphicsModel;
+import com.inpeace.models.HUDGraphicsModel;
+import com.inpeace.models.OverlayGraphicsModel;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   24 Mar 2014
  */
 public abstract class AbstractState {
 
 	/**   */
-	private int type;
+	private final int type;
 	
 	/**   */
-	private int stateID;
+	private final int stateID;
+	
+	/**   */
+	private final boolean historical;
+	
+	/**   */
+	protected final DefaultGraphicsModel defaultGraphics;
+	protected final HUDGraphicsModel hudGraphics;
+	protected final OverlayGraphicsModel overlayGraphics;
 	
 	/**
-	 * @param graphics
-	 * @param audio
-	 * @param logic
-	 * @param data
+	 * Constructs a new AbstractState object.
+	 *
+	 * @param type
+	 * @param stateID
+	 * @param historical
 	 */
-	public abstract void load(GraphicsManager graphics, AudioManager audio,
-			LogicManager logic, DataManager data);
+	public AbstractState(int type, int stateID, boolean historical) {
+		this.type = type;
+		this.stateID = stateID;
+		this.historical = historical;
+		defaultGraphics = new DefaultGraphicsModel();
+		hudGraphics = new HUDGraphicsModel();
+		overlayGraphics = new OverlayGraphicsModel();
+		initialiseGraphicsModels();
+	}
 	
-	/**
-	 * @return
-	 */
-	public abstract boolean isHistorical();
-	
-	/**
-	 * Close method, by default no action is performed on close. Subclasses must override
-	 * this method if they require actions to be performed on close.
-	 */
-	public abstract void close();
-
 	/**
 	 * Get the type
 	 *
@@ -50,15 +55,6 @@ public abstract class AbstractState {
 	}
 
 	/**
-	 * Set the type
-	 *
-	 * @param type the type to set
-	 */
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	/**
 	 * Get the stateID
 	 *
 	 * @return the stateID
@@ -66,13 +62,30 @@ public abstract class AbstractState {
 	public int getStateID() {
 		return stateID;
 	}
-
+	
 	/**
-	 * Set the stateID
-	 *
-	 * @param stateID the stateID to set
+	 * @return
 	 */
-	public void setStateID(int stateID) {
-		this.stateID = stateID;
+	public boolean isHistorical() {
+		return historical;
 	}
+	
+	/**
+	 * 
+	 */
+	public abstract void initialiseGraphicsModels();
+	
+	/**
+	 * @param graphics
+	 * @param audio
+	 * @param logic
+	 * @param data
+	 */
+	public abstract void load(GameEngine engine);
+	
+	/**
+	 * Close method, by default no action is performed on close. Subclasses must override
+	 * this method if they require actions to be performed on close.
+	 */
+	public abstract void close();
 }

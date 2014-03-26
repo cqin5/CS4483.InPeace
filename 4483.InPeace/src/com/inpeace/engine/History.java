@@ -1,8 +1,8 @@
 package com.inpeace.engine;
 
-import java.util.EmptyStackException;
 import java.util.Stack;
 
+import com.inpeace.exceptions.StateException;
 import com.inpeace.states.AbstractState;
 
 /**
@@ -37,12 +37,14 @@ public class History {
 	}
 
 	/**
-	 * @return
-	 * @throws EmptyStackException
+	 * @throws StateException
 	 */
-	public AbstractState back() throws EmptyStackException {
+	public int back() throws StateException {
+		if (history.isEmpty()) {
+			throw new StateException("State History: unable to go back, no historical views registered");
+		}
 		current = history.pop();
-		return getCurrentState();
+		return current.getStateID();
 	}
 
 	/**
@@ -55,12 +57,5 @@ public class History {
 			}
 		}
 		current = state;
-	}
-	
-	/**
-	 * @return
-	 */
-	public int size() {
-		return history.size();
 	}
 }

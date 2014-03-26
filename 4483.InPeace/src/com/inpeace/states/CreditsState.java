@@ -2,10 +2,7 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
-import com.inpeace.engine.AudioManager;
-import com.inpeace.engine.DataManager;
-import com.inpeace.engine.GraphicsManager;
-import com.inpeace.engine.LogicManager;
+import com.inpeace.engine.GameEngine;
 
 /**
  * 
@@ -15,6 +12,18 @@ import com.inpeace.engine.LogicManager;
  * @since   18 Mar 2014
  */
 public class CreditsState extends AbstractState {
+
+	/**
+	 * Constructs a new CreditsState object.
+	 *
+	 * @param type
+	 * @param stateID
+	 * @param historical
+	 */
+	public CreditsState() {
+		super(0, 0, false);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**   */
 	private String backgroundPath;
@@ -83,8 +92,7 @@ public class CreditsState extends AbstractState {
 	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
 	 */
 	@Override
-	public void load(GraphicsManager graphics, AudioManager audio,
-			LogicManager logic, DataManager data) {
+	public void load(GameEngine engine) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -103,6 +111,15 @@ public class CreditsState extends AbstractState {
 	 */
 	@Override
 	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#initialiseGraphicsModels()
+	 */
+	@Override
+	public void initialiseGraphicsModels() {
 		// TODO Auto-generated method stub
 		
 	}

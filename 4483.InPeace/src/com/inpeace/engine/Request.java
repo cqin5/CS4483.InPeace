@@ -9,12 +9,22 @@ package com.inpeace.engine;
  */
 public class Request {
 	
-	/**   */
+	/** Request type codes.  */
 	public static final int CLEAR_PROPERTY_REQUEST = 0;
 	public static final int CHANGE_PROPERTY_REQUEST = 1;
+	
+	/** Routing codes.  */
+	public static final int ROUTE_TO_GRAPHICS = 0;
+	public static final int ROUTE_TO_STATES = 1;
+	public static final int ROUTE_TO_AUDIO = 2;
+	public static final int ROUTE_TO_LOGIC = 3;
+	public static final int ROUTE_TO_DATA = 4;
 
 	/**   */
 	public final int requestType;
+	
+	/**   */
+	public final int routingCode;
 	
 	/**   */
 	public final String propertyName;
@@ -28,9 +38,10 @@ public class Request {
 	 * @param propertyName
 	 * @param value
 	 */
-	public Request(String propertyName, Object value, int requestType) {
+	public Request(String propertyName, Object value, int requestType, int routingCode) {
 		this.propertyName = propertyName;
 		this.value = value;
 		this.requestType = requestType;
+		this.routingCode = routingCode;
 	}
 }

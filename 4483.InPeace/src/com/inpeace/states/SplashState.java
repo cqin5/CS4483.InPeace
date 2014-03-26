@@ -1,10 +1,7 @@
 package com.inpeace.states;
 
 import com.inpeace.controllers.GraphicsController;
-import com.inpeace.engine.AudioManager;
-import com.inpeace.engine.DataManager;
-import com.inpeace.engine.GraphicsManager;
-import com.inpeace.engine.LogicManager;
+import com.inpeace.engine.GameEngine;
 import com.inpeace.engine.Request;
 
 
@@ -17,6 +14,18 @@ import com.inpeace.engine.Request;
  */
 public class SplashState extends AbstractState {
 	
+	/**
+	 * Constructs a new SplashState object.
+	 *
+	 * @param type
+	 * @param stateID
+	 * @param historical
+	 */
+	public SplashState() {
+		super(0, 0, false);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**   */
 	private static final String graphicName = "splash";
 
@@ -33,11 +42,10 @@ public class SplashState extends AbstractState {
 	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
 	 */
 	@Override
-	public void load(GraphicsManager graphics, AudioManager audio,
-			LogicManager logic, DataManager data) {
+	public void load(GameEngine engine) {
 		
-		graphics.makeChangeRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
-				Request.CHANGE_PROPERTY_REQUEST));
+		engine.postRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS));
 		
 		// TODO add audio and logic (ie. timer action) to load
 		
@@ -57,6 +65,15 @@ public class SplashState extends AbstractState {
 	@Override
 	public void close() {
 		//NULL BODY
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#initialiseGraphicsModels()
+	 */
+	@Override
+	public void initialiseGraphicsModels() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -22,14 +22,15 @@ import com.inpeace.states.SplashState;
  * @since   25 Mar 2014
  */
 public class StateManager {
-	
+
 	/** State type codes. */
 	public static final int SPLASH_SCREEN = 0;
 	public static final int DEFAULT_SCREEN = 1;
 	public static final int GAME_SCREEN = 2;
 	public static final int OVERLAY_SCREEN = 3;
-	
+
 	/** State id codes.  */
+	public static final int PREVIOUS_HISTORICAL_STATE = -1;
 	public static final int UWO_SPLASH = 1;
 	public static final int MAIN_MENU = 2;
 	public static final int LOAD_GAME = 3;
@@ -42,13 +43,15 @@ public class StateManager {
 	public static final int PAUSE_MENU = 10;
 	public static final int SETTINGS_OVERLAY = 11;
 	public static final int SCROLL = 12;
-		
+
+	public static final String LOAD_STATE = "loadState";
+
 	/**   */
 	private History history;
-	
+
 	/**   */
 	private int currentStateID;
-	
+
 	/**
 	 * Constructs a new StateManager object.
 	 *
@@ -57,7 +60,7 @@ public class StateManager {
 		history = new History();
 		currentStateID = 0;
 	}
-	
+
 	/**
 	 * @param graphics
 	 * @param audio
@@ -66,53 +69,60 @@ public class StateManager {
 	 * @param stateID
 	 * @throws StateException
 	 */
-	public void loadState(GraphicsManager graphics, AudioManager audio, LogicManager logic,
-			DataManager data, int stateID) throws StateException {
-		
-		if (currentStateID == stateID) {
-			throw new StateException("State change failed, already in state");
+	public void loadState(GameEngine engine, int stateID) throws StateException {
+
+		if (stateID == PREVIOUS_HISTORICAL_STATE) {
+			stateID = history.back();
+			if (currentStateID == stateID) {
+				throw new StateException("State change failed, already in state");
+			}
 		}
-		switch (stateID) {
-		case UWO_SPLASH:
-			history.registerState(new SplashState());
-			break;
-		case MAIN_MENU:
-			history.registerState(new MainMenuState());
-			break;
-		case LOAD_GAME:
-			history.registerState(new LoadGameState());
-			break;
-		case NEW_GAME:
-			history.registerState(new NewGameState());
-			break;
-		case CREDITS:
-			history.registerState(new CreditsState());
-			break;
-		case GAME_MENU:
-			history.registerState(new GameMenuState());
-			break;
-		case SETTINGS_SCREEN:
-			history.registerState(new SettingsScreenState());
-			break;
-		case COLLECTIBLES:
-			history.registerState(new CollectiblesState());
-			break;
-		case GAME_PLAY:
-			history.registerState(new GameState());
-			break;
-		case PAUSE_MENU:
-			history.registerState(new PauseMenuState());
-			break;
-		case SETTINGS_OVERLAY:
-			history.registerState(new SettingsOverlayState());
-			break;
-		case SCROLL:
-			history.registerState(new ScrollState());
-			break;
+		else {
+			if (currentStateID == stateID) {
+				throw new StateException("State change failed, already in state");
+			}
+			switch (stateID) {
+			case UWO_SPLASH:
+				history.registerState(new SplashState());
+				break;
+			case MAIN_MENU:
+				history.registerState(new MainMenuState());
+				break;
+			case LOAD_GAME:
+				history.registerState(new LoadGameState());
+				break;
+			case NEW_GAME:
+				history.registerState(new NewGameState());
+				break;
+			case CREDITS:
+				history.registerState(new CreditsState());
+				break;
+			case GAME_MENU:
+				history.registerState(new GameMenuState());
+				break;
+			case SETTINGS_SCREEN:
+				history.registerState(new SettingsScreenState());
+				break;
+			case COLLECTIBLES:
+				history.registerState(new CollectiblesState());
+				break;
+			case GAME_PLAY:
+				history.registerState(new GameState());
+				break;
+			case PAUSE_MENU:
+				history.registerState(new PauseMenuState());
+				break;
+			case SETTINGS_OVERLAY:
+				history.registerState(new SettingsOverlayState());
+				break;
+			case SCROLL:
+				history.registerState(new ScrollState());
+				break;
+			}
 		}
 		currentStateID = stateID;
-		
-		history.getCurrentState().load(graphics, audio, logic, data);
+
+		history.getCurrentState().load(engine);
 	}
-	
+
 }
