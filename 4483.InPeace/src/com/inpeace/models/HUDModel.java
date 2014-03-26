@@ -1,7 +1,6 @@
 package com.inpeace.models;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
@@ -56,7 +55,7 @@ public class HUDModel extends AbstractModel {
 	 */
 	public void setHUDObjectEntity(AbstractEntityGraphic entity)
 			throws IncompatibleObjectException {
-		if (objects.containsKey(entity.getDepth())) {
+		if (!objects.containsKey(entity.getDepth())) {
 			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
@@ -74,9 +73,11 @@ public class HUDModel extends AbstractModel {
 	 * @param depth
 	 */
 	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
+		fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
+				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
 	
 	/**
@@ -85,9 +86,11 @@ public class HUDModel extends AbstractModel {
 	 * @throws IncompatibleObjectException 
 	 */
 	private void removeObjectEntity(int depth) {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.remove(depth);
-		fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
+		fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
+				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
 	
 	/**
@@ -97,17 +100,12 @@ public class HUDModel extends AbstractModel {
 	 */
 	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
 			throws IncompatibleObjectException {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.HUD_OBJECT_ITERATOR, old, getObjectIterator());
+			fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
+					new ArrayList<AbstractEntityGraphic>(objects.values()));
 		}
-	}
-	
-	/**
-	 * @return
-	 */
-	public Iterator<Entry<Integer, AbstractEntityGraphic>> getObjectIterator() {
-		return objects.entrySet().iterator();
 	}
 	
 }

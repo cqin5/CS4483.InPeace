@@ -43,14 +43,10 @@ public class SpriteSheet {
 	public BufferedImage getSprite(String spriteCode) {
 		String[] chuncks = spriteCode.split("-");
 		int x = Integer.parseInt(chuncks[1]);
-		System.out.print(x + "\n");
 		int y = Integer.parseInt(chuncks[2]);
-		System.out.print(y + "\n");
 		int width = Integer.parseInt(chuncks[3]);
-		System.out.print(width + "\n");
 		int height = Integer.parseInt(chuncks[4]);
-		System.out.print(height + "\n");
-
+		
 		return getSprite((int) x, y, width, height);
 	}
 }

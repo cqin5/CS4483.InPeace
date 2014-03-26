@@ -7,8 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +15,7 @@ import javax.swing.JPanel;
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.ChangeRequest;
 import com.inpeace.engine.GameProperties;
+import com.inpeace.engine.StateManager;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.AbstractEntityGraphic;
 import com.inpeace.library.Librarian;
@@ -35,7 +35,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	/**   */
 	private BufferStrategy buffer;
 	
-	/** Type of state (0 = splash, 1 = menu, 2 = in game, 3 = overlay)  */
+	/**   */
 	private int stateType = 0;
 	
 	/**   */
@@ -63,7 +63,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	
 	/**   */
-	private Iterator<Entry<Integer, AbstractEntityGraphic>> foregroundObjectIterator = null;
+	ArrayList<AbstractEntityGraphic> foregroundObjects= null;
 	
 	
 	/*
@@ -74,7 +74,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage hudGraphic = null;
 	
 	/**   */
-	private Iterator<Entry<Integer, AbstractEntityGraphic>> hudObjectIterator = null;
+	ArrayList<AbstractEntityGraphic> hudObjects = null;
 	
 	
 	/*
@@ -85,7 +85,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage overlayGraphic = null;
 	
 	/**   */
-	private Iterator<Entry<Integer, AbstractEntityGraphic>> overlayObjectIterator = null;
+	ArrayList<AbstractEntityGraphic> overlayObjects = null;
 	
 	
 	/**
@@ -129,14 +129,13 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		try {
 			repaintBackground(g);
-			if (stateType > 0) {
+			if (stateType > StateManager.SPLASH_SCREEN) {
 				repaintForeground(g);
-
 			}
-			if (stateType > 1) {
+			if (stateType == StateManager.GAME_SCREEN) {
 				repaintHUD(g);
 			}
-			if (stateType > 2) {
+			if (stateType == StateManager.OVERLAY_SCREEN) {
 				repaintOverlay(g);
 			}
 		} catch (ResourceAccessException e) {
@@ -164,9 +163,9 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	private void repaintForeground(Graphics2D g) throws ResourceAccessException {				
 		
-		if (foregroundObjectIterator != null) {
-			while (foregroundObjectIterator.hasNext()) {
-				foregroundObjectIterator.next().getValue().paint(g, scrollPosition);
+		if (foregroundObjects != null) {
+			for (AbstractEntityGraphic object: foregroundObjects) {
+				object.paint(g, scrollPosition);
 			}
 		}
 	}
@@ -181,9 +180,9 @@ public class DefaultView extends Canvas implements AbstractView {
 			g.drawImage(hudGraphic, 0, 0, null);
 		}
 		
-		if (hudObjectIterator != null) {
-			while (hudObjectIterator.hasNext()) {
-				hudObjectIterator.next().getValue().paint(g, scrollPosition);
+		if (hudObjects != null) {
+			for (AbstractEntityGraphic object: hudObjects) {
+				object.paint(g, scrollPosition);
 			}
 		}
 		
@@ -205,9 +204,9 @@ public class DefaultView extends Canvas implements AbstractView {
 			g.drawImage(overlayGraphic, x, y, null);
 		}
 		
-		if (overlayObjectIterator != null) {
-			while (overlayObjectIterator.hasNext()) {
-				overlayObjectIterator.next().getValue().paint(g, scrollPosition);
+		if (overlayObjects != null) {
+			for (AbstractEntityGraphic object: hudObjects) {
+				object.paint(g, scrollPosition);
 			}
 		}
 
@@ -224,17 +223,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			stateType = (Integer) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HORIZONTAL_SCROLL_POSITION)) {
-			int position = (Integer) e.getNewValue();
-			
-			if ((background.getWidth() - position) < GameProperties.DEFAULT_WIDTH) {
-				position = background.getWidth() - GameProperties.DEFAULT_WIDTH;
-				if (scrollPosition != position) {
-					controller.processRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, position));
-				}
-			}
-			else if (scrollPosition != position) {
-				scrollPosition = position;
-			}
+			scrollPosition = (Integer) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.BACKGROUND_IMAGE_NAME)) {
 			try {
@@ -245,8 +234,8 @@ public class DefaultView extends Canvas implements AbstractView {
 			}
 		}
 
-		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECT_ITERATOR)) {
-			foregroundObjectIterator = (Iterator<Entry<Integer, AbstractEntityGraphic>>) e.getNewValue();
+		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECT_LIST)) {
+			foregroundObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HUD_GRAPHIC_SPRITE_CODE)) {
 			try {
@@ -256,8 +245,8 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECT_ITERATOR)) {
-			hudObjectIterator = (Iterator<Entry<Integer, AbstractEntityGraphic>>) e.getNewValue();
+		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECT_LIST)) {
+			hudObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
 			try {
@@ -267,8 +256,8 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECT_ITERATOR)) {
-			overlayObjectIterator = (Iterator<Entry<Integer, AbstractEntityGraphic>>) e.getNewValue();
+		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECT_LIST)) {
+			overlayObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 	}
 

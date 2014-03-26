@@ -1,11 +1,14 @@
 package com.inpeace.engine;
 
 import java.awt.Point;
+import java.lang.reflect.Method;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.controls.ControlManager;
 import com.inpeace.exceptions.StateException;
+import com.inpeace.graphics.AbstractEntityGraphic;
 import com.inpeace.graphics.ImageEntityGraphic;
+import com.inpeace.models.DefaultGraphicsModel;
 
 /**
  * 
@@ -61,11 +64,16 @@ public class GameEngine implements Runnable {
 
 		
 		//TODO:remove following test code
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, 100));
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, 0));
 		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.BACKGROUND_IMAGE_NAME, "splash"));
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.STATE_TYPE, 1));
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.STATE_TYPE, StateManager.DEFAULT_SCREEN));
 		String code = "1-0-0-128-128";
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, new ImageEntityGraphic(1, code, new Point(0,0))));
+		ImageEntityGraphic entity = new ImageEntityGraphic(1, code, new Point(0,0));
+		
+		//graphics.makeChangeRequest(new ChangeRequest(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, code));
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity));
+		
+		//TODO:remove above test code
 		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();

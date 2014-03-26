@@ -68,7 +68,6 @@ public abstract class AbstractController implements PropertyChangeListener {
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent e) {
-
 		for (AbstractView view: registeredViews) {
 			view.update(e);
 		}
@@ -86,7 +85,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 		for (AbstractModel model: registeredModels) {
 			try {
 				Method methods[] = model.getClass().getMethods();
-				String methodName = "set"+request.propertyName;
+				String methodName = "set" + request.propertyName;
 				for (Method method: methods) {
 					if (!method.getName().equals(methodName)) {
 						continue;
@@ -95,7 +94,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 					if (paramTypes.length != 1) {
 						continue;
 					}
-					else if (!paramTypes[0].isAssignableFrom(request.value.getClass())) {
+					else if (!paramTypes[0].isAssignableFrom((request.value).getClass())) {
 						continue;
 					}
 					method.invoke(model, request.value);
@@ -107,6 +106,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 			}
 		}
 	}
+	
 	
 	/**
 	 * 

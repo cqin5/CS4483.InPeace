@@ -1,7 +1,6 @@
 package com.inpeace.models;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
@@ -17,7 +16,7 @@ import com.inpeace.graphics.AbstractEntityGraphic;
  */
 public class DefaultGraphicsModel extends AbstractModel {
 	
-	/** Type of state (0 = splash, 1 = menu, 2 = in game, 3 = overlay)  */
+	/** Type of state  */
 	private int stateType;
 	
 	/** The name of the background image.  */
@@ -71,7 +70,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 *
 	 * @return the scrollPosition
 	 */
-	public int getScrollPosition() {
+	public int getHorizontalScrollPosition() {
 		return scrollPosition;
 	}
 
@@ -80,7 +79,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 *
 	 * @param scrollPosition the scrollPosition to set
 	 */
-	public void setScrollPosition(int scrollPosition) {
+	public void setHorizontalScrollPosition(Integer scrollPosition) {
 		if (this.scrollPosition != scrollPosition) {
 			int old = this.scrollPosition;
 			this.scrollPosition = scrollPosition;
@@ -94,7 +93,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 */
 	public void setForegroundObjectEntity(AbstractEntityGraphic entity)
 			throws IncompatibleObjectException {
-		if (objects.containsKey(entity.getDepth())) {
+		if (!objects.containsKey(entity.getDepth())) {
 			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
@@ -112,9 +111,11 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * @param depth
 	 */
 	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.FOREGROUND_OBJECT_ITERATOR, old, getObjectIterator());
+		fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
+				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
 	
 	/**
@@ -123,9 +124,11 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * @throws IncompatibleObjectException 
 	 */
 	private void removeObjectEntity(int depth) {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.remove(depth);
-		fireChange(GraphicsController.FOREGROUND_OBJECT_ITERATOR, old, getObjectIterator());
+		fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
+				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
 	
 	/**
@@ -135,17 +138,12 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 */
 	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
 			throws IncompatibleObjectException {
-		Iterator<Entry<Integer, AbstractEntityGraphic>> old = getObjectIterator();
+		ArrayList<AbstractEntityGraphic> old = 
+				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.FOREGROUND_OBJECT_ITERATOR, old, getObjectIterator());
+			fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
+					new ArrayList<AbstractEntityGraphic>(objects.values()));
 		}
-	}
-	
-	/**
-	 * @return
-	 */
-	public Iterator<Entry<Integer, AbstractEntityGraphic>> getObjectIterator() {
-		return objects.entrySet().iterator();
 	}
 	
 }
