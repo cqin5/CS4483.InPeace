@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
-import com.inpeace.engine.ChangeRequest;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.engine.StateManager;
 import com.inpeace.exceptions.ResourceAccessException;
@@ -42,9 +41,6 @@ public class DefaultView extends Canvas implements AbstractView {
 	//TODO: determine what to do about window size
 	private static final Dimension size = new Dimension(GameProperties.DEFAULT_WIDTH,
 			GameProperties.DEFAULT_HEIGHT);
-
-	/**   */
-	private final GraphicsController controller;
 	
 	
 	/*
@@ -94,7 +90,6 @@ public class DefaultView extends Canvas implements AbstractView {
 	 * @param controller
 	 */
 	public DefaultView(GraphicsController controller) {
-		this.controller = controller;
 		initialiser();
 	}
 	

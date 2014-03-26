@@ -20,7 +20,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 	/**   */
 	private ArrayList<AbstractView> registeredViews;
-	
+
 	/**   */
 	private ArrayList<AbstractModel> registeredModels;
 
@@ -106,8 +106,8 @@ public abstract class AbstractController implements PropertyChangeListener {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * 
 	 */
