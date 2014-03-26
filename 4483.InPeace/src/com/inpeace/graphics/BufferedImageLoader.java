@@ -16,9 +16,6 @@ import com.inpeace.exceptions.ResourceAccessException;
  */
 public final class BufferedImageLoader {
 	
-	/** Base path to images for current project.  */
-	private static final String imageBasePath = "/com/inpeace/images/";
-	
 	/**
 	 * @param relativePath				the relative path from the image base directory.
 	 * @return							the loaded buffered image.
@@ -28,7 +25,7 @@ public final class BufferedImageLoader {
 	public static BufferedImage loadImage(String relativePath) throws ResourceAccessException {
 		BufferedImage img;
 		try {
-			img = ImageIO.read(BufferedImageLoader.class.getResource(imageBasePath + relativePath));
+			img = ImageIO.read(BufferedImageLoader.class.getResource(relativePath));
 		} catch (IOException e) {
 			throw new ResourceAccessException("Opps! It appears we were "
 					+ "unable to load the image: " + relativePath + " (BufferedImageLoader");

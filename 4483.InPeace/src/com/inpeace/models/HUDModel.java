@@ -1,6 +1,5 @@
 package com.inpeace.models;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -8,7 +7,6 @@ import java.util.TreeMap;
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.graphics.AbstractEntityGraphic;
-import com.inpeace.graphics.ImageEntityGraphic;
 
 /**
  * 
@@ -20,7 +18,7 @@ import com.inpeace.graphics.ImageEntityGraphic;
 public class HUDModel extends AbstractModel {
 	
 	/**   */
-	private long spriteCode;
+	private String spriteCode;
 	
 	/**   */
 	private TreeMap<Integer, AbstractEntityGraphic> objects;
@@ -30,25 +28,25 @@ public class HUDModel extends AbstractModel {
 	 *
 	 */
 	public HUDModel() {
-		spriteCode = 0;
+		spriteCode = "";
 		objects = new TreeMap<Integer, AbstractEntityGraphic>();
 	}
 	
 	/**
 	 * @return
 	 */
-	public long getOverlaySpriteCode() {
+	public String getHUDSpriteCode() {
 		return spriteCode;
 	}
 
 	/**
-	 * @param name
+	 * @param spriteCode
 	 */
-	public void setBackground(long name) {
-		if (this.spriteCode != name) {
-			long old = this.spriteCode;
-			this.spriteCode = name;
-			fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, old, name);
+	public void setHUDSpriteCode(String spriteCode) {
+		if (this.spriteCode != spriteCode) {
+			String old = this.spriteCode;
+			this.spriteCode = spriteCode;
+			fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, old, spriteCode);
 		}
 	}
 	
@@ -56,18 +54,18 @@ public class HUDModel extends AbstractModel {
 	 * @param entity
 	 * @throws IncompatibleObjectException
 	 */
-	public void setHUDObjectEntity(SimpleEntry<Integer, ImageEntityGraphic> entity)
+	public void setHUDObjectEntity(AbstractEntityGraphic entity)
 			throws IncompatibleObjectException {
-		if (objects.containsKey(entity.getKey())) {
-			addObjectEntity(entity.getValue(), entity.getKey());
+		if (objects.containsKey(entity.getDepth())) {
+			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
-			if (entity.getValue() == null) {
-				removeObjectEntity(entity.getKey());
+			if (entity.getDepth() < 0) {
+				removeObjectEntity(-(entity.getDepth()));
 			}
 			else {
-				updateObjectEntity(entity.getValue(), entity.getKey());
-			}
+				updateObjectEntity(entity, entity.getDepth());
+			}		
 		}
 	}
 	

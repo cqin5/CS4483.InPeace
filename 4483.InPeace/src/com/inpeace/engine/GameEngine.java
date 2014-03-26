@@ -1,7 +1,11 @@
 package com.inpeace.engine;
 
+import java.awt.Point;
+
+import com.inpeace.controllers.GraphicsController;
 import com.inpeace.controls.ControlManager;
 import com.inpeace.exceptions.StateException;
+import com.inpeace.graphics.ImageEntityGraphic;
 
 /**
  * 
@@ -55,15 +59,23 @@ public class GameEngine implements Runnable {
 		running = true;
 		startTime = System.currentTimeMillis();
 
+		
+		//TODO:remove following test code
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, 100));
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.BACKGROUND_IMAGE_NAME, "splash"));
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.STATE_TYPE, 1));
+		String code = "1-0-0-128-128";
+		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, new ImageEntityGraphic(1, code, new Point(0,0))));
+		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
 		
-		Thread audioThread = new Thread(audio);
-		audioThread.start();
+		//Thread audioThread = new Thread(audio);
+		//audioThread.start();
 
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
-			
+						
 			logic.act(runTime);
 
 			try {
@@ -74,7 +86,7 @@ public class GameEngine implements Runnable {
 		}
 		running = false;
 		graphicsThread.interrupt();
-		audioThread.interrupt();
+		//audioThread.interrupt();
 		
 	}
 	

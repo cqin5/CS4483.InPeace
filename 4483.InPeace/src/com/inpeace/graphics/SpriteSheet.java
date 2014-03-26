@@ -40,16 +40,17 @@ public class SpriteSheet {
 	 * @param spriteCode
 	 * @return
 	 */
-	public BufferedImage getSprite(long spriteCode) {
-		spriteCode /= 1000;
-		int x = (int) spriteCode % 1000;
-		spriteCode /= 1000;
-		int y = (int) spriteCode % 1000;
-		spriteCode /= 1000;
-		int width = (int) spriteCode % 1000;
-		spriteCode /= 1000;
-		int height = (int) spriteCode;
-		
-		return getSprite(x, y, width, height);
+	public BufferedImage getSprite(String spriteCode) {
+		String[] chuncks = spriteCode.split("-");
+		int x = Integer.parseInt(chuncks[1]);
+		System.out.print(x + "\n");
+		int y = Integer.parseInt(chuncks[2]);
+		System.out.print(y + "\n");
+		int width = Integer.parseInt(chuncks[3]);
+		System.out.print(width + "\n");
+		int height = Integer.parseInt(chuncks[4]);
+		System.out.print(height + "\n");
+
+		return getSprite((int) x, y, width, height);
 	}
 }

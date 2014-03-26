@@ -85,10 +85,22 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 		for (AbstractModel model: registeredModels) {
 			try {
-				Method method = model.getClass().getMethod("set"+request.propertyName, new Class[] {
-						request.value.getClass()
-				});
-				method.invoke(model, request.value);
+				Method methods[] = model.getClass().getMethods();
+				String methodName = "set"+request.propertyName;
+				for (Method method: methods) {
+					if (!method.getName().equals(methodName)) {
+						continue;
+					}
+					Class<?>[] paramTypes = method.getParameterTypes();
+					if (paramTypes.length != 1) {
+						continue;
+					}
+					else if (!paramTypes[0].isAssignableFrom(request.value.getClass())) {
+						continue;
+					}
+					method.invoke(model, request.value);
+					break;
+				}
 
 			} catch (Exception e) {
 				//NULL BODY

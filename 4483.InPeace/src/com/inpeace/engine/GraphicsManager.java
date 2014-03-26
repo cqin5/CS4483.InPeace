@@ -4,11 +4,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.inpeace.controllers.GraphicsController;
-import com.inpeace.models.BackgroundModel;
-import com.inpeace.models.ForegroundModel;
+import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDModel;
 import com.inpeace.models.OverlayModel;
-import com.inpeace.views.MainView;
+import com.inpeace.views.DefaultView;
 
 /**
  * 
@@ -45,12 +44,11 @@ public class GraphicsManager implements Runnable {
 	 * 
 	 */
 	public void initialiser() {
-		controller.addModel(new BackgroundModel());
-		controller.addModel(new ForegroundModel());
+		controller.addModel(new DefaultGraphicsModel());
 		controller.addModel(new HUDModel());
 		controller.addModel(new OverlayModel());
 		
-		controller.addView(new MainView(controller));
+		controller.addView(new DefaultView(controller));
 	}
 
 	/* (non-Javadoc)

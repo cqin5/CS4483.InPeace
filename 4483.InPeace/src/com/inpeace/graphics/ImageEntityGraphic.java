@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import com.inpeace.engine.GameProperties;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
@@ -15,10 +16,10 @@ import com.inpeace.library.Librarian;
  * @version 1.0
  * @since   24 Mar 2014
  */
-public class ImageEntityGraphic implements AbstractEntityGraphic {
+public class ImageEntityGraphic extends AbstractEntityGraphic {
 	
 	/**   */
-	private long spriteCode;
+	private String spriteCode;
 	
 	/**   */
 	private BufferedImage image;
@@ -26,7 +27,8 @@ public class ImageEntityGraphic implements AbstractEntityGraphic {
 	/**   */
 	private Point position;
 	
-	public ImageEntityGraphic(long spriteCode, Point position) {
+	public ImageEntityGraphic(int depth, String spriteCode, Point position) {
+		super(depth);
 		this.spriteCode = spriteCode;
 		this.position = position;
 		this.image = null;
@@ -37,7 +39,7 @@ public class ImageEntityGraphic implements AbstractEntityGraphic {
 	 *
 	 * @return the sprite code
 	 */
-	public long getSpriteCode() {
+	public String getSpriteCode() {
 		return spriteCode;
 	}
 
@@ -50,11 +52,10 @@ public class ImageEntityGraphic implements AbstractEntityGraphic {
 		return position;
 	}
 
-	/**
-	 * @param graphic
-	 * @return
-	 * @throws IncompatibleObjectException 
+	/* (non-Javadoc)
+	 * @see com.inpeace.graphics.AbstractEntityGraphic#update(com.inpeace.graphics.AbstractEntityGraphic)
 	 */
+	@Override
 	public boolean update(AbstractEntityGraphic graphic) throws IncompatibleObjectException {
 		if (graphic.getClass() != ImageEntityGraphic.class) {
 			throw new IncompatibleObjectException("ImageEntityGraphic: unable to update,"
@@ -72,15 +73,18 @@ public class ImageEntityGraphic implements AbstractEntityGraphic {
 		return change;
 	}
 	
-	/**
-	 * @param g
-	 * @throws ResourceAccessException
+	/* (non-Javadoc)
+	 * @see com.inpeace.graphics.AbstractEntityGraphic#paint(java.awt.Graphics2D)
 	 */
-	public void paint(Graphics2D g) throws ResourceAccessException {
+	@Override
+	public void paint(Graphics2D g, int scrollPosition) throws ResourceAccessException {
 		if (image == null) {
 			image = Librarian.getInstance().getSprite(spriteCode);
 		}
-		g.drawImage(image , position.x, position.y, null);
+		int x = position.x - scrollPosition;
+		if (x < GameProperties.DEFAULT_WIDTH) {
+			g.drawImage(image , x, position.y, null);
+		}
 	}
 	
 }

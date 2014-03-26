@@ -14,20 +14,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
+import com.inpeace.engine.ChangeRequest;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.AbstractEntityGraphic;
-import com.inpeace.graphics.ImageEntityGraphic;
 import com.inpeace.library.Librarian;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   25 Mar 2014
  */
-public class MainView extends Canvas implements AbstractView {
+public class DefaultView extends Canvas implements AbstractView {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -1745144542387224115L;
@@ -36,7 +36,7 @@ public class MainView extends Canvas implements AbstractView {
 	private BufferStrategy buffer;
 	
 	/** Type of state (0 = splash, 1 = menu, 2 = in game, 3 = overlay)  */
-	private int stateType;
+	private int stateType = 0;
 	
 	/**   */
 	//TODO: determine what to do about window size
@@ -61,9 +61,6 @@ public class MainView extends Canvas implements AbstractView {
 	/*
 	 * Foreground variables.
 	 */
-	
-	/**   */
-	private Iterator<Entry<Integer, ImageEntityGraphic>> characterIterator = null;
 	
 	/**   */
 	private Iterator<Entry<Integer, AbstractEntityGraphic>> foregroundObjectIterator = null;
@@ -96,7 +93,7 @@ public class MainView extends Canvas implements AbstractView {
 	 *
 	 * @param controller
 	 */
-	public MainView(GraphicsController controller) {
+	public DefaultView(GraphicsController controller) {
 		this.controller = controller;
 		initialiser();
 	}
@@ -111,6 +108,7 @@ public class MainView extends Canvas implements AbstractView {
 		panel.setLayout(null);
 
 		setBounds(0, 0, size.width, size.height);
+		setBackground(Color.BLACK);
 		setIgnoreRepaint(true);
 		panel.add(this);
 
@@ -128,7 +126,6 @@ public class MainView extends Canvas implements AbstractView {
 	@Override
 	public void repaint() {
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
-		g.setColor(Color.black);
 		
 		try {
 			repaintBackground(g);
@@ -155,9 +152,10 @@ public class MainView extends Canvas implements AbstractView {
 	 * @param g
 	 */
 	private void repaintBackground(Graphics2D g) {
-		
-		g.drawImage(background.getSubimage(scrollPosition, GameProperties.DEFAULT_VERTICAL_ALIGNMENT,
-				GameProperties.DEFAULT_WIDTH, GameProperties.DEFAULT_HEIGHT), 0, 0, null);
+		if (background != null) {
+			g.drawImage(background.getSubimage(scrollPosition, 0, GameProperties.DEFAULT_WIDTH,
+					GameProperties.DEFAULT_HEIGHT), 0, 0, null);
+		}
 	}
 
 	/**
@@ -166,12 +164,10 @@ public class MainView extends Canvas implements AbstractView {
 	 */
 	private void repaintForeground(Graphics2D g) throws ResourceAccessException {				
 		
-		while (foregroundObjectIterator.hasNext()) {
-			foregroundObjectIterator.next().getValue().paint(g);
-		}
-		
-		while (characterIterator.hasNext()) {
-			characterIterator.next().getValue().paint(g);
+		if (foregroundObjectIterator != null) {
+			while (foregroundObjectIterator.hasNext()) {
+				foregroundObjectIterator.next().getValue().paint(g, scrollPosition);
+			}
 		}
 	}
 
@@ -181,11 +177,16 @@ public class MainView extends Canvas implements AbstractView {
 	 */
 	private void repaintHUD(Graphics2D g) throws ResourceAccessException {
 
-		g.drawImage(hudGraphic, 0, 0, null);
-		
-		while (hudObjectIterator.hasNext()) {
-			hudObjectIterator.next().getValue().paint(g);
+		if (hudGraphic != null) {
+			g.drawImage(hudGraphic, 0, 0, null);
 		}
+		
+		if (hudObjectIterator != null) {
+			while (hudObjectIterator.hasNext()) {
+				hudObjectIterator.next().getValue().paint(g, scrollPosition);
+			}
+		}
+		
 	}
 
 	/**
@@ -198,12 +199,16 @@ public class MainView extends Canvas implements AbstractView {
 		g.setPaint(new Color(0, 0, 0, 0.75f));
 		g.fillRect(0, 0, GameProperties.DEFAULT_WIDTH, GameProperties.DEFAULT_HEIGHT);
 		
-		int x = (GameProperties.DEFAULT_WIDTH / 2) - (overlayGraphic.getWidth() / 2);
-		int y = (GameProperties.DEFAULT_HEIGHT / 2) - (overlayGraphic.getHeight() / 2);
-		g.drawImage(overlayGraphic, x, y, null);
+		if (overlayGraphic != null) {
+			int x = (GameProperties.DEFAULT_WIDTH / 2) - (overlayGraphic.getWidth() / 2);
+			int y = (GameProperties.DEFAULT_HEIGHT / 2) - (overlayGraphic.getHeight() / 2);
+			g.drawImage(overlayGraphic, x, y, null);
+		}
 		
-		while (overlayObjectIterator.hasNext()) {
-			overlayObjectIterator.next().getValue().paint(g);
+		if (overlayObjectIterator != null) {
+			while (overlayObjectIterator.hasNext()) {
+				overlayObjectIterator.next().getValue().paint(g, scrollPosition);
+			}
 		}
 
 	}
@@ -215,38 +220,37 @@ public class MainView extends Canvas implements AbstractView {
 	@Override
 	public void update(PropertyChangeEvent e) {
 		
-		if (e.getPropertyName().equals(GraphicsController.HORIZONTAL_SCROLL_POSITION)) {
+		if (e.getPropertyName().equals(GraphicsController.STATE_TYPE)) {
+			stateType = (Integer) e.getNewValue();
+		}
+		else if (e.getPropertyName().equals(GraphicsController.HORIZONTAL_SCROLL_POSITION)) {
 			int position = (Integer) e.getNewValue();
 			
 			if ((background.getWidth() - position) < GameProperties.DEFAULT_WIDTH) {
 				position = background.getWidth() - GameProperties.DEFAULT_WIDTH;
 				if (scrollPosition != position) {
-					controller.setScrollPosition(position);
+					controller.processRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, position));
 				}
 			}
 			else if (scrollPosition != position) {
 				scrollPosition = position;
-				repaint();
 			}
 		}
 		else if (e.getPropertyName().equals(GraphicsController.BACKGROUND_IMAGE_NAME)) {
 			try {
 				background = Librarian.getInstance().getBackground(e.getNewValue().toString());
-				repaint();
 			} catch (ResourceAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.CHARACTER_ITERATOR)) {
-			characterIterator = (Iterator<Entry<Integer, ImageEntityGraphic>>) e.getNewValue();
-		}
+
 		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECT_ITERATOR)) {
 			foregroundObjectIterator = (Iterator<Entry<Integer, AbstractEntityGraphic>>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HUD_GRAPHIC_SPRITE_CODE)) {
 			try {
-				hudGraphic = Librarian.getInstance().getSprite((Long) e.getNewValue());
+				hudGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
 			} catch (ResourceAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -257,7 +261,7 @@ public class MainView extends Canvas implements AbstractView {
 		}
 		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
 			try {
-				overlayGraphic = Librarian.getInstance().getSprite((Long) e.getNewValue());
+				overlayGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
 			} catch (ResourceAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

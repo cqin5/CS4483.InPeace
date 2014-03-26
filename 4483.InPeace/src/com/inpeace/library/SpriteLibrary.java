@@ -31,16 +31,16 @@ public class SpriteLibrary {
 
 	/**
 	 * 
-	 * @param sheetCode
+	 * @param sheetNum
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSheet(int sheetCode) throws ResourceAccessException {
+	public SpriteSheet getSheet(int sheetNum) throws ResourceAccessException {
 		SpriteSheet sheet = null;
-		sheet = library.get(sheetCode);
+		sheet = library.get(sheetNum);
 		if (sheet == null) {
-			add(sheetCode);
-			return getSheet(sheetCode);
+			add(sheetNum);
+			return getSheet(sheetNum);
 		}
 		return sheet;
 	}
@@ -51,18 +51,19 @@ public class SpriteLibrary {
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSheet(long spriteCode) throws ResourceAccessException {
-		return getSheet(spriteCode % 1000);
+	public SpriteSheet getSheet(String spriteCode) throws ResourceAccessException {
+		String[] chunks = spriteCode.split("-");
+		return getSheet(Integer.parseInt(chunks[0]));
 	}
 	
 	/**
 	 * 
-	 * @param sheetCode
+	 * @param sheetNum
 	 * @throws ResourceAccessException
 	 */
-	private void add(int sheetCode) throws ResourceAccessException {
-		library.put(sheetCode, new SpriteSheet(BufferedImageLoader.loadImage(
-				spritePath + sheetCode + ".png")));
+	private void add(int sheetNum) throws ResourceAccessException {
+		library.put(sheetNum, new SpriteSheet(BufferedImageLoader.loadImage(
+				spritePath + sheetNum + ".png")));
 	}
 	
 }

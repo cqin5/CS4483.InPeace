@@ -47,17 +47,17 @@ public class Librarian {
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSpriteSheet(long spriteCode) throws ResourceAccessException {
+	public SpriteSheet getSpriteSheet(String spriteCode) throws ResourceAccessException {
 		return sprites.getSheet(spriteCode);
 	}
 	
 	/**
-	 * @param sheetCode
+	 * @param sheetNum
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSpriteSheet(int sheetCode) throws ResourceAccessException {
-		return sprites.getSheet(sheetCode);
+	public SpriteSheet getSpriteSheet(int sheetNum) throws ResourceAccessException {
+		return sprites.getSheet(sheetNum);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Librarian {
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public BufferedImage getSprite(long spriteCode) throws ResourceAccessException {
+	public BufferedImage getSprite(String spriteCode) throws ResourceAccessException {
 		return getSpriteSheet(spriteCode).getSprite(spriteCode);
 	}
 	

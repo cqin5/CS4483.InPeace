@@ -10,10 +10,9 @@ package com.inpeace.controllers;
  */
 public class GraphicsController extends AbstractController {
 	
+	public static final String STATE_TYPE = "StateType";
 	public static final String HORIZONTAL_SCROLL_POSITION = "ScrollPosition";
 	public static final String BACKGROUND_IMAGE_NAME = "BackgroundName";
-	public static final String CHARACTER_ITERATOR = "CharacterIterator";
-	public static final String CHARACTER_ENTITY = "CharacterEntity";
 	public static final String FOREGROUND_OBJECT_ITERATOR = "ForegroundObjectIterator";
 	public static final String FOREGROUND_OBJECT_ENTITY = "ForegroundObjectEntity";
 	public static final String HUD_GRAPHIC_SPRITE_CODE = "HUDSpriteCode";
