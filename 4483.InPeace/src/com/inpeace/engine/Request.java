@@ -12,6 +12,8 @@ public class Request {
 	/** Request type codes.  */
 	public static final int CLEAR_PROPERTY_REQUEST = 0;
 	public static final int CHANGE_PROPERTY_REQUEST = 1;
+	public static final int REGISTRATION_REQUEST = 2;
+	public static final int DEREGISTRATION_REQUEST = 3;
 	
 	/** Routing codes.  */
 	public static final int ROUTE_TO_GRAPHICS = 0;

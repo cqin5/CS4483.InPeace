@@ -17,6 +17,9 @@ import com.inpeace.views.AbstractView;
  * @since   24 Mar 2014
  */
 public abstract class AbstractController implements PropertyChangeListener {
+	
+	public static final String MODEL = "Model";
+	public static final String VIEW = "View";
 
 	/**   */
 	private ArrayList<AbstractView> registeredViews;
@@ -39,6 +42,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 	public void addModel(AbstractModel model) {
 		registeredModels.add(model);
 		model.addListener(this);
+		model.fireAll();
 	}
 
 	/**
@@ -78,6 +82,33 @@ public abstract class AbstractController implements PropertyChangeListener {
 	 */
 	public void processRequest(Request request) {
 
+		if (request.requestType == Request.CHANGE_PROPERTY_REQUEST ||
+				request.requestType == Request.CLEAR_PROPERTY_REQUEST) {
+			processPropertyRequest(request);
+		}
+		else if (request.requestType == Request.REGISTRATION_REQUEST) {
+			if (request.propertyName.equals(MODEL)) {
+				addModel((AbstractModel) request.value);
+			}
+			else if (request.propertyName.equals(VIEW)) {
+				addView((AbstractView) request.value);
+			}
+		}
+		else if (request.requestType == Request.DEREGISTRATION_REQUEST) {
+			if (request.propertyName.equals(MODEL)) {
+				removeModel((AbstractModel) request.value);
+			}
+			else if (request.propertyName.equals(VIEW)) {
+				removeView((AbstractView) request.value);
+			}
+		}
+
+	}
+	
+	/**
+	 * @param request
+	 */
+	private void processPropertyRequest(Request request) {
 		try {
 			String methodName = "";
 			if (request.requestType == Request.CHANGE_PROPERTY_REQUEST) {
@@ -111,7 +142,6 @@ public abstract class AbstractController implements PropertyChangeListener {
 			//NULL BODY
 		}
 	}
-
 
 	/**
 	 * 
