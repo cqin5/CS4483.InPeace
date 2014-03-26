@@ -64,6 +64,13 @@ public class DefaultGraphicsModel extends AbstractModel {
 			fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, old, backgroundName);
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	public void clearBackgroundName() {
+		setBackgroundName("");
+	}
 
 	/**
 	 * Get the scrollPosition
@@ -88,6 +95,13 @@ public class DefaultGraphicsModel extends AbstractModel {
 	}
 	
 	/**
+	 * 
+	 */
+	public void clearHorizontalScrollPosition() {
+		setHorizontalScrollPosition(0);
+	}
+
+	/**
 	 * @param entity
 	 * @throws IncompatibleObjectException
 	 */
@@ -97,15 +111,23 @@ public class DefaultGraphicsModel extends AbstractModel {
 			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
-			if (entity.getDepth() < 0) {
-				removeObjectEntity(-(entity.getDepth()));
-			}
-			else {
-				updateObjectEntity(entity, entity.getDepth());
-			}		
+			updateObjectEntity(entity, entity.getDepth());		
 		}
 	}
 	
+	/**
+	 * @param depth
+	 */
+	public void clearForegroundObjectEntity(Integer depth) {
+		if (objects.containsKey(depth)) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.remove(depth);
+			fireChange(GraphicsController.FOREGROUND_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>(objects.values()));
+		}
+	}
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -114,23 +136,10 @@ public class DefaultGraphicsModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
+		fireChange(GraphicsController.FOREGROUND_OBJECTS, old, 
 				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
-	
-	/**
-	 * @param graphic
-	 * @param depth
-	 * @throws IncompatibleObjectException 
-	 */
-	private void removeObjectEntity(int depth) {
-		ArrayList<AbstractEntityGraphic> old = 
-				new ArrayList<AbstractEntityGraphic>(objects.values());
-		objects.remove(depth);
-		fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
-				new ArrayList<AbstractEntityGraphic>(objects.values()));
-	}
-	
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -141,8 +150,21 @@ public class DefaultGraphicsModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.FOREGROUND_OBJECT_LIST, old, 
+			fireChange(GraphicsController.FOREGROUND_OBJECTS, old, 
 					new ArrayList<AbstractEntityGraphic>(objects.values()));
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void clearForegroundObjects() {
+		if (objects != null) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.clear();
+			fireChange(GraphicsController.FOREGROUND_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>());
 		}
 	}
 	

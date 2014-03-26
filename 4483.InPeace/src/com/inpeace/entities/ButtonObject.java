@@ -19,7 +19,7 @@ public class ButtonObject extends Object {
 	 * @param spriteCode
 	 * @param actions
 	 */
-	public ButtonObject(long spriteCode, ArrayList<Action> actions) {
+	public ButtonObject(String spriteCode, ArrayList<Action> actions) {
 		super(spriteCode, actions);
 		// TODO Auto-generated constructor stub
 	}

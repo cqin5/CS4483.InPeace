@@ -1,5 +1,12 @@
 package com.inpeace.states;
 
+import com.inpeace.controllers.GraphicsController;
+import com.inpeace.engine.AudioManager;
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.GraphicsManager;
+import com.inpeace.engine.LogicManager;
+import com.inpeace.engine.Request;
+
 
 /**
  * 
@@ -10,14 +17,34 @@ package com.inpeace.states;
  */
 public class SplashState extends AbstractState {
 	
-	/** Seconds to display the splash  */
-	private int duration;
-	
 	/**   */
-	private String graphicPath;
+	private static final String graphicName = "splash";
+
+	/**
+	 * Get the graphicName
+	 *
+	 * @return the graphicName
+	 */
+	public String getGraphicName() {
+		return graphicName;
+	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.gui.general.GUIDelegate#isHistorical()
+	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
+	 */
+	@Override
+	public void load(GraphicsManager graphics, AudioManager audio,
+			LogicManager logic, DataManager data) {
+		
+		graphics.makeChangeRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
+				Request.CHANGE_PROPERTY_REQUEST));
+		
+		// TODO add audio and logic (ie. timer action) to load
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#isHistorical()
 	 */
 	@Override
 	public boolean isHistorical() {
@@ -25,49 +52,12 @@ public class SplashState extends AbstractState {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.gui.general.GUIDelegate#close()
+	 * @see com.inpeace.states.AbstractState#close()
 	 */
 	@Override
 	public void close() {
 		//NULL BODY
-		//No action to be performed
 		
-	}
-
-	/**
-	 * Get the duration
-	 *
-	 * @return the duration
-	 */
-	public int getDuration() {
-		return duration;
-	}
-
-	/**
-	 * Set the duration
-	 *
-	 * @param duration the duration to set
-	 */
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	/**
-	 * Get the graphicPath
-	 *
-	 * @return the graphicPath
-	 */
-	public String getGraphicPath() {
-		return graphicPath;
-	}
-
-	/**
-	 * Set the graphicPath
-	 *
-	 * @param graphicPath the graphicPath to set
-	 */
-	public void setGraphicPath(String graphicPath) {
-		this.graphicPath = graphicPath;
 	}
 
 }

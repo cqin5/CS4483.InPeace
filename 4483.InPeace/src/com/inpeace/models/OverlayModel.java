@@ -18,10 +18,10 @@ public class OverlayModel extends AbstractModel {
 
 	/**   */
 	private String spriteCode;
-	
+
 	/**   */
 	private TreeMap<Integer, AbstractEntityGraphic> objects;
-	
+
 	/**
 	 * Constructs a new OverlayModel object.
 	 *
@@ -30,7 +30,7 @@ public class OverlayModel extends AbstractModel {
 		spriteCode = "";
 		objects = new TreeMap<Integer, AbstractEntityGraphic>();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -48,7 +48,14 @@ public class OverlayModel extends AbstractModel {
 			fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, old, spriteCode);
 		}
 	}
-	
+
+	/**
+	 * 
+	 */
+	public void clearOverlaySpriteCode() {
+		setOverlaySpriteCode("");
+	}
+
 	/**
 	 * @param entity
 	 * @throws IncompatibleObjectException
@@ -59,15 +66,23 @@ public class OverlayModel extends AbstractModel {
 			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
-			if (entity.getDepth() < 0) {
-				removeObjectEntity(-(entity.getDepth()));
-			}
-			else {
-				updateObjectEntity(entity, entity.getDepth());
-			}		
+			updateObjectEntity(entity, entity.getDepth());		
 		}
 	}
 	
+	/**
+	 * @param depth
+	 */
+	public void clearOverlayObjectEntity(Integer depth) {
+		if (objects.containsKey(depth)) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.remove(depth);
+			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>(objects.values()));
+		}
+	}
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -76,23 +91,10 @@ public class OverlayModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.OVERLAY_OBJECT_LIST, old, 
+		fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
 				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
-	
-	/**
-	 * @param graphic
-	 * @param depth
-	 * @throws IncompatibleObjectException 
-	 */
-	private void removeObjectEntity(int depth) {
-		ArrayList<AbstractEntityGraphic> old = 
-				new ArrayList<AbstractEntityGraphic>(objects.values());
-		objects.remove(depth);
-		fireChange(GraphicsController.OVERLAY_OBJECT_LIST, old, 
-				new ArrayList<AbstractEntityGraphic>(objects.values()));
-	}
-	
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -103,10 +105,23 @@ public class OverlayModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.OVERLAY_OBJECT_LIST, old, 
+			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
 					new ArrayList<AbstractEntityGraphic>(objects.values()));
 		}
 	}
-	
+
+	/**
+	 * 
+	 */
+	public void clearOverlayObjects() {
+		if (objects != null) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.clear();
+			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>());
+		}
+	}
+
 }
 

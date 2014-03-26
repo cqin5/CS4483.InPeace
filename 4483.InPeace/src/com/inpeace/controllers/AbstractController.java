@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import com.inpeace.engine.ChangeRequest;
+import com.inpeace.engine.Request;
 import com.inpeace.models.AbstractModel;
 import com.inpeace.views.AbstractView;
 
@@ -74,18 +74,24 @@ public abstract class AbstractController implements PropertyChangeListener {
 	}
 
 	/**
-	 * Dispatches property change to all registered models with a method named "set" + propertyName,
-	 * where the property name is that which is passed as a parameter and must match the propertyName
-	 * in the method exactly.
-	 * 
 	 * @param request
 	 */
-	public void processRequest(ChangeRequest request) {
+	public void processRequest(Request request) {
 
-		for (AbstractModel model: registeredModels) {
-			try {
+		try {
+			String methodName = "";
+			if (request.requestType == Request.CHANGE_PROPERTY_REQUEST) {
+				methodName =  "set" + request.propertyName;
+			}
+			else if (request.requestType == Request.CLEAR_PROPERTY_REQUEST) {
+				methodName =  "clear" + request.propertyName;
+			}
+			else {
+				throw new Exception();
+			}
+
+			for (AbstractModel model: registeredModels) {
 				Method methods[] = model.getClass().getMethods();
-				String methodName = "set" + request.propertyName;
 				for (Method method: methods) {
 					if (!method.getName().equals(methodName)) {
 						continue;
@@ -100,10 +106,9 @@ public abstract class AbstractController implements PropertyChangeListener {
 					method.invoke(model, request.value);
 					break;
 				}
-
-			} catch (Exception e) {
-				//NULL BODY
 			}
+		} catch (Exception e) {
+			//NULL BODY
 		}
 	}
 

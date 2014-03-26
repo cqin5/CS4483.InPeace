@@ -229,7 +229,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			}
 		}
 
-		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECT_LIST)) {
+		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECTS)) {
 			foregroundObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HUD_GRAPHIC_SPRITE_CODE)) {
@@ -240,7 +240,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECT_LIST)) {
+		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECTS)) {
 			hudObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
@@ -251,7 +251,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECT_LIST)) {
+		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECTS)) {
 			overlayObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
 		}
 	}

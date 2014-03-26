@@ -1,7 +1,6 @@
 package com.inpeace.engine;
 
 import com.inpeace.exceptions.StateException;
-import com.inpeace.states.AbstractState;
 import com.inpeace.states.CollectiblesState;
 import com.inpeace.states.CreditsState;
 import com.inpeace.states.GameMenuState;
@@ -19,7 +18,7 @@ import com.inpeace.states.SplashState;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   25 Mar 2014
  */
 public class StateManager {
@@ -43,32 +42,20 @@ public class StateManager {
 	public static final int PAUSE_MENU = 10;
 	public static final int SETTINGS_OVERLAY = 11;
 	public static final int SCROLL = 12;
-
+		
 	/**   */
-	private static StateManager instance = null;
+	private History history;
 	
 	/**   */
-	private AbstractState state;
-	
-	/**   */
-	private int currentState;
+	private int currentStateID;
 	
 	/**
 	 * Constructs a new StateManager object.
 	 *
 	 */
-	private StateManager() {
-		currentState = 0;
-	}
-	
-	/**
-	 * @return
-	 */
-	public static StateManager getInstance() {
-		if (instance == null) {
-			instance = new StateManager();
-		}
-		return instance;
+	public StateManager() {
+		history = new History();
+		currentStateID = 0;
 	}
 	
 	/**
@@ -82,50 +69,50 @@ public class StateManager {
 	public void loadState(GraphicsManager graphics, AudioManager audio, LogicManager logic,
 			DataManager data, int stateID) throws StateException {
 		
-		if (currentState == stateID) {
+		if (currentStateID == stateID) {
 			throw new StateException("State change failed, already in state");
 		}
 		switch (stateID) {
 		case UWO_SPLASH:
-			state = new SplashState();
+			history.registerState(new SplashState());
 			break;
 		case MAIN_MENU:
-			state = new MainMenuState();
+			history.registerState(new MainMenuState());
 			break;
 		case LOAD_GAME:
-			state = new LoadGameState();
+			history.registerState(new LoadGameState());
 			break;
 		case NEW_GAME:
-			state = new NewGameState();
+			history.registerState(new NewGameState());
 			break;
 		case CREDITS:
-			state = new CreditsState();
+			history.registerState(new CreditsState());
 			break;
 		case GAME_MENU:
-			state = new GameMenuState();
+			history.registerState(new GameMenuState());
 			break;
 		case SETTINGS_SCREEN:
-			state = new SettingsScreenState();
+			history.registerState(new SettingsScreenState());
 			break;
 		case COLLECTIBLES:
-			state = new CollectiblesState();
+			history.registerState(new CollectiblesState());
 			break;
 		case GAME_PLAY:
-			state = new GameState();
+			history.registerState(new GameState());
 			break;
 		case PAUSE_MENU:
-			state = new PauseMenuState();
+			history.registerState(new PauseMenuState());
 			break;
 		case SETTINGS_OVERLAY:
-			state = new SettingsOverlayState();
+			history.registerState(new SettingsOverlayState());
 			break;
 		case SCROLL:
-			state = new ScrollState();
+			history.registerState(new ScrollState());
 			break;
 		}
-		currentState = stateID;
+		currentStateID = stateID;
 		
-		state.load(graphics, audio, logic, data);
+		history.getCurrentState().load(graphics, audio, logic, data);
 	}
 	
 }

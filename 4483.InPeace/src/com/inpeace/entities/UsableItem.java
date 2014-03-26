@@ -19,7 +19,7 @@ public class UsableItem extends Object {
 	 * @param id
 	 * @param actions
 	 */
-	public UsableItem(int id, ArrayList<Action> actions) {
+	public UsableItem(String id, ArrayList<Action> actions) {
 		super(id, actions);
 	}
 

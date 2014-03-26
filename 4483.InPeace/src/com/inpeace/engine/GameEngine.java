@@ -1,11 +1,6 @@
 package com.inpeace.engine;
 
-import java.awt.Point;
-
-import com.inpeace.controllers.GraphicsController;
-import com.inpeace.controls.ControlManager;
 import com.inpeace.exceptions.StateException;
-import com.inpeace.graphics.ImageEntityGraphic;
 
 /**
  * 
@@ -24,17 +19,10 @@ public class GameEngine implements Runnable {
 
 	/**   */
 	private GraphicsManager graphics;
-
-	/**   */
 	private AudioManager audio;
-
-	/**   */
 	private LogicManager logic;
-
-	/**   */
 	private DataManager data;
-
-	/**   */
+	private StateManager states;
 	private ControlManager controls;
 
 	/**
@@ -47,8 +35,10 @@ public class GameEngine implements Runnable {
 		startTime = 0;
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
-		controls = new ControlManager();
-		logic = new LogicManager();
+		logic = new LogicManager(this);
+		data = new DataManager();
+		states = new StateManager();
+		controls = new ControlManager(this);
 	}
 
 	/* (non-Javadoc)
@@ -61,17 +51,19 @@ public class GameEngine implements Runnable {
 
 
 		//TODO:remove following test code
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, 0));
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.BACKGROUND_IMAGE_NAME, "splash"));
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.STATE_TYPE, StateManager.DEFAULT_SCREEN));
+		/*graphics.makeChangeRequest(new Request(GraphicsController.HORIZONTAL_SCROLL_POSITION, 0, Request.CHANGE_PROPERTY_REQUEST));
+		graphics.makeChangeRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, "splash", Request.CHANGE_PROPERTY_REQUEST));
+		graphics.makeChangeRequest(new Request(GraphicsController.STATE_TYPE, StateManager.OVERLAY_SCREEN, Request.CHANGE_PROPERTY_REQUEST));
 		String code = "1-0-0-128-128";
 		ImageEntityGraphic entity = new ImageEntityGraphic(1, code, new Point(0,0));
 
-		//graphics.makeChangeRequest(new ChangeRequest(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, code));
-		graphics.makeChangeRequest(new ChangeRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity));
-
+		graphics.makeChangeRequest(new Request(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, code, Request.CHANGE_PROPERTY_REQUEST));
+		graphics.makeChangeRequest(new Request(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, Request.CHANGE_PROPERTY_REQUEST));
+*/
 		//TODO:remove above test code
 
+		changeState(StateManager.UWO_SPLASH);
+		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
 
@@ -104,11 +96,31 @@ public class GameEngine implements Runnable {
 
 	public void changeState(int id) {
 		try {
-			StateManager.getInstance().loadState(graphics, audio, logic, data, id);
+			states.loadState(graphics, audio, logic, data, id);
 		} catch (StateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @param request
+	 */
+	public void postGraphicsRequest(Request request) {
+		graphics.makeChangeRequest(request);
+	}
+	
+	/**
+	 * @param request
+	 */
+	public void postAudioRequest(Request request) {
+		audio.makeChangeRequest(request);
+	}
 
+	/**
+	 * @param request
+	 */
+	public void postLocicRequest(Request request) {
+		logic.makeChangeRequest(request);
+	}
 }

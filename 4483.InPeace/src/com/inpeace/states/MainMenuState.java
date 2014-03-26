@@ -1,5 +1,10 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.AudioManager;
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.GraphicsManager;
+import com.inpeace.engine.LogicManager;
+
 
 /**
  * 
@@ -14,14 +19,14 @@ public class MainMenuState extends AbstractState {
 	private final String backgroundName;
 	
 	/**   */
-	private Long[] buttonSpriteCodes;
+	private String[] buttonSpriteCodes;
 
 	/**
 	 * Get the buttonSpriteCodes
 	 *
 	 * @return the buttonSpriteCodes
 	 */
-	public Long[] getButtonSpriteCodes() {
+	public String[] getButtonSpriteCodes() {
 		return buttonSpriteCodes;
 	}
 
@@ -30,7 +35,7 @@ public class MainMenuState extends AbstractState {
 	 *
 	 * @param buttonSpriteCodes the buttonSpriteCodes to set
 	 */
-	public void setButtonSpriteCodes(Long[] buttonSpriteCodes) {
+	public void setButtonSpriteCodes(String[] buttonSpriteCodes) {
 		this.buttonSpriteCodes = buttonSpriteCodes;
 	}
 
@@ -49,11 +54,21 @@ public class MainMenuState extends AbstractState {
 	 */
 	public MainMenuState() {
 		backgroundName = "main";
-		buttonSpriteCodes[0] = (long) 1;
+		buttonSpriteCodes[0] =  "";
 	}
-	
+
 	/* (non-Javadoc)
-	 * @see com.inpeace.gui.general.GUIDelegate#isHistorical()
+	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
+	 */
+	@Override
+	public void load(GraphicsManager graphics, AudioManager audio,
+			LogicManager logic, DataManager data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#isHistorical()
 	 */
 	@Override
 	public boolean isHistorical() {
@@ -62,7 +77,7 @@ public class MainMenuState extends AbstractState {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.gui.general.GUIDelegate#close()
+	 * @see com.inpeace.states.AbstractState#close()
 	 */
 	@Override
 	public void close() {

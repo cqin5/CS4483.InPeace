@@ -1,5 +1,10 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.AudioManager;
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.GraphicsManager;
+import com.inpeace.engine.LogicManager;
+
 
 /**
  * 
@@ -9,6 +14,16 @@ package com.inpeace.states;
  * @since   18 Mar 2014
  */
 public class PauseMenuState extends AbstractState {
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
+	 */
+	@Override
+	public void load(GraphicsManager graphics, AudioManager audio,
+			LogicManager logic, DataManager data) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.states.AbstractState#isHistorical()

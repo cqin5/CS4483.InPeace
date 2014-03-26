@@ -1,4 +1,4 @@
-package com.inpeace.controls;
+package com.inpeace.engine;
 
 /**
  * 
@@ -9,4 +9,7 @@ package com.inpeace.controls;
  */
 public class ControlManager {
 
+	public ControlManager(GameEngine engine) {
+		
+	}
 }

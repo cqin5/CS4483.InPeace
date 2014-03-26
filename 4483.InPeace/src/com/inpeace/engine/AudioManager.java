@@ -10,8 +10,8 @@ package com.inpeace.engine;
  */
 public class AudioManager implements Runnable {
 
-	public void requestStateChange(int newStateID) {
-		
+	public void makeChangeRequest(Request request) {
+		//TODO
 	}
 
 	/* (non-Javadoc)

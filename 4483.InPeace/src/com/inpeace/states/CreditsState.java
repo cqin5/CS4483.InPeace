@@ -2,6 +2,11 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
+import com.inpeace.engine.AudioManager;
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.GraphicsManager;
+import com.inpeace.engine.LogicManager;
+
 /**
  * 
  * 
@@ -11,6 +16,15 @@ import java.util.ArrayList;
  */
 public class CreditsState extends AbstractState {
 
+	/**   */
+	private String backgroundPath;
+	
+	/**   */
+	private int speed;
+	
+	/**   */
+	private ArrayList<String> credits;
+	
 	/**
 	 * Get the backgroundPath
 	 *
@@ -65,14 +79,15 @@ public class CreditsState extends AbstractState {
 		this.credits = credits;
 	}
 
-	/**   */
-	private String backgroundPath;
-	
-	/**   */
-	private int speed;
-	
-	/**   */
-	private ArrayList<String> credits;
+	/* (non-Javadoc)
+	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
+	 */
+	@Override
+	public void load(GraphicsManager graphics, AudioManager audio,
+			LogicManager logic, DataManager data) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.states.AbstractState#isHistorical()

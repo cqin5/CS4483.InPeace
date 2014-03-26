@@ -18,7 +18,7 @@ public class CollectibleItem extends Object {
 	 * Constructs a new CollectibleItem object.
 	 *
 	 */
-	public CollectibleItem(int id) {
+	public CollectibleItem(String id) {
 		super(id, new ArrayList<Action>());
 		actions.add(new CollectAction(this));
 	}

@@ -25,7 +25,7 @@ public class GraphicsManager implements Runnable {
 	private boolean running;
 	
 	/**   */
-	private Queue<ChangeRequest> requests;
+	private Queue<Request> requests;
 
 	/**
 	 * Constructs a new GraphicsManager object.
@@ -36,7 +36,7 @@ public class GraphicsManager implements Runnable {
 	public GraphicsManager() {
 		controller = new GraphicsController();
 		running = false;
-		requests = new LinkedList<ChangeRequest>();
+		requests = new LinkedList<Request>();
 		initialiser();
 	}
 	
@@ -77,7 +77,7 @@ public class GraphicsManager implements Runnable {
 	/**
 	 * @param request
 	 */
-	public void makeChangeRequest(ChangeRequest request) {
+	public void makeChangeRequest(Request request) {
 		requests.add(request);
 	}
 

@@ -32,7 +32,7 @@ public class History {
 	/**
 	 * @return
 	 */
-	public AbstractState getCurrentScreen() {
+	public AbstractState getCurrentState() {
 		return current;
 	}
 
@@ -42,19 +42,19 @@ public class History {
 	 */
 	public AbstractState back() throws EmptyStackException {
 		current = history.pop();
-		return getCurrentScreen();
+		return getCurrentState();
 	}
 
 	/**
 	 * @param screen
 	 */
-	public void registerView(AbstractState screen) {
+	public void registerState(AbstractState state) {
 		if (current != null) {
 			if (current.isHistorical()) {
 				history.push(current);
 			}
 		}
-		current = screen;
+		current = state;
 	}
 	
 	/**

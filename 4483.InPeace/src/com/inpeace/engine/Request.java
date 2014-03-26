@@ -7,8 +7,15 @@ package com.inpeace.engine;
  * @version 1.0
  * @since   25 Mar 2014
  */
-public class ChangeRequest {
+public class Request {
+	
+	/**   */
+	public static final int CLEAR_PROPERTY_REQUEST = 0;
+	public static final int CHANGE_PROPERTY_REQUEST = 1;
 
+	/**   */
+	public final int requestType;
+	
 	/**   */
 	public final String propertyName;
 	
@@ -21,8 +28,9 @@ public class ChangeRequest {
 	 * @param propertyName
 	 * @param value
 	 */
-	public ChangeRequest(String propertyName, Object value) {
+	public Request(String propertyName, Object value, int requestType) {
 		this.propertyName = propertyName;
 		this.value = value;
+		this.requestType = requestType;
 	}
 }

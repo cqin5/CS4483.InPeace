@@ -48,7 +48,14 @@ public class HUDModel extends AbstractModel {
 			fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, old, spriteCode);
 		}
 	}
-	
+
+	/**
+	 * 
+	 */
+	public void clearHUDSpriteCode() {
+		setHUDSpriteCode("");
+	}
+
 	/**
 	 * @param entity
 	 * @throws IncompatibleObjectException
@@ -59,15 +66,23 @@ public class HUDModel extends AbstractModel {
 			addObjectEntity(entity, entity.getDepth());
 		}
 		else {
-			if (entity.getDepth() < 0) {
-				removeObjectEntity(-(entity.getDepth()));
-			}
-			else {
-				updateObjectEntity(entity, entity.getDepth());
-			}		
+			updateObjectEntity(entity, entity.getDepth());		
 		}
 	}
 	
+	/**
+	 * @param depth
+	 */
+	public void clearHUDObjectEntity(Integer depth) {
+		if (objects.containsKey(depth)) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.remove(depth);
+			fireChange(GraphicsController.HUD_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>(objects.values()));
+		}
+	}
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -76,23 +91,10 @@ public class HUDModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
+		fireChange(GraphicsController.HUD_OBJECTS, old, 
 				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
-	
-	/**
-	 * @param graphic
-	 * @param depth
-	 * @throws IncompatibleObjectException 
-	 */
-	private void removeObjectEntity(int depth) {
-		ArrayList<AbstractEntityGraphic> old = 
-				new ArrayList<AbstractEntityGraphic>(objects.values());
-		objects.remove(depth);
-		fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
-				new ArrayList<AbstractEntityGraphic>(objects.values()));
-	}
-	
+
 	/**
 	 * @param graphic
 	 * @param depth
@@ -103,8 +105,21 @@ public class HUDModel extends AbstractModel {
 		ArrayList<AbstractEntityGraphic> old = 
 				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.HUD_OBJECT_LIST, old, 
+			fireChange(GraphicsController.HUD_OBJECTS, old, 
 					new ArrayList<AbstractEntityGraphic>(objects.values()));
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void clearHUDObjects() {
+		if (objects != null) {
+			ArrayList<AbstractEntityGraphic> old = 
+					new ArrayList<AbstractEntityGraphic>(objects.values());
+			objects.clear();
+			fireChange(GraphicsController.HUD_OBJECTS, old, 
+					new ArrayList<AbstractEntityGraphic>());
 		}
 	}
 	

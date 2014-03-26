@@ -21,17 +21,17 @@ public abstract class Object {
 	/**
 	 * Unique code identifying sprite location for the normal graphic of the item.
 	 * 
-	 * Broken into chunks of 4 digits each, from right to left:
+	 * Broken into chunks separated by '-', the chunks are (from left to right):
 	 * 		Sheet code = the code for the sheet on which the sprite is found
 	 * 		x = horizontal position on sheet for top left corner
 	 * 		y = vertical position on sheet for top left corner
 	 * 		width = sprite box width
 	 * 		height = sprite box height
 	 * 
-	 * NB:	the glowing graphic has to be directly below the normal one on the same
+	 * NB:	the glowing versions of each graphic should be directly below the normal one on the same
 	 * 		sprite sheet
 	 */
-	private long spriteCode;
+	private String spriteCode;
 
 	/**   */
 	private BufferedImage dormant = null;
@@ -48,7 +48,7 @@ public abstract class Object {
 	 * @param id
 	 * @param actions
 	 */
-	public Object(long spriteCode, ArrayList<Action> actions) {
+	public Object(String spriteCode, ArrayList<Action> actions) {
 		this.spriteCode = spriteCode;
 		this.actions.addAll(actions);
 	}
@@ -58,7 +58,7 @@ public abstract class Object {
 	 *
 	 * @return the sprite code
 	 */
-	public long getSpriteCode() {
+	public String getSpriteCode() {
 		return spriteCode;
 	}
 	
@@ -100,8 +100,7 @@ public abstract class Object {
 	 */
 	private BufferedImage getActive() throws ResourceAccessException {
 		if (active == null) {
-			active = Librarian.getInstance().getSprite(spriteCode +
-					((spriteCode / 1000000000000L) * 1000000));
+			//TODO: determine what to do about different images
 		}
 		return active;
 	}
