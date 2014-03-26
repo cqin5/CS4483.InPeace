@@ -40,11 +40,15 @@ public abstract class AbstractModel {
  
     /**
      * @param propertyName
-     * @param oldValue
      * @param newValue
      */
-    protected void fireChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+    protected void fireChange(String propertyName, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName, null, newValue);
     }
+    
+    /**
+     * 
+     */
+    public abstract void fireAll();
     
 }

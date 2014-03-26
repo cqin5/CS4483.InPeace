@@ -43,9 +43,8 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	public void setOverlaySpriteCode(String spriteCode) {
 		if (this.spriteCode != spriteCode) {
-			String old = this.spriteCode;
 			this.spriteCode = spriteCode;
-			fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, old, spriteCode);
+			fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
 		}
 	}
 
@@ -75,10 +74,8 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	public void clearOverlayObjectEntity(Integer depth) {
 		if (objects.containsKey(depth)) {
-			ArrayList<AbstractEntityGraphic> old = 
-					new ArrayList<AbstractEntityGraphic>(objects.values());
 			objects.remove(depth);
-			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+			fireChange(GraphicsController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntityGraphic>(objects.values()));
 		}
 	}
@@ -88,10 +85,8 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 * @param depth
 	 */
 	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
-		ArrayList<AbstractEntityGraphic> old = 
-				new ArrayList<AbstractEntityGraphic>(objects.values());
 		objects.put(depth, graphic);
-		fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+		fireChange(GraphicsController.OVERLAY_OBJECTS, 
 				new ArrayList<AbstractEntityGraphic>(objects.values()));
 	}
 
@@ -102,10 +97,8 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
 			throws IncompatibleObjectException {
-		ArrayList<AbstractEntityGraphic> old = 
-				new ArrayList<AbstractEntityGraphic>(objects.values());
 		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+			fireChange(GraphicsController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntityGraphic>(objects.values()));
 		}
 	}
@@ -115,12 +108,20 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	public void clearOverlayObjects() {
 		if (objects != null) {
-			ArrayList<AbstractEntityGraphic> old = 
-					new ArrayList<AbstractEntityGraphic>(objects.values());
 			objects.clear();
-			fireChange(GraphicsController.OVERLAY_OBJECTS, old, 
+			fireChange(GraphicsController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntityGraphic>());
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.models.AbstractModel#fireAll()
+	 */
+	@Override
+	public void fireAll() {
+		fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
+		fireChange(GraphicsController.OVERLAY_OBJECTS, 
+				new ArrayList<AbstractEntityGraphic>());
 	}
 
 }
