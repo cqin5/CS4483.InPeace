@@ -35,7 +35,7 @@ public class GameEngine implements Runnable {
 		startTime = 0;
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
-		logic = new LogicManager(this);
+		logic = new LogicManager();
 		data = new DataManager();
 		states = new StateManager();
 		controls = new ControlManager(this);
@@ -62,8 +62,8 @@ public class GameEngine implements Runnable {
 */
 		//TODO:remove above test code
 
-		postRequest(new Request(StateManager.LOAD_STATE, StateManager.UWO_SPLASH,
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
+		postRequest(StateManager.LOAD_STATE, StateManager.UWO_SPLASH,
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
@@ -74,7 +74,7 @@ public class GameEngine implements Runnable {
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
 
-			logic.act(runTime);
+			logic.executeOfAgeEvents(this);
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);
@@ -91,14 +91,15 @@ public class GameEngine implements Runnable {
 	/**
 	 * @return
 	 */
-	public long getLoopTime() {
-		return startTime;
+	public long getRunTime() {
+		return runTime;
 	}
 	
 	/**
 	 * @param request
 	 */
-	public void postRequest(Request request) {
+	public void postRequest(String propertyName, Object value, int type, int routingCode) {
+		Request request = new Request(propertyName, value, type, routingCode);
 		switch (request.routingCode) {
 		case Request.ROUTE_TO_GRAPHICS:
 			graphics.makeChangeRequest(request);

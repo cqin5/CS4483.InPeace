@@ -1,9 +1,6 @@
 package com.inpeace.states;
 
 import com.inpeace.engine.GameEngine;
-import com.inpeace.models.DefaultGraphicsModel;
-import com.inpeace.models.HUDGraphicsModel;
-import com.inpeace.models.OverlayGraphicsModel;
 
 /**
  * 
@@ -13,6 +10,12 @@ import com.inpeace.models.OverlayGraphicsModel;
  * @since   24 Mar 2014
  */
 public abstract class AbstractState {
+	
+	/** State type codes. */
+	public static final int SPLASH_SCREEN = 0;
+	public static final int DEFAULT_SCREEN = 1;
+	public static final int GAME_SCREEN = 2;
+	public static final int OVERLAY_SCREEN = 3;
 
 	/**   */
 	private final int type;
@@ -22,11 +25,6 @@ public abstract class AbstractState {
 	
 	/**   */
 	private final boolean historical;
-	
-	/**   */
-	protected final DefaultGraphicsModel defaultGraphics;
-	protected final HUDGraphicsModel hudGraphics;
-	protected final OverlayGraphicsModel overlayGraphics;
 	
 	/**
 	 * Constructs a new AbstractState object.
@@ -39,10 +37,6 @@ public abstract class AbstractState {
 		this.type = type;
 		this.stateID = stateID;
 		this.historical = historical;
-		defaultGraphics = new DefaultGraphicsModel();
-		hudGraphics = new HUDGraphicsModel();
-		overlayGraphics = new OverlayGraphicsModel();
-		initialiseGraphicsModels();
 	}
 	
 	/**
@@ -69,11 +63,6 @@ public abstract class AbstractState {
 	public boolean isHistorical() {
 		return historical;
 	}
-	
-	/**
-	 * 
-	 */
-	public abstract void initialiseGraphicsModels();
 	
 	/**
 	 * @param graphics

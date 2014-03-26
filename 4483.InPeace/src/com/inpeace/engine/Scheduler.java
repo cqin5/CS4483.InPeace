@@ -50,7 +50,7 @@ public class Scheduler {
 	 */
 	public AbstractEvent getOfAge(Long time) {
 		if (schedule.size() > 0) {
-			if (schedule.get(0).getTime() < time) {
+			if (schedule.get(0).getTime() <= time) {
 				return schedule.remove(0);
 			}
 		}

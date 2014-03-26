@@ -23,12 +23,6 @@ import com.inpeace.states.SplashState;
  */
 public class StateManager {
 
-	/** State type codes. */
-	public static final int SPLASH_SCREEN = 0;
-	public static final int DEFAULT_SCREEN = 1;
-	public static final int GAME_SCREEN = 2;
-	public static final int OVERLAY_SCREEN = 3;
-
 	/** State id codes.  */
 	public static final int PREVIOUS_HISTORICAL_STATE = -1;
 	public static final int UWO_SPLASH = 1;

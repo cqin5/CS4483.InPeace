@@ -1,12 +1,14 @@
 package com.inpeace.events;
 
-import com.inpeace.engine.Schedule;
+import com.inpeace.engine.GameEngine;
+import com.inpeace.engine.Request;
+import com.inpeace.engine.StateManager;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   26 Mar 2014
  */
 public class ChangeStateEvent extends AbstractEvent {
@@ -24,12 +26,12 @@ public class ChangeStateEvent extends AbstractEvent {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.events.AbstractEvent#perform(com.inpeace.engine.Schedule)
+	 * @see com.inpeace.events.AbstractEvent#perform(com.inpeace.engine.GameEngine)
 	 */
 	@Override
-	public void perform(Schedule scheduler) {
-		// TODO Auto-generated method stub
-		
+	public void execute(GameEngine engine) {
+		engine.postRequest(StateManager.LOAD_STATE, newStateCode, Request.CHANGE_PROPERTY_REQUEST,
+				Request.ROUTE_TO_STATES);
 	}
 
 }

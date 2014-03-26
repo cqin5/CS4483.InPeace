@@ -3,6 +3,7 @@ package com.inpeace.states;
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.GameEngine;
 import com.inpeace.engine.Request;
+import com.inpeace.engine.StateManager;
 
 
 /**
@@ -22,7 +23,7 @@ public class SplashState extends AbstractState {
 	 * @param historical
 	 */
 	public SplashState() {
-		super(0, 0, false);
+		super(AbstractState.SPLASH_SCREEN, StateManager.UWO_SPLASH, false);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -44,19 +45,11 @@ public class SplashState extends AbstractState {
 	@Override
 	public void load(GameEngine engine) {
 		
-		engine.postRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS));
+		engine.postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
 		// TODO add audio and logic (ie. timer action) to load
 		
-	}
-
-	/* (non-Javadoc)
-	 * @see com.inpeace.states.AbstractState#isHistorical()
-	 */
-	@Override
-	public boolean isHistorical() {
-		return false;
 	}
 
 	/* (non-Javadoc)
@@ -65,16 +58,6 @@ public class SplashState extends AbstractState {
 	@Override
 	public void close() {
 		//NULL BODY
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see com.inpeace.states.AbstractState#initialiseGraphicsModels()
-	 */
-	@Override
-	public void initialiseGraphicsModels() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

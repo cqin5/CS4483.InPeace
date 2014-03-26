@@ -34,28 +34,10 @@ public class CollectiblesState extends AbstractState {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.states.AbstractState#isHistorical()
-	 */
-	@Override
-	public boolean isHistorical() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
 	 * @see com.inpeace.states.AbstractState#close()
 	 */
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see com.inpeace.states.AbstractState#initialiseGraphicsModels()
-	 */
-	@Override
-	public void initialiseGraphicsModels() {
 		// TODO Auto-generated method stub
 		
 	}

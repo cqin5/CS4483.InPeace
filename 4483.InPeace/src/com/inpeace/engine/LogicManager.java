@@ -1,5 +1,6 @@
 package com.inpeace.engine;
 
+import com.inpeace.events.AbstractEvent;
 
 /**
  * 
@@ -9,16 +10,30 @@ package com.inpeace.engine;
  * @since   25 Mar 2014
  */
 public class LogicManager {
-		
-	public LogicManager(GameEngine engine) {
-		//TODO
+	
+	/**   */
+	private Scheduler scheduler;
+	
+	/**
+	 * Constructs a new LogicManager object.
+	 *
+	 */
+	public LogicManager() {
+		scheduler = new Scheduler();
+	}
+	
+	/**
+	 * @param engine
+	 */
+	public void executeOfAgeEvents(GameEngine engine) {
+		AbstractEvent event = scheduler.getOfAge(engine.getRunTime());
+		while (event != null) {
+			event.execute(engine);
+			event = scheduler.getOfAge(engine.getRunTime());
+		}
 	}
 	
 	public void makeChangeRequest(Request request) {
-		//TODO
-	}
-
-	public void act(long loopTime) {
 		//TODO
 	}
 }

@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.GameProperties;
-import com.inpeace.engine.StateManager;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.AbstractEntityGraphic;
 import com.inpeace.library.Librarian;
+import com.inpeace.states.AbstractState;
 
 /**
  * 
@@ -124,13 +124,13 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		try {
 			repaintBackground(g);
-			if (stateType > StateManager.SPLASH_SCREEN) {
+			if (stateType > AbstractState.SPLASH_SCREEN) {
 				repaintForeground(g);
 			}
-			if (stateType == StateManager.GAME_SCREEN) {
+			if (stateType == AbstractState.GAME_SCREEN) {
 				repaintHUD(g);
 			}
-			if (stateType == StateManager.OVERLAY_SCREEN) {
+			if (stateType == AbstractState.OVERLAY_SCREEN) {
 				repaintOverlay(g);
 			}
 		} catch (ResourceAccessException e) {

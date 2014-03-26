@@ -1,6 +1,7 @@
 package com.inpeace.events;
 
-import com.inpeace.engine.Schedule;
+import com.inpeace.engine.GameEngine;
+
 
 /**
  * 
@@ -78,5 +79,6 @@ public abstract class AbstractEvent {
 	/**
 	 * 
 	 */
-	public abstract void perform(Schedule scheduler);
+	public abstract void execute(GameEngine engine);
+	
 }
