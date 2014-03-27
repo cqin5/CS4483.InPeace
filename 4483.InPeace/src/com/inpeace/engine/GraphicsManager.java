@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.inpeace.controllers.GraphicsController;
+import com.inpeace.models.DefaultGraphicsModel;
+import com.inpeace.models.HUDGraphicsModel;
+import com.inpeace.models.OverlayGraphicsModel;
 import com.inpeace.views.DefaultView;
 
 /**
@@ -35,6 +38,9 @@ public class GraphicsManager implements Runnable {
 		running = false;
 		requests = new LinkedList<Request>();
 		controller.registerView(new DefaultView(controller));
+		controller.registerModel(new DefaultGraphicsModel());
+		controller.registerModel(new HUDGraphicsModel());
+		controller.registerModel(new OverlayGraphicsModel());
 	}
 	
 	/* (non-Javadoc)

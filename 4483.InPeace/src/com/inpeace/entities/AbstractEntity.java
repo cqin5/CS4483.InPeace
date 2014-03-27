@@ -103,6 +103,9 @@ public abstract class AbstractEntity {
 		if (action != null) {
 			mousePressID = ActionRegistrar.getInstance().registerAction(action);
 		}
+		else {
+			mousePressID = null;
+		}
 	}
 
 	/**
@@ -112,20 +115,27 @@ public abstract class AbstractEntity {
 		if (action != null) {
 			enterID = ActionRegistrar.getInstance().registerAction(action);
 		}
+		else {
+			enterID = null;
+		}
 	}
 
 	/**
 	 * @return
 	 */
 	public void press() {
+		if (mousePressID != null && mousePressID != 0) {
 			ActionRegistrar.getInstance().getAction(mousePressID).performAction();
+		}
 	}
 
 	/**
 	 * @return
 	 */
 	public void enter() {
-		ActionRegistrar.getInstance().getAction(enterID).performAction();
+		if (enterID != null && enterID != 0) {
+			ActionRegistrar.getInstance().getAction(enterID).performAction();
+		}
 	}
 
 	/**
@@ -137,7 +147,7 @@ public abstract class AbstractEntity {
 	/**
 	 * @param g
 	 */
-	public abstract void paint(Graphics2D g, int scrollPosition, Point mousePosition)
+	public abstract void paint(Graphics2D g, int scrollPosition, Point mousePosition, boolean active)
 			throws ResourceAccessException;
 
 }

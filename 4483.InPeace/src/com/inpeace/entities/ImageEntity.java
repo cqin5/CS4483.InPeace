@@ -50,6 +50,9 @@ public class ImageEntity extends AbstractEntity {
 		this.mousePressSpriteCode = mousePressSpriteCode;
 		this.position = position;
 		this.defaultImage = null;
+		this.mouseOverImage = null;
+		this.mousePressImage = null;
+		setBounds();
 
 	}
 
@@ -82,6 +85,12 @@ public class ImageEntity extends AbstractEntity {
 	public Point getPosition() {
 		return position;
 	}
+	
+	private void setBounds() {
+		String[] chunks = defaultSpriteCode.split("-");
+		bounds = new Rectangle(position.x, position.y, Integer.parseInt(chunks[3]), 
+				Integer.parseInt(chunks[4]));
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.graphics.AbstractEntityGraphic#update(com.inpeace.graphics.AbstractEntityGraphic)
@@ -110,9 +119,7 @@ public class ImageEntity extends AbstractEntity {
 			change = true;
 		}
 		if (change) {
-			String[] chunks = defaultSpriteCode.split("-");
-			bounds = new Rectangle(position.x, position.y, Integer.parseInt(chunks[3]), 
-					Integer.parseInt(chunks[4]));
+			setBounds();
 		}
 		return change;
 	}
@@ -121,24 +128,24 @@ public class ImageEntity extends AbstractEntity {
 	 * @see com.inpeace.graphics.AbstractEntityGraphic#paint(java.awt.Graphics2D)
 	 */
 	@Override
-	public void paint(Graphics2D g, int scrollPosition, Point mouse) throws ResourceAccessException {
+	public void paint(Graphics2D g, int scrollPosition, Point mouse, boolean active) throws ResourceAccessException {
 		int x = position.x - scrollPosition;
-		if (contains(mouse)) {
-			if (mouseOverImage == null) {
-				mouseOverImage = Librarian.getInstance().getSprite(mouseOverSpriteCode);
-			}
-			if (x < (GameProperties.DEFAULT_WIDTH + mouseOverImage.getWidth()) 
-					&& x > (0 - mouseOverImage.getWidth())) {
-				g.drawImage(mouseOverImage , x, position.y, null);
-			}
-		}
-		if (isMousePress()) {
+		if (active && isMousePress()) {
 			if (mousePressImage == null) {
 				mousePressImage = Librarian.getInstance().getSprite(mousePressSpriteCode);
 			}
 			if (x < (GameProperties.DEFAULT_WIDTH + mousePressImage.getWidth()) 
 					&& x > (0 - mousePressImage.getWidth())) {
 				g.drawImage(mousePressImage , x, position.y, null);
+			}
+		}
+		else if (active && contains(mouse)) {
+			if (mouseOverImage == null) {
+				mouseOverImage = Librarian.getInstance().getSprite(mouseOverSpriteCode);
+			}
+			if (x < (GameProperties.DEFAULT_WIDTH + mouseOverImage.getWidth()) 
+					&& x > (0 - mouseOverImage.getWidth())) {
+				g.drawImage(mouseOverImage , x, position.y, null);
 			}
 		}
 		else {

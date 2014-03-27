@@ -1,12 +1,11 @@
 package com.inpeace.states;
 
-import com.inpeace.controllers.AbstractController;
+import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.Scheduler;
 import com.inpeace.engine.StateManager;
 import com.inpeace.events.ChangeStateEvent;
-import com.inpeace.models.DefaultGraphicsModel;
 
 
 /**
@@ -50,10 +49,10 @@ public class SplashState extends AbstractState {
 	@Override
 	public void load() {
 		
-		DefaultGraphicsModel model = new DefaultGraphicsModel();
-		model.setBackgroundName(graphicName);
-		MailRoom.getInstance().postRequest(AbstractController.MODEL, model, 
-				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, getStateID(), 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
 		 

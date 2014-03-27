@@ -2,6 +2,7 @@
 
 import java.awt.Point;
 
+import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
@@ -63,7 +64,8 @@ public class MainMenuState extends AbstractState {
 		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
-		ImageEntity entity = new ImageEntity(1, null, null, "1-0-0-128-128", "1-0-128-128-128", "1-0-256-128-128", new Point(0,0));
+		ImageEntity entity = new ImageEntity(1, new ChangeStateAction(StateManager.SCROLL), null, 
+				"1-0-0-128-128", "1-0-128-128-128", "1-0-256-128-128", new Point(0,0));
 		MailRoom.getInstance().postRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		MailRoom.getInstance().postRequest(GraphicsController.STATE_TYPE, stateType, 
