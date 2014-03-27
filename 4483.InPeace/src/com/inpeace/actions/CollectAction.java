@@ -1,7 +1,5 @@
 package com.inpeace.actions;
 
-import com.inpeace.entities.Object;
-
 /**
  * 
  * 
@@ -9,15 +7,14 @@ import com.inpeace.entities.Object;
  * @version 0.0
  * @since   24 Mar 2014
  */
-public class CollectAction extends Action {
+public class CollectAction extends AbstractAction {
 
 	/**
 	 * Constructs a new CollectAction object.
 	 *
 	 * @param item
 	 */
-	public CollectAction(Object item) {
-		super(item);
+	public CollectAction() {
 		// TODO Auto-generated constructor stub
 	}
 

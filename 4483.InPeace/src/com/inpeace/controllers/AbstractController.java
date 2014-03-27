@@ -39,7 +39,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 	/**
 	 * @param model
 	 */
-	public void addModel(AbstractModel model) {
+	public void registerModel(AbstractModel model) {
 		registeredModels.add(model);
 		model.addListener(this);
 		model.fireAll();
@@ -48,7 +48,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 	/**
 	 * @param model
 	 */
-	public void removeModel(AbstractModel model) {
+	public void deregisterMode(AbstractModel model) {
 		registeredModels.remove(model);
 		model.removeListener(this);
 	}
@@ -56,14 +56,14 @@ public abstract class AbstractController implements PropertyChangeListener {
 	/**
 	 * @param view
 	 */
-	public void addView(AbstractView view) {
+	public void registerView(AbstractView view) {
 		registeredViews.add(view);
 	}
 
 	/**
 	 * @param view
 	 */
-	public void removeView(AbstractView view) {
+	public void deregisterView(AbstractView view) {
 		registeredViews.remove(view);
 	}
 
@@ -82,24 +82,24 @@ public abstract class AbstractController implements PropertyChangeListener {
 	 */
 	public void processRequest(Request request) {
 
-		if (request.requestType == Request.CHANGE_PROPERTY_REQUEST ||
-				request.requestType == Request.CLEAR_PROPERTY_REQUEST) {
+		if (request.type == Request.CHANGE_PROPERTY_REQUEST ||
+				request.type == Request.CLEAR_PROPERTY_REQUEST) {
 			processPropertyRequest(request);
 		}
-		else if (request.requestType == Request.REGISTRATION_REQUEST) {
+		else if (request.type == Request.REGISTRATION_REQUEST) {
 			if (request.propertyName.equals(MODEL)) {
-				addModel((AbstractModel) request.value);
+				registerModel((AbstractModel) request.value);
 			}
 			else if (request.propertyName.equals(VIEW)) {
-				addView((AbstractView) request.value);
+				registerView((AbstractView) request.value);
 			}
 		}
-		else if (request.requestType == Request.DEREGISTRATION_REQUEST) {
+		else if (request.type == Request.DEREGISTRATION_REQUEST) {
 			if (request.propertyName.equals(MODEL)) {
-				removeModel((AbstractModel) request.value);
+				deregisterMode((AbstractModel) request.value);
 			}
 			else if (request.propertyName.equals(VIEW)) {
-				removeView((AbstractView) request.value);
+				deregisterView((AbstractView) request.value);
 			}
 		}
 
@@ -111,10 +111,10 @@ public abstract class AbstractController implements PropertyChangeListener {
 	private void processPropertyRequest(Request request) {
 		try {
 			String methodName = "";
-			if (request.requestType == Request.CHANGE_PROPERTY_REQUEST) {
+			if (request.type == Request.CHANGE_PROPERTY_REQUEST) {
 				methodName =  "set" + request.propertyName;
 			}
-			else if (request.requestType == Request.CLEAR_PROPERTY_REQUEST) {
+			else if (request.type == Request.CLEAR_PROPERTY_REQUEST) {
 				methodName =  "clear" + request.propertyName;
 			}
 			else {

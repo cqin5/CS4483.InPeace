@@ -2,7 +2,7 @@ package com.inpeace.entities;
 
 import java.util.ArrayList;
 
-import com.inpeace.actions.Action;
+import com.inpeace.actions.AbstractAction;
 
 /**
  * 
@@ -19,7 +19,7 @@ public class ButtonObject extends Object {
 	 * @param spriteCode
 	 * @param actions
 	 */
-	public ButtonObject(String spriteCode, ArrayList<Action> actions) {
+	public ButtonObject(String spriteCode, ArrayList<AbstractAction> actions) {
 		super(spriteCode, actions);
 		// TODO Auto-generated constructor stub
 	}

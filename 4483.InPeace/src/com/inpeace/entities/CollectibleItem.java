@@ -2,14 +2,14 @@ package com.inpeace.entities;
 
 import java.util.ArrayList;
 
-import com.inpeace.actions.Action;
+import com.inpeace.actions.AbstractAction;
 import com.inpeace.actions.CollectAction;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 1.0
+ * @version 0.0
  * @since   18 Mar 2014
  */
 public class CollectibleItem extends Object {
@@ -19,8 +19,8 @@ public class CollectibleItem extends Object {
 	 *
 	 */
 	public CollectibleItem(String id) {
-		super(id, new ArrayList<Action>());
-		actions.add(new CollectAction(this));
+		super(id, new ArrayList<AbstractAction>());
+		actions.add(new CollectAction());
 	}
 	
 	/* (non-Javadoc)

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.inpeace.actions.Action;
+import com.inpeace.actions.AbstractAction;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
 
@@ -40,7 +40,7 @@ public abstract class Object {
 	private BufferedImage active = null;
 
 	/**   */
-	ArrayList<Action> actions;
+	ArrayList<AbstractAction> actions;
 
 	/**
 	 * Constructs a new Item object.
@@ -48,7 +48,7 @@ public abstract class Object {
 	 * @param id
 	 * @param actions
 	 */
-	public Object(String spriteCode, ArrayList<Action> actions) {
+	public Object(String spriteCode, ArrayList<AbstractAction> actions) {
 		this.spriteCode = spriteCode;
 		this.actions.addAll(actions);
 	}
@@ -111,7 +111,7 @@ public abstract class Object {
 	 * @return
 	 * @throws
 	 */
-	public Action getAction(int index) throws IndexOutOfBoundsException {
+	public AbstractAction getAction(int index) throws IndexOutOfBoundsException {
 		if (index > 0 && index < actions.size()) {
 			return actions.get(index);
 		}
@@ -122,7 +122,7 @@ public abstract class Object {
 	 * 
 	 * @return
 	 */
-	public Iterator<Action> actionIterator() {
+	public Iterator<AbstractAction> actionIterator() {
 		return actions.iterator();
 	}
 

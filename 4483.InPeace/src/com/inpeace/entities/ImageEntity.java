@@ -1,7 +1,8 @@
-package com.inpeace.graphics;
+package com.inpeace.entities;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.inpeace.engine.GameProperties;
@@ -16,7 +17,7 @@ import com.inpeace.library.Librarian;
  * @version 1.0
  * @since   24 Mar 2014
  */
-public class ImageEntityGraphic extends AbstractEntityGraphic {
+public class ImageEntity extends AbstractEntity {
 	
 	/**   */
 	private String spriteCode;
@@ -27,8 +28,8 @@ public class ImageEntityGraphic extends AbstractEntityGraphic {
 	/**   */
 	private Point position;
 	
-	public ImageEntityGraphic(int depth, String spriteCode, Point position) {
-		super(depth);
+	public ImageEntity(int depth, int clickActionCode, String spriteCode, Point position) {
+		super(depth, clickActionCode);
 		this.spriteCode = spriteCode;
 		this.position = position;
 		this.image = null;
@@ -56,19 +57,24 @@ public class ImageEntityGraphic extends AbstractEntityGraphic {
 	 * @see com.inpeace.graphics.AbstractEntityGraphic#update(com.inpeace.graphics.AbstractEntityGraphic)
 	 */
 	@Override
-	public boolean update(AbstractEntityGraphic graphic) throws IncompatibleObjectException {
-		if (graphic.getClass() != ImageEntityGraphic.class) {
+	public boolean update(AbstractEntity graphic) throws IncompatibleObjectException {
+		if (graphic.getClass() != ImageEntity.class) {
 			throw new IncompatibleObjectException("ImageEntityGraphic: unable to update,"
 					+ " paramater class does not match");
 		}
 		boolean change = false;
-		if (spriteCode != ((ImageEntityGraphic) graphic).getSpriteCode()) {
-			spriteCode = ((ImageEntityGraphic) graphic).getSpriteCode();
+		if (spriteCode != ((ImageEntity) graphic).getSpriteCode()) {
+			spriteCode = ((ImageEntity) graphic).getSpriteCode();
 			change = true;
 		}
-		if (position != ((ImageEntityGraphic) graphic).getPosition()) {
-			position = ((ImageEntityGraphic) graphic).getPosition();
+		if (position != ((ImageEntity) graphic).getPosition()) {
+			position = ((ImageEntity) graphic).getPosition();
 			change = true;
+		}
+		if (change) {
+			String[] chunks = spriteCode.split("-");
+			bounds = new Rectangle(position.x, position.y, Integer.parseInt(chunks[3]), 
+					Integer.parseInt(chunks[4]));
 		}
 		return change;
 	}

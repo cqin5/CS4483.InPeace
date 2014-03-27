@@ -23,7 +23,7 @@ public class Request {
 	public static final int ROUTE_TO_DATA = 4;
 
 	/**   */
-	public final int requestType;
+	public final int type;
 	
 	/**   */
 	public final int routingCode;
@@ -43,7 +43,7 @@ public class Request {
 	public Request(String propertyName, Object value, int requestType, int routingCode) {
 		this.propertyName = propertyName;
 		this.value = value;
-		this.requestType = requestType;
+		this.type = requestType;
 		this.routingCode = routingCode;
 	}
 }

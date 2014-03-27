@@ -2,7 +2,7 @@ package com.inpeace.entities;
 
 import java.util.ArrayList;
 
-import com.inpeace.actions.Action;
+import com.inpeace.actions.AbstractAction;
 
 /**
  * 
@@ -19,7 +19,7 @@ public class UsableItem extends Object {
 	 * @param id
 	 * @param actions
 	 */
-	public UsableItem(String id, ArrayList<Action> actions) {
+	public UsableItem(String id, ArrayList<AbstractAction> actions) {
 		super(id, actions);
 	}
 

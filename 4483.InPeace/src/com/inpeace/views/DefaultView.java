@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.GameProperties;
+import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
-import com.inpeace.graphics.AbstractEntityGraphic;
 import com.inpeace.library.Librarian;
 import com.inpeace.states.AbstractState;
 
@@ -59,7 +59,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	
 	/**   */
-	ArrayList<AbstractEntityGraphic> foregroundObjects= null;
+	ArrayList<AbstractEntity> foregroundObjects= null;
 	
 	
 	/*
@@ -70,7 +70,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage hudGraphic = null;
 	
 	/**   */
-	ArrayList<AbstractEntityGraphic> hudObjects = null;
+	ArrayList<AbstractEntity> hudObjects = null;
 	
 	
 	/*
@@ -81,7 +81,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage overlayGraphic = null;
 	
 	/**   */
-	ArrayList<AbstractEntityGraphic> overlayObjects = null;
+	ArrayList<AbstractEntity> overlayObjects = null;
 	
 	
 	/**
@@ -159,7 +159,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private void repaintForeground(Graphics2D g) throws ResourceAccessException {				
 		
 		if (foregroundObjects != null) {
-			for (AbstractEntityGraphic object: foregroundObjects) {
+			for (AbstractEntity object: foregroundObjects) {
 				object.paint(g, scrollPosition);
 			}
 		}
@@ -176,7 +176,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 		
 		if (hudObjects != null) {
-			for (AbstractEntityGraphic object: hudObjects) {
+			for (AbstractEntity object: hudObjects) {
 				object.paint(g, scrollPosition);
 			}
 		}
@@ -200,7 +200,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 		
 		if (overlayObjects != null) {
-			for (AbstractEntityGraphic object: hudObjects) {
+			for (AbstractEntity object: hudObjects) {
 				object.paint(g, scrollPosition);
 			}
 		}
@@ -230,7 +230,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 
 		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECTS)) {
-			foregroundObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
+			foregroundObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HUD_GRAPHIC_SPRITE_CODE)) {
 			try {
@@ -241,7 +241,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			}
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECTS)) {
-			hudObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
+			hudObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
 			try {
@@ -252,7 +252,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			}
 		}
 		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECTS)) {
-			overlayObjects = (ArrayList<AbstractEntityGraphic>) e.getNewValue();
+			overlayObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
 	}
 

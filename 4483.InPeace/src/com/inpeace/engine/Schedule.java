@@ -73,7 +73,7 @@ public class Schedule extends ArrayList<AbstractEvent> {
 	 * @param eventID
 	 * @return
 	 */
-	public int indexOf(Integer eventID) {
+	private int indexOf(Integer eventID) {
 		for(int i = 0; i < size(); i++) {
 			if(get(i) != null && get(i).getEventID().equals(eventID)) {
 				return i;
@@ -81,4 +81,5 @@ public class Schedule extends ArrayList<AbstractEvent> {
 		}
 		return -1;
 	}
+	
 }

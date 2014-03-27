@@ -49,20 +49,7 @@ public class GameEngine implements Runnable {
 		running = true;
 		startTime = System.currentTimeMillis();
 
-
-		//TODO:remove following test code
-		/*graphics.makeChangeRequest(new Request(GraphicsController.HORIZONTAL_SCROLL_POSITION, 0, Request.CHANGE_PROPERTY_REQUEST));
-		graphics.makeChangeRequest(new Request(GraphicsController.BACKGROUND_IMAGE_NAME, "splash", Request.CHANGE_PROPERTY_REQUEST));
-		graphics.makeChangeRequest(new Request(GraphicsController.STATE_TYPE, StateManager.OVERLAY_SCREEN, Request.CHANGE_PROPERTY_REQUEST));
-		String code = "1-0-0-128-128";
-		ImageEntityGraphic entity = new ImageEntityGraphic(1, code, new Point(0,0));
-
-		graphics.makeChangeRequest(new Request(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, code, Request.CHANGE_PROPERTY_REQUEST));
-		graphics.makeChangeRequest(new Request(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, Request.CHANGE_PROPERTY_REQUEST));
-*/
-		//TODO:remove above test code
-
-		postRequest(StateManager.LOAD_STATE, StateManager.UWO_SPLASH,
+		postRequest(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 		
 		Thread graphicsThread = new Thread(graphics);
@@ -74,7 +61,7 @@ public class GameEngine implements Runnable {
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
 
-			logic.executeOfAgeEvents(this);
+			logic.executeMaturedEvents(this);
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);

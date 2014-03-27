@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
+import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.IncompatibleObjectException;
-import com.inpeace.graphics.AbstractEntityGraphic;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	private String spriteCode;
 	
 	/**   */
-	private TreeMap<Integer, AbstractEntityGraphic> objects;
+	private TreeMap<Integer, AbstractEntity> objects;
 	
 	/**
 	 * Constructs a new OverlayModel object.
@@ -28,7 +28,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	public HUDGraphicsModel() {
 		spriteCode = "";
-		objects = new TreeMap<Integer, AbstractEntityGraphic>();
+		objects = new TreeMap<Integer, AbstractEntity>();
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 * @param entity
 	 * @throws IncompatibleObjectException
 	 */
-	public void setHUDObjectEntity(AbstractEntityGraphic entity)
+	public void setHUDObjectEntity(AbstractEntity entity)
 			throws IncompatibleObjectException {
 		if (!objects.containsKey(entity.getDepth())) {
 			addObjectEntity(entity, entity.getDepth());
@@ -76,7 +76,7 @@ public class HUDGraphicsModel extends AbstractModel {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
 			fireChange(GraphicsController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntityGraphic>(objects.values()));
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -84,10 +84,10 @@ public class HUDGraphicsModel extends AbstractModel {
 	 * @param graphic
 	 * @param depth
 	 */
-	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
+	private void addObjectEntity(AbstractEntity graphic, int depth) {
 		objects.put(depth, graphic);
 		fireChange(GraphicsController.HUD_OBJECTS, 
-				new ArrayList<AbstractEntityGraphic>(objects.values()));
+				new ArrayList<AbstractEntity>(objects.values()));
 	}
 
 	/**
@@ -95,11 +95,11 @@ public class HUDGraphicsModel extends AbstractModel {
 	 * @param depth
 	 * @throws IncompatibleObjectException 
 	 */
-	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
+	private void updateObjectEntity(AbstractEntity graphic, int depth)
 			throws IncompatibleObjectException {
 		if (objects.get(depth).update(graphic)) {
 			fireChange(GraphicsController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntityGraphic>(objects.values()));
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -110,7 +110,7 @@ public class HUDGraphicsModel extends AbstractModel {
 		if (objects != null) {
 			objects.clear();
 			fireChange(GraphicsController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntityGraphic>());
+					new ArrayList<AbstractEntity>());
 		}
 	}
 
@@ -121,7 +121,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	public void fireAll() {
 		fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
 		fireChange(GraphicsController.HUD_OBJECTS, 
-				new ArrayList<AbstractEntityGraphic>());		
+				new ArrayList<AbstractEntity>());		
 	}
 	
 }

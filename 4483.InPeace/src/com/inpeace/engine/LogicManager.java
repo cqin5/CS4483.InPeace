@@ -11,25 +11,22 @@ import com.inpeace.events.AbstractEvent;
  */
 public class LogicManager {
 	
-	/**   */
-	private Scheduler scheduler;
-	
 	/**
 	 * Constructs a new LogicManager object.
 	 *
 	 */
 	public LogicManager() {
-		scheduler = new Scheduler();
+		//TODO
 	}
 	
 	/**
 	 * @param engine
 	 */
-	public void executeOfAgeEvents(GameEngine engine) {
-		AbstractEvent event = scheduler.getOfAge(engine.getRunTime());
+	public void executeMaturedEvents(GameEngine engine) {
+		AbstractEvent event = Scheduler.getInstance().getMaturedEvent(engine.getRunTime());
 		while (event != null) {
 			event.execute(engine);
-			event = scheduler.getOfAge(engine.getRunTime());
+			event = Scheduler.getInstance().getMaturedEvent(engine.getRunTime());
 		}
 	}
 	

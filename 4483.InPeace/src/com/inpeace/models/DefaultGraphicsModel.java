@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
+import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.IncompatibleObjectException;
-import com.inpeace.graphics.AbstractEntityGraphic;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	private int scrollPosition;
 	
 	/**   */
-	private TreeMap<Integer, AbstractEntityGraphic> objects;
+	private TreeMap<Integer, AbstractEntity> objects;
 	
 	/**
 	 * Constructs a new ForegroundModel object.
@@ -36,7 +36,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 		backgroundName = "";
 		scrollPosition = 0;
 		stateType = 0;
-		objects = new TreeMap<Integer, AbstractEntityGraphic>();
+		objects = new TreeMap<Integer, AbstractEntity>();
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * @param entity
 	 * @throws IncompatibleObjectException
 	 */
-	public void setForegroundObjectEntity(AbstractEntityGraphic entity)
+	public void setForegroundObjectEntity(AbstractEntity entity)
 			throws IncompatibleObjectException {
 		if (!objects.containsKey(entity.getDepth())) {
 			addObjectEntity(entity, entity.getDepth());
@@ -119,7 +119,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
 			fireChange(GraphicsController.FOREGROUND_OBJECTS,
-					new ArrayList<AbstractEntityGraphic>(objects.values()));
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -127,10 +127,10 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * @param graphic
 	 * @param depth
 	 */
-	private void addObjectEntity(AbstractEntityGraphic graphic, int depth) {
+	private void addObjectEntity(AbstractEntity graphic, int depth) {
 		objects.put(depth, graphic);
 		fireChange(GraphicsController.FOREGROUND_OBJECTS, 
-				new ArrayList<AbstractEntityGraphic>(objects.values()));
+				new ArrayList<AbstractEntity>(objects.values()));
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * @param depth
 	 * @throws IncompatibleObjectException 
 	 */
-	private void updateObjectEntity(AbstractEntityGraphic graphic, int depth)
+	private void updateObjectEntity(AbstractEntity graphic, int depth)
 			throws IncompatibleObjectException {
 		if (objects.get(depth).update(graphic)) {
 			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
-					new ArrayList<AbstractEntityGraphic>(objects.values()));
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -153,7 +153,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 		if (objects != null) {
 			objects.clear();
 			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
-					new ArrayList<AbstractEntityGraphic>());
+					new ArrayList<AbstractEntity>());
 		}
 	}
 
@@ -164,7 +164,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void fireAll() {
 		fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName);
 		fireChange(GraphicsController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
-		fireChange(GraphicsController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntityGraphic>());
+		fireChange(GraphicsController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
 	}
 	
 }

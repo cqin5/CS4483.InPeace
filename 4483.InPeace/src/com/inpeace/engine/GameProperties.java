@@ -14,6 +14,8 @@ public class GameProperties {
 	
 	public static final String TITLE = "In Peace: A Ghost Story";
 	
+	public static final int LAUNCH_STATE = StateManager.UWO_SPLASH;
+	
 	public static final int DEFAULT_WIDTH = 1440; //TODO: update with proper width
 	
 	public static final int DEFAULT_HEIGHT = (int) (DEFAULT_WIDTH / 1.78);
