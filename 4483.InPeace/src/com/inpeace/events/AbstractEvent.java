@@ -3,7 +3,8 @@ package com.inpeace.events;
 
 
 /**
- * 
+ * The extendible superclass of all events.  Extend this class directly for events that only post
+ * requests to the game engine.
  * 
  * @author  James Anderson
  * @version 1.0

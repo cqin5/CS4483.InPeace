@@ -10,7 +10,7 @@ import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
- * 
+ * The extendible superclass of all Entities.
  * 
  * @author  James Anderson
  * @version 1.0

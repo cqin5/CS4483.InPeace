@@ -1,7 +1,8 @@
 package com.inpeace.engine;
 
 /**
- * 
+ * The class responsible for carrying requests to the various parts of the game engine.  Think of
+ * this object like an office memo.
  * 
  * @author  James Anderson
  * @version 1.0
