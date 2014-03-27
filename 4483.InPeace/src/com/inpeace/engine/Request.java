@@ -26,7 +26,7 @@ public class Request {
 	public final int type;
 	
 	/**   */
-	public final int routingCode;
+	public final int[] routingCodes;
 	
 	/**   */
 	public final String propertyName;
@@ -40,10 +40,10 @@ public class Request {
 	 * @param propertyName
 	 * @param value
 	 */
-	public Request(String propertyName, Object value, int requestType, int routingCode) {
+	public Request(String propertyName, Object value, int requestType, int... routingCodes) {
 		this.propertyName = propertyName;
 		this.value = value;
 		this.type = requestType;
-		this.routingCode = routingCode;
+		this.routingCodes = routingCodes;
 	}
 }

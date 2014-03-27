@@ -17,7 +17,7 @@ public class GameEngine implements Runnable {
 
 	/**   */
 	private long runTime, startTime;
-	
+
 	/**   */
 	private GraphicsManager graphics;
 	private AudioManager audio;
@@ -48,7 +48,7 @@ public class GameEngine implements Runnable {
 
 		routeRequest(new Request(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
-		
+
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
 
@@ -57,7 +57,7 @@ public class GameEngine implements Runnable {
 
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
-			
+
 			Scheduler.getInstance().updateRunTime(runTime);
 			executeMaturedEvents();
 			processRequests();
@@ -73,7 +73,7 @@ public class GameEngine implements Runnable {
 		//audioThread.interrupt();
 
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -84,7 +84,7 @@ public class GameEngine implements Runnable {
 			event = Scheduler.getInstance().getMaturedEvent();
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -95,37 +95,39 @@ public class GameEngine implements Runnable {
 			request = MailRoom.getInstance().getRequest();
 		}
 	}
-	
+
 	/**
 	 * @param request
 	 */
 	private void routeRequest(Request request) {
-		switch (request.routingCode) {
-		case Request.ROUTE_TO_GRAPHICS:
-			graphics.makeChangeRequest(request);
-			break;
-		case Request.ROUTE_TO_STATES:
-			try {
-				states.loadState((Integer) request.value);
-			} catch (StateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		for (int code: request.routingCodes) {
+			switch (code) {
+			case Request.ROUTE_TO_GRAPHICS:
+				graphics.makeChangeRequest(request);
+				break;
+			case Request.ROUTE_TO_STATES:
+				try {
+					states.loadState((Integer) request.value);
+				} catch (StateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			case Request.ROUTE_TO_AUDIO:
+				audio.makeChangeRequest(request);
+				break;
+			case Request.ROUTE_TO_DATA:
+				data.makeChangeRequest(request);
+				break;
 			}
-			break;
-		case Request.ROUTE_TO_AUDIO:
-			audio.makeChangeRequest(request);
-			break;
-		case Request.ROUTE_TO_DATA:
-			data.makeChangeRequest(request);
-			break;
 		}
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public long getRunTime() {
 		return runTime;
 	}
-	
+
 }
