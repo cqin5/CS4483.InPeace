@@ -1,4 +1,4 @@
-package com.inpeace.controls;
+package com.inpeace.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

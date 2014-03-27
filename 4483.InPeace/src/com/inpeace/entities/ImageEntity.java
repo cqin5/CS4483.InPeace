@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.inpeace.actions.AbstractAction;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
@@ -20,28 +21,57 @@ import com.inpeace.library.Librarian;
 public class ImageEntity extends AbstractEntity {
 	
 	/**   */
-	private String spriteCode;
-	
+	private String defaultSpriteCode;
+	private String mouseOverSpriteCode;
+	private String mousePressSpriteCode;
+
 	/**   */
-	private BufferedImage image;
-	
+	private BufferedImage defaultImage;
+	private BufferedImage mouseOverImage;
+	private BufferedImage mousePressImage;
+
 	/**   */
 	private Point position;
-	
-	public ImageEntity(int depth, EntityActions actions, String spriteCode, Point position) {
-		super(depth, actions);
-		this.spriteCode = spriteCode;
+
+	/**
+	 * Constructs a new ImageEntity object.
+	 *
+	 * @param depth
+	 * @param actions
+	 * @param spriteCode
+	 * @param mouseOverSpriteCode
+	 */
+	public ImageEntity(int depth, AbstractAction pressAction, AbstractAction enterAction, 
+			String defaultSpriteCode, String mouseOverSpriteCode, String mousePressSpriteCode,
+			Point position) {
+		super(depth, pressAction, enterAction);
+		this.defaultSpriteCode = defaultSpriteCode;
+		this.mouseOverSpriteCode = mouseOverSpriteCode;
+		this.mousePressSpriteCode = mousePressSpriteCode;
 		this.position = position;
-		this.image = null;
+		this.defaultImage = null;
+
+	}
+
+	/**
+	 * @return
+	 */
+	public String getDefaultSpriteCode() {
+		return defaultSpriteCode;
 	}
 	
 	/**
-	 * Get the sprite code
-	 *
-	 * @return the sprite code
+	 * @return
 	 */
-	public String getSpriteCode() {
-		return spriteCode;
+	public String getMouseOverSpriteCode() {
+		return mouseOverSpriteCode;
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getMousePressSpriteCode() {
+		return mousePressSpriteCode;
 	}
 
 	/**
@@ -63,8 +93,16 @@ public class ImageEntity extends AbstractEntity {
 					+ " paramater class does not match");
 		}
 		boolean change = false;
-		if (spriteCode != ((ImageEntity) graphic).getSpriteCode()) {
-			spriteCode = ((ImageEntity) graphic).getSpriteCode();
+		if (!defaultSpriteCode.equals(((ImageEntity) graphic).getDefaultSpriteCode())) {
+			defaultSpriteCode = ((ImageEntity) graphic).getDefaultSpriteCode();
+			change = true;
+		}
+		if (!mouseOverSpriteCode.equals(((ImageEntity) graphic).getMouseOverSpriteCode())) {
+			mouseOverSpriteCode = ((ImageEntity) graphic).getMouseOverSpriteCode();
+			change = true;
+		}
+		if (!mousePressSpriteCode.equals(((ImageEntity) graphic).getMousePressSpriteCode())) {
+			mousePressSpriteCode = ((ImageEntity) graphic).getMousePressSpriteCode();
 			change = true;
 		}
 		if (position != ((ImageEntity) graphic).getPosition()) {
@@ -72,25 +110,45 @@ public class ImageEntity extends AbstractEntity {
 			change = true;
 		}
 		if (change) {
-			String[] chunks = spriteCode.split("-");
+			String[] chunks = defaultSpriteCode.split("-");
 			bounds = new Rectangle(position.x, position.y, Integer.parseInt(chunks[3]), 
 					Integer.parseInt(chunks[4]));
 		}
 		return change;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.inpeace.graphics.AbstractEntityGraphic#paint(java.awt.Graphics2D)
 	 */
 	@Override
-	public void paint(Graphics2D g, int scrollPosition) throws ResourceAccessException {
-		if (image == null) {
-			image = Librarian.getInstance().getSprite(spriteCode);
-		}
+	public void paint(Graphics2D g, int scrollPosition, Point mouse) throws ResourceAccessException {
 		int x = position.x - scrollPosition;
-		if (x < GameProperties.DEFAULT_WIDTH) {
-			g.drawImage(image , x, position.y, null);
+		if (contains(mouse)) {
+			if (mouseOverImage == null) {
+				mouseOverImage = Librarian.getInstance().getSprite(mouseOverSpriteCode);
+			}
+			if (x < (GameProperties.DEFAULT_WIDTH + mouseOverImage.getWidth()) 
+					&& x > (0 - mouseOverImage.getWidth())) {
+				g.drawImage(mouseOverImage , x, position.y, null);
+			}
+		}
+		if (isMousePress()) {
+			if (mousePressImage == null) {
+				mousePressImage = Librarian.getInstance().getSprite(mousePressSpriteCode);
+			}
+			if (x < (GameProperties.DEFAULT_WIDTH + mousePressImage.getWidth()) 
+					&& x > (0 - mousePressImage.getWidth())) {
+				g.drawImage(mousePressImage , x, position.y, null);
+			}
+		}
+		else {
+			if (defaultImage == null) {
+				defaultImage = Librarian.getInstance().getSprite(defaultSpriteCode);
+			}
+			if (x < (GameProperties.DEFAULT_WIDTH + defaultImage.getWidth()) 
+					&& x > (0 - defaultImage.getWidth())) {
+				g.drawImage(defaultImage , x, position.y, null);
+			}
 		}
 	}
-	
 }

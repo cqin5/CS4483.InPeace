@@ -4,6 +4,10 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
@@ -14,6 +18,7 @@ import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.GameProperties;
+import com.inpeace.engine.Request;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
@@ -32,7 +37,13 @@ public class DefaultView extends Canvas implements AbstractView {
 	private static final long serialVersionUID = -1745144542387224115L;
 	
 	/**   */
+	private GraphicsController controller;
+	
+	/**   */
 	private BufferStrategy buffer;
+	
+	/**   */
+	private Point mousePosition;
 	
 	/**   */
 	private int stateType = 0;
@@ -59,7 +70,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	
 	/**   */
-	ArrayList<AbstractEntity> foregroundObjects= null;
+	private ArrayList<AbstractEntity> foregroundObjects= null;
 	
 	
 	/*
@@ -70,7 +81,10 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage hudGraphic = null;
 	
 	/**   */
-	ArrayList<AbstractEntity> hudObjects = null;
+	private ArrayList<AbstractEntity> hudObjects = null;
+	
+	/**   */
+	private ArrayList<Rectangle> hudScreenCoverage;
 	
 	
 	/*
@@ -81,7 +95,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferedImage overlayGraphic = null;
 	
 	/**   */
-	ArrayList<AbstractEntity> overlayObjects = null;
+	private ArrayList<AbstractEntity> overlayObjects = null;
 	
 	
 	/**
@@ -90,6 +104,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 * @param controller
 	 */
 	public DefaultView(GraphicsController controller) {
+		this.controller = controller;
 		initialiser();
 	}
 	
@@ -104,6 +119,7 @@ public class DefaultView extends Canvas implements AbstractView {
 
 		setBounds(0, 0, size.width, size.height);
 		setBackground(Color.BLACK);
+		addMouseListener(new DefaultMouseAdapter());
 		setIgnoreRepaint(true);
 		panel.add(this);
 
@@ -113,6 +129,8 @@ public class DefaultView extends Canvas implements AbstractView {
 
 		createBufferStrategy(2);
 		buffer = getBufferStrategy();
+		
+		requestFocus();
 	}
 	
 	/* (non-Javadoc)
@@ -160,7 +178,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		if (foregroundObjects != null) {
 			for (AbstractEntity object: foregroundObjects) {
-				object.paint(g, scrollPosition);
+				object.paint(g, scrollPosition, mousePosition);
 			}
 		}
 	}
@@ -177,7 +195,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		if (hudObjects != null) {
 			for (AbstractEntity object: hudObjects) {
-				object.paint(g, scrollPosition);
+				object.paint(g, scrollPosition, mousePosition);
 			}
 		}
 		
@@ -201,7 +219,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		if (overlayObjects != null) {
 			for (AbstractEntity object: hudObjects) {
-				object.paint(g, scrollPosition);
+				object.paint(g, scrollPosition, mousePosition);
 			}
 		}
 
@@ -255,6 +273,47 @@ public class DefaultView extends Canvas implements AbstractView {
 			overlayObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
 	}
+	
+	/**
+	 * @param p
+	 * @return
+	 */
+	public AbstractEntity getEntityAt(Point p) {
+		switch (stateType) {
+		case AbstractState.GAME_SCREEN:
+			boolean hudSpace = false;
+			for (Rectangle bound: hudScreenCoverage) {
+				if (bound.contains(p)) {
+					hudSpace = true;
+					break;
+				}
+			}
+			if (hudSpace) {
+				for (AbstractEntity entity: hudObjects) {
+					if (entity.contains(p)) {
+						return entity;
+					}
+				}
+				break;
+			}
+			//Fall through is on purpose
+		case AbstractState.DEFAULT_SCREEN:
+			for (AbstractEntity entity: foregroundObjects) {
+				if (entity.contains(p)) {
+					return entity;
+				}
+			}
+			break;
+		case AbstractState.OVERLAY_SCREEN:
+			for (AbstractEntity entity: overlayObjects) {
+				if (entity.contains(p)) {
+					return entity;
+				}
+			}
+			break;
+		}
+		return null;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.views.AbstractView#refresh()
@@ -264,6 +323,80 @@ public class DefaultView extends Canvas implements AbstractView {
 		repaint();
 	}
 	
-	//TODO: deal with any form of user input that may end up being put through here
-
+	/**
+	 * @param x
+	 */
+	public void sideScroll(int x) {
+		int newScroll = scrollPosition + x;
+		if ((background.getWidth() - newScroll) < GameProperties.DEFAULT_WIDTH) {
+			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
+		}
+		controller.processRequest(new Request(GraphicsController.HORIZONTAL_SCROLL_POSITION, newScroll, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS));
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @author  James Anderson
+	 * @version 1.0
+	 * @since   26 Mar 2014
+	 */
+	private class DefaultMouseAdapter extends MouseAdapter {
+		
+		/**   */
+		private DefaultView view;
+		
+		/**   */
+		private AbstractEntity pressedEntity;
+		
+		/**   */
+		private int dragPosX;
+		
+		/**
+		 * Constructs a new DefaultMouseAdapter object.
+		 *
+		 * @param view
+		 */
+		public DefaultMouseAdapter() {
+			dragPosX = -1;
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+		 */
+		public void mousePressed(MouseEvent e) {
+			pressedEntity = view.getEntityAt(e.getPoint());
+			pressedEntity.setMousePress(true);
+			pressedEntity.press();
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+		 */
+		public void mouseReleased(MouseEvent e) {
+			pressedEntity.setMousePress(false);
+			dragPosX = -1;
+			
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseAdapter#mouseDragged(java.awt.event.MouseEvent)
+		 */
+		public void mouseDragged(MouseEvent e) {
+			if (dragPosX >= 0) {
+				view.sideScroll(dragPosX - e.getX());
+			}
+			dragPosX = e.getX();
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseAdapter#mouseMoved(java.awt.event.MouseEvent)
+		 */
+		public void mouseMoved(MouseEvent e) {
+			mousePosition = e.getPoint();
+		}
+	}
+	
 }

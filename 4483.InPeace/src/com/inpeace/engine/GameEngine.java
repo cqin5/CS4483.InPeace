@@ -17,13 +17,12 @@ public class GameEngine implements Runnable {
 
 	/**   */
 	private long runTime, startTime;
-
+	
 	/**   */
 	private GraphicsManager graphics;
 	private AudioManager audio;
 	private DataManager data;
 	private StateManager states;
-	private ControlManager controls;
 
 	/**
 	 * Constructs a new GameEngine object.
@@ -37,7 +36,6 @@ public class GameEngine implements Runnable {
 		audio = new AudioManager();
 		data = new DataManager();
 		states = new StateManager();
-		controls = new ControlManager(this);
 	}
 
 	/* (non-Javadoc)

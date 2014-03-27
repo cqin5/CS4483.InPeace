@@ -1,8 +1,11 @@
 package com.inpeace.entities;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 
+import com.inpeace.actions.AbstractAction;
+import com.inpeace.engine.ActionRegistrar;
 import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
 
@@ -21,16 +24,25 @@ public abstract class AbstractEntity {
 	/**   */
 	protected Rectangle bounds;
 	
-	/** Mouse event actions.  */
-	private EntityActions actions;
+	/**   */
+	private boolean mousePress;
+	
+	/**   */
+	private Integer mousePressID = null;
+	
+	/**   */
+	private Integer enterID = null;
 	
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
 	 * @param depth
 	 */
-	public AbstractEntity(int depth, EntityActions actions) {
+	public AbstractEntity(int depth, AbstractAction pressAction, AbstractAction enterAction) {
 		setDepth(depth);
+		setMousePress(false);
+		setMousePressAction(pressAction);
+		this.setEnterAction(enterAction);
 	}
 	
 	/**
@@ -56,41 +68,70 @@ public abstract class AbstractEntity {
 	 * @param y
 	 * @return
 	 */
-	public boolean contains(int x, int y) {
-		if (bounds.contains(x, y)) {
+	public boolean contains(Point p) {
+		if (bounds.contains(p)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Get the actions
+	 * Get the mousePress
 	 *
-	 * @return the actions
+	 * @return the mousePress
 	 */
-	public EntityActions getActions() {
-		return actions;
+	public boolean isMousePress() {
+		return mousePress;
 	}
 
 	/**
-	 * Set the actions
+	 * Set the mousePress
 	 *
-	 * @param actions the actions to set
+	 * @param mousePress the mousePress to set
 	 */
-	public void setActions(EntityActions actions) {
-		this.actions = actions;
+	public void setMousePress(boolean mousePress) {
+		this.mousePress = mousePress;
+	}
+	
+
+	/**
+	 * @param action
+	 */
+	public void setMousePressAction(AbstractAction action) {
+		mousePressID = ActionRegistrar.getInstance().registerAction(action);
+	}
+	
+	/**
+	 * @param action
+	 */
+	public void setEnterAction(AbstractAction action) {
+		enterID = ActionRegistrar.getInstance().registerAction(action);
+	}
+	
+	/**
+	 * @return
+	 */
+	public void press() {
+		ActionRegistrar.getInstance().getAction(mousePressID).performAction();
+	}
+	
+	/**
+	 * @return
+	 */
+	public void enter() {
+		ActionRegistrar.getInstance().getAction(enterID).performAction();
 	}
 	
 	/**
 	 * @param graphic
 	 * @return
 	 */
-	public abstract boolean update(AbstractEntity graphic) throws IncompatibleObjectException ;
+	public abstract boolean update(AbstractEntity graphic) throws IncompatibleObjectException;
 	
 	/**
 	 * @param g
 	 */
-	public abstract void paint(Graphics2D g, int scrollPosition) throws ResourceAccessException ;
-
+	public abstract void paint(Graphics2D g, int scrollPosition, Point mousePosition)
+			throws ResourceAccessException;
 
 }

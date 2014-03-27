@@ -12,7 +12,7 @@ public class GameProperties {
 	/**   */
 	public static final int FPS = 100;
 	
-	public static final String TITLE = "In Peace: A Ghost Story";
+	public static final String TITLE = "In Peace: A Ghost Story (Demo)";
 	
 	public static final int LAUNCH_STATE = StateManager.UWO_SPLASH;
 	
