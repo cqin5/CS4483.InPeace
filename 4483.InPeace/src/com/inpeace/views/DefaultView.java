@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.engine.GameProperties;
+import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
@@ -37,13 +38,10 @@ public class DefaultView extends Canvas implements AbstractView {
 	private static final long serialVersionUID = -1745144542387224115L;
 	
 	/**   */
-	private GraphicsController controller;
-	
-	/**   */
 	private BufferStrategy buffer;
 	
 	/**   */
-	private Point mousePosition;
+	private Point mousePosition = new Point(0, 0);
 	
 	/**   */
 	private int stateType = 0;
@@ -84,7 +82,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private ArrayList<AbstractEntity> hudObjects = null;
 	
 	/**   */
-	private ArrayList<Rectangle> hudScreenCoverage;
+	private ArrayList<Rectangle> hudScreenCoverage = null;
 	
 	
 	/*
@@ -104,7 +102,6 @@ public class DefaultView extends Canvas implements AbstractView {
 	 * @param controller
 	 */
 	public DefaultView(GraphicsController controller) {
-		this.controller = controller;
 		initialiser();
 	}
 	
@@ -331,8 +328,8 @@ public class DefaultView extends Canvas implements AbstractView {
 		if ((background.getWidth() - newScroll) < GameProperties.DEFAULT_WIDTH) {
 			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
 		}
-		controller.processRequest(new Request(GraphicsController.HORIZONTAL_SCROLL_POSITION, newScroll, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS));
+		MailRoom.getInstance().postRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, newScroll, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 	}
 	
 	

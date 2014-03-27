@@ -1,6 +1,5 @@
 package com.inpeace.events;
 
-import com.inpeace.engine.GameEngine;
 
 
 /**
@@ -24,8 +23,8 @@ public abstract class AbstractEvent {
 	 * @param time
 	 * @param eventID
 	 */
-	public AbstractEvent(Long time) {
-		setTime(time);
+	public AbstractEvent() {
+		setTime(0L);
 		setEventID(0);
 	}
 
@@ -79,6 +78,6 @@ public abstract class AbstractEvent {
 	/**
 	 * 
 	 */
-	public abstract void execute(GameEngine engine);
+	public abstract void execute();
 	
 }

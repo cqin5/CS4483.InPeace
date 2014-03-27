@@ -20,19 +20,19 @@ public abstract class AbstractEntity {
 
 	/**   */
 	private int depth;
-	
+
 	/**   */
 	protected Rectangle bounds;
-	
+
 	/**   */
 	private boolean mousePress;
-	
+
 	/**   */
 	private Integer mousePressID = null;
-	
+
 	/**   */
 	private Integer enterID = null;
-	
+
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
@@ -44,7 +44,7 @@ public abstract class AbstractEntity {
 		setMousePressAction(pressAction);
 		this.setEnterAction(enterAction);
 	}
-	
+
 	/**
 	 * Get the depth
 	 *
@@ -62,15 +62,17 @@ public abstract class AbstractEntity {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	
+
 	/**
 	 * @param x
 	 * @param y
 	 * @return
 	 */
 	public boolean contains(Point p) {
-		if (bounds.contains(p)) {
-			return true;
+		if (bounds != null) {
+			if (bounds.contains(p)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -92,42 +94,46 @@ public abstract class AbstractEntity {
 	public void setMousePress(boolean mousePress) {
 		this.mousePress = mousePress;
 	}
-	
+
 
 	/**
 	 * @param action
 	 */
 	public void setMousePressAction(AbstractAction action) {
-		mousePressID = ActionRegistrar.getInstance().registerAction(action);
+		if (action != null) {
+			mousePressID = ActionRegistrar.getInstance().registerAction(action);
+		}
 	}
-	
+
 	/**
 	 * @param action
 	 */
 	public void setEnterAction(AbstractAction action) {
-		enterID = ActionRegistrar.getInstance().registerAction(action);
+		if (action != null) {
+			enterID = ActionRegistrar.getInstance().registerAction(action);
+		}
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public void press() {
-		ActionRegistrar.getInstance().getAction(mousePressID).performAction();
+			ActionRegistrar.getInstance().getAction(mousePressID).performAction();
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public void enter() {
 		ActionRegistrar.getInstance().getAction(enterID).performAction();
 	}
-	
+
 	/**
 	 * @param graphic
 	 * @return
 	 */
 	public abstract boolean update(AbstractEntity graphic) throws IncompatibleObjectException;
-	
+
 	/**
 	 * @param g
 	 */

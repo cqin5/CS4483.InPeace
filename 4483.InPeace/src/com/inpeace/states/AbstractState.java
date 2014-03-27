@@ -1,6 +1,5 @@
 package com.inpeace.states;
 
-import com.inpeace.engine.GameEngine;
 
 /**
  * 
@@ -18,7 +17,7 @@ public abstract class AbstractState {
 	public static final int OVERLAY_SCREEN = 3;
 
 	/**   */
-	private final int type;
+	protected final int stateType;
 	
 	/**   */
 	private final int stateID;
@@ -34,7 +33,7 @@ public abstract class AbstractState {
 	 * @param historical
 	 */
 	public AbstractState(int type, int stateID, boolean historical) {
-		this.type = type;
+		this.stateType = type;
 		this.stateID = stateID;
 		this.historical = historical;
 	}
@@ -45,7 +44,7 @@ public abstract class AbstractState {
 	 * @return the type
 	 */
 	public int getType() {
-		return type;
+		return stateType;
 	}
 
 	/**
@@ -70,7 +69,7 @@ public abstract class AbstractState {
 	 * @param logic
 	 * @param data
 	 */
-	public abstract void load(GameEngine engine);
+	public abstract void load();
 	
 	/**
 	 * Close method, by default no action is performed on close. Subclasses must override

@@ -19,6 +19,8 @@ public class Scheduler {
 	/**   */
 	private Integer lastIssuedID = 0;
 	
+	private long runTime = 0;
+	
 	/**
 	 * Constructs a new Scheduler object.
 	 *
@@ -40,8 +42,9 @@ public class Scheduler {
 	/**
 	 * @param event
 	 */
-	public Integer registerEvent(AbstractEvent event) {
+	public Integer registerEvent(AbstractEvent event, int secondsUntil) {
 		event.setEventID(++lastIssuedID);
+		event.setTime(runTime + (1000 * secondsUntil));
 		schedule.add(event);
 		return lastIssuedID;
 	}
@@ -57,12 +60,19 @@ public class Scheduler {
 	 * @param time
 	 * @return
 	 */
-	public AbstractEvent getMaturedEvent(Long time) {
+	public AbstractEvent getMaturedEvent() {
 		if (schedule.size() > 0) {
-			if (schedule.get(0).getTime() <= time) {
-				return schedule.remove(0);
+			if (schedule.get(0).getTime().compareTo(runTime) <= 0) {
+				return schedule.removeFirst();
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * @param time
+	 */
+	public void updateRunTime(Long time) {
+		runTime = time;
 	}
 }

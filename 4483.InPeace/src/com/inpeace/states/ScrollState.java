@@ -2,8 +2,6 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
-import com.inpeace.engine.GameEngine;
-
 /**
  * 
  * 
@@ -50,7 +48,7 @@ public class ScrollState extends AbstractState {
 	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
 	 */
 	@Override
-	public void load(GameEngine engine) {
+	public void load() {
 		// TODO Auto-generated method stub
 		
 	}

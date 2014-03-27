@@ -63,7 +63,7 @@ public class StateManager {
 	 * @param stateID
 	 * @throws StateException
 	 */
-	public void loadState(GameEngine engine, int stateID) throws StateException {
+	public void loadState(int stateID) throws StateException {
 
 		if (stateID == PREVIOUS_HISTORICAL_STATE) {
 			stateID = history.back();
@@ -116,7 +116,7 @@ public class StateManager {
 		}
 		currentStateID = stateID;
 
-		history.getCurrentState().load(engine);
+		history.getCurrentState().load();
 	}
 
 }

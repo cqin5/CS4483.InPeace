@@ -1,7 +1,7 @@
 package com.inpeace.states;
 
 import com.inpeace.controllers.AbstractController;
-import com.inpeace.engine.GameEngine;
+import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.Scheduler;
 import com.inpeace.engine.StateManager;
@@ -48,15 +48,14 @@ public class SplashState extends AbstractState {
 	 * @see com.inpeace.states.AbstractState#load(com.inpeace.engine.GraphicsManager, com.inpeace.engine.AudioManager, com.inpeace.engine.LogicManager, com.inpeace.engine.DataManager)
 	 */
 	@Override
-	public void load(GameEngine engine) {
+	public void load() {
 		
 		DefaultGraphicsModel model = new DefaultGraphicsModel();
 		model.setBackgroundName(graphicName);
-		engine.postRequest(AbstractController.MODEL, model, 
+		MailRoom.getInstance().postRequest(AbstractController.MODEL, model, 
 				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
-		Scheduler.getInstance().registerEvent(new ChangeStateEvent(engine.getRunTime() + (1000 * duration),
-				StateManager.MAIN_MENU));
+		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
 		 
 		// TODO add audio and event to load
 		

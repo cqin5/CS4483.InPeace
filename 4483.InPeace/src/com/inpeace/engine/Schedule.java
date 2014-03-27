@@ -13,21 +13,21 @@ import com.inpeace.events.AbstractEvent;
  * @version 1.0
  * @since   26 Mar 2014
  */
-public class Schedule extends ArrayList<AbstractEvent> {
-
-	/** Eclipse generated version ID.  */
-	private static final long serialVersionUID = 8323157983870116071L;
+public class Schedule {
 
 	/**   */
-	Comparator<AbstractEvent> comparator;
+	private ArrayList<AbstractEvent> schedule;
+	
+	/**   */
+	private Comparator<AbstractEvent> comparator;
 
 	/**
 	 * Constructs a new Scheduler object.
 	 *
 	 */
 	public Schedule() {
-		super();
-		this.comparator = new Comparator<AbstractEvent>() {
+		schedule = new ArrayList<AbstractEvent>();
+		comparator = new Comparator<AbstractEvent>() {
 			@Override
 			public int compare(AbstractEvent o1, AbstractEvent o2) {
 				return o1.getTime().compareTo(o2.getTime());
@@ -35,13 +35,13 @@ public class Schedule extends ArrayList<AbstractEvent> {
 		};
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.ArrayList#add(java.lang.Object)
+	/**
+	 * @param event
+	 * @return
 	 */
-	@Override
 	public boolean add(AbstractEvent event) {
-		boolean result = add(event);
-		Collections.sort(this, comparator);
+		boolean result = schedule.add(event);
+		Collections.sort(schedule, comparator);
 		return result;
 	}
 
@@ -52,21 +52,31 @@ public class Schedule extends ArrayList<AbstractEvent> {
 	public AbstractEvent remove(Integer eventID) {
 		int i = indexOf(eventID);
 		if (i < 0) {
+			System.out.print("error");
 			return null;
 		}
-		return remove(i);
+		return schedule.remove(i);
+	}
+	
+	/**
+	 * @return
+	 */
+	public AbstractEvent removeFirst() {
+		if (schedule.isEmpty()) {
+			return null;
+		}
+		return schedule.remove(0);
 	}
 
 	/**
 	 * @param eventID
 	 * @return
 	 */
-	public AbstractEvent get(Integer eventID) {
-		int i = indexOf(eventID);
-		if (i < 0) {
+	public AbstractEvent get(int index) {
+		if (index < 0 || index >= schedule.size()) {
 			return null;
 		}
-		return get(i);
+		return schedule.get(index);
 	}
 
 	/**
@@ -74,12 +84,21 @@ public class Schedule extends ArrayList<AbstractEvent> {
 	 * @return
 	 */
 	private int indexOf(Integer eventID) {
-		for(int i = 0; i < size(); i++) {
-			if(get(i) != null && get(i).getEventID().equals(eventID)) {
-				return i;
+		for(int i = 0; i < schedule.size(); i++) {
+			if(schedule.get(i) != null) {
+				if (schedule.get(i).getEventID().equals(eventID)) {
+					return i;
+				}
 			}
 		}
 		return -1;
+	}
+	
+	/**
+	 * @return
+	 */
+	public int size() {
+		return schedule.size();
 	}
 	
 }

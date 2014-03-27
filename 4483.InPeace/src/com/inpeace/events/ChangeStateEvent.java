@@ -1,6 +1,6 @@
 package com.inpeace.events;
 
-import com.inpeace.engine.GameEngine;
+import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
 
@@ -20,8 +20,8 @@ public class ChangeStateEvent extends AbstractEvent {
 	 *
 	 * @param time
 	 */
-	public ChangeStateEvent(Long time, int newStateCode) {
-		super(time);
+	public ChangeStateEvent(int newStateCode) {
+		super();
 		this.newStateCode = newStateCode;
 	}
 
@@ -29,9 +29,9 @@ public class ChangeStateEvent extends AbstractEvent {
 	 * @see com.inpeace.events.AbstractEvent#perform(com.inpeace.engine.GameEngine)
 	 */
 	@Override
-	public void execute(GameEngine engine) {
-		engine.postRequest(StateManager.LOAD_STATE, newStateCode, Request.CHANGE_PROPERTY_REQUEST,
-				Request.ROUTE_TO_STATES);
+	public void execute() {
+		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, newStateCode, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 	}
 
 }

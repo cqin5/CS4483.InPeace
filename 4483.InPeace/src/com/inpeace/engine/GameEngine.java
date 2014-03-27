@@ -46,8 +46,8 @@ public class GameEngine implements Runnable {
 		running = true;
 		startTime = System.currentTimeMillis();
 
-		postRequest(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
+		routeRequest(new Request(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
 		
 		Thread graphicsThread = new Thread(graphics);
 		graphicsThread.start();
@@ -57,8 +57,10 @@ public class GameEngine implements Runnable {
 
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
-
+			
+			Scheduler.getInstance().updateRunTime(runTime);
 			executeMaturedEvents();
+			processRequests();
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);
@@ -76,25 +78,35 @@ public class GameEngine implements Runnable {
 	 * 
 	 */
 	public void executeMaturedEvents() {
-		AbstractEvent event = Scheduler.getInstance().getMaturedEvent(runTime);
+		AbstractEvent event = Scheduler.getInstance().getMaturedEvent();
 		while (event != null) {
-			event.execute(this);
-			event = Scheduler.getInstance().getMaturedEvent(runTime);
+			event.execute();
+			event = Scheduler.getInstance().getMaturedEvent();
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void processRequests() {
+		Request request = MailRoom.getInstance().getRequest();
+		while (request != null) {
+			routeRequest(request);
+			request = MailRoom.getInstance().getRequest();
 		}
 	}
 	
 	/**
 	 * @param request
 	 */
-	public void postRequest(String propertyName, Object value, int type, int routingCode) {
-		Request request = new Request(propertyName, value, type, routingCode);
+	private void routeRequest(Request request) {
 		switch (request.routingCode) {
 		case Request.ROUTE_TO_GRAPHICS:
 			graphics.makeChangeRequest(request);
 			break;
 		case Request.ROUTE_TO_STATES:
 			try {
-				states.loadState(this, (Integer) request.value);
+				states.loadState((Integer) request.value);
 			} catch (StateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
