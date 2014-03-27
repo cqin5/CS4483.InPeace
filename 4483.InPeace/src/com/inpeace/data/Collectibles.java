@@ -1,4 +1,4 @@
-package com.inpeace.collectibles;
+package com.inpeace.data;
 
 import java.io.Serializable;
 

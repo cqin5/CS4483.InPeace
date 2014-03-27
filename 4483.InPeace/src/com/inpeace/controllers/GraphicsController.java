@@ -18,6 +18,7 @@ public class GraphicsController extends AbstractController {
 	public static final String HUD_GRAPHIC_SPRITE_CODE = "HUDSpriteCode";
 	public static final String HUD_OBJECTS = "HUDObjects";
 	public static final String HUD_OBJECT_ENTITY = "HUDObjectEntity";
+	public static final String HUD_SCREEN_COVERAGE = "HUDScreenCoverage";
 	public static final String OVERLAY_GRAPHIC_SPRITE_CODE = "OverlaySpriteCode";
 	public static final String OVERLAY_OBJECTS = "OverlayObjects";
 	public static final String OVERLAY_OBJECT_ENTITY = "OverlayObjectEntity";

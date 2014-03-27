@@ -1,5 +1,6 @@
 package com.inpeace.models;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -22,6 +23,9 @@ public class HUDGraphicsModel extends AbstractModel {
 	/**   */
 	private TreeMap<Integer, AbstractEntity> objects;
 	
+	/**   */
+	private ArrayList<Rectangle> screenCoverage;
+	
 	/**
 	 * Constructs a new OverlayModel object.
 	 *
@@ -29,13 +33,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	public HUDGraphicsModel() {
 		spriteCode = "";
 		objects = new TreeMap<Integer, AbstractEntity>();
-	}
-	
-	/**
-	 * @return
-	 */
-	public String getHUDSpriteCode() {
-		return spriteCode;
+		screenCoverage = new ArrayList<Rectangle>();
 	}
 
 	/**
@@ -53,6 +51,23 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	public void clearHUDSpriteCode() {
 		setHUDSpriteCode("");
+	}
+	
+	/**
+	 * Set the screenCoverage
+	 *
+	 * @param screenCoverage the screenCoverage to set
+	 */
+	public void setHUDScreenCoverage(ArrayList<Rectangle> screenCoverage) {
+		this.screenCoverage = screenCoverage;
+		fireChange(GraphicsController.HUD_SCREEN_COVERAGE, this.screenCoverage);
+	}
+	
+	/**
+	 * 
+	 */
+	public void clearHUDScreenCoverage() {
+		setHUDScreenCoverage(new ArrayList<Rectangle>());
 	}
 
 	/**

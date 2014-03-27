@@ -2,8 +2,6 @@ package com.inpeace.data;
 
 import java.io.Serializable;
 
-import com.inpeace.collectibles.Collectibles;
-
 /**
  * 
  * 
