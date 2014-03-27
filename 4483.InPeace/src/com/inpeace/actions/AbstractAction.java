@@ -4,7 +4,7 @@ package com.inpeace.actions;
 
 /**
  * The extendible superclass of all actions.  Extend this class directly for actions that only post
- * requests to the game engine, and do not need to directly effect the entity to which they are
+ * requests to the game engine, and do not need to directly affect the entity to which they are
  * attached.
  * 
  * @author  James Anderson

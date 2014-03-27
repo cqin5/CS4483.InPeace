@@ -44,7 +44,7 @@ public class MainMenuState extends AbstractState {
 	public String[] getButtonSpriteCodes() {
 		return buttonSpriteCodes;
 	}
-
+	
 	/**
 	 * Get the backgroundName
 	 *
@@ -78,7 +78,10 @@ public class MainMenuState extends AbstractState {
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-		
+		AbstractState.SPLASH_SCREEN;
+		AbstractState.DEFAULT_SCREEN;
+		AbstractState.GAME_SCREEN;
+		AbstractState.OVERLAY_SCREEN;
 	}
 	
 }

@@ -38,6 +38,7 @@ public class StateManager {
 	public static final int SETTINGS_OVERLAY = 11;
 	public static final int SCROLL = 12;
 
+	/** A request property name.  */
 	public static final String LOAD_STATE = "loadState";
 
 	/**   */

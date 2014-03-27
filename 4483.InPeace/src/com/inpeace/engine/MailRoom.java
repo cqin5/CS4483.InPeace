@@ -49,11 +49,11 @@ public class MailRoom {
 	/**
 	 * @param propertyName
 	 * @param value
-	 * @param type
+	 * @param requestType
 	 * @param routingCode
 	 */
-	public void postRequest(String propertyName, Object value, int type, int routingCode) {
-		requests.add(new Request(propertyName, value, type, routingCode));
+	public void postRequest(String propertyName, Object value, int requestType, int... routingCodes) {
+		requests.add(new Request(propertyName, value, requestType, routingCodes));
 	}
 
 }

@@ -55,7 +55,7 @@ public class SplashState extends AbstractState {
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
-		 
+
 		// TODO add audio and event to load
 		
 	}
