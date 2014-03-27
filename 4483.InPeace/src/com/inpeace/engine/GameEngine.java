@@ -1,5 +1,6 @@
 package com.inpeace.engine;
 
+import com.inpeace.events.AbstractEvent;
 import com.inpeace.exceptions.StateException;
 
 /**
@@ -20,7 +21,6 @@ public class GameEngine implements Runnable {
 	/**   */
 	private GraphicsManager graphics;
 	private AudioManager audio;
-	private LogicManager logic;
 	private DataManager data;
 	private StateManager states;
 	private ControlManager controls;
@@ -35,7 +35,6 @@ public class GameEngine implements Runnable {
 		startTime = 0;
 		graphics = new GraphicsManager();
 		audio = new AudioManager();
-		logic = new LogicManager();
 		data = new DataManager();
 		states = new StateManager();
 		controls = new ControlManager(this);
@@ -61,7 +60,7 @@ public class GameEngine implements Runnable {
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
 
-			logic.executeMaturedEvents(this);
+			executeMaturedEvents();
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);
@@ -74,12 +73,16 @@ public class GameEngine implements Runnable {
 		//audioThread.interrupt();
 
 	}
-
+	
 	/**
-	 * @return
+	 * 
 	 */
-	public long getRunTime() {
-		return runTime;
+	public void executeMaturedEvents() {
+		AbstractEvent event = Scheduler.getInstance().getMaturedEvent(runTime);
+		while (event != null) {
+			event.execute(this);
+			event = Scheduler.getInstance().getMaturedEvent(runTime);
+		}
 	}
 	
 	/**
@@ -102,7 +105,17 @@ public class GameEngine implements Runnable {
 		case Request.ROUTE_TO_AUDIO:
 			audio.makeChangeRequest(request);
 			break;
+		case Request.ROUTE_TO_DATA:
+			data.makeChangeRequest(request);
+			break;
 		}
-		logic.makeChangeRequest(request);
 	}
+	
+	/**
+	 * @return
+	 */
+	public long getRunTime() {
+		return runTime;
+	}
+	
 }

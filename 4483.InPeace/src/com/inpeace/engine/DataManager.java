@@ -9,4 +9,7 @@ package com.inpeace.engine;
  */
 public class DataManager {
 
+	public void makeChangeRequest(Request request) {
+		//TODO
+	}
 }

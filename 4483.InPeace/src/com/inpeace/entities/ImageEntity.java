@@ -28,8 +28,8 @@ public class ImageEntity extends AbstractEntity {
 	/**   */
 	private Point position;
 	
-	public ImageEntity(int depth, int clickActionCode, String spriteCode, Point position) {
-		super(depth, clickActionCode);
+	public ImageEntity(int depth, EntityActions actions, String spriteCode, Point position) {
+		super(depth, actions);
 		this.spriteCode = spriteCode;
 		this.position = position;
 		this.image = null;

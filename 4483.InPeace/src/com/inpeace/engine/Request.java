@@ -19,7 +19,6 @@ public class Request {
 	public static final int ROUTE_TO_GRAPHICS = 0;
 	public static final int ROUTE_TO_STATES = 1;
 	public static final int ROUTE_TO_AUDIO = 2;
-	public static final int ROUTE_TO_LOGIC = 3;
 	public static final int ROUTE_TO_DATA = 4;
 
 	/**   */

@@ -21,17 +21,16 @@ public abstract class AbstractEntity {
 	/**   */
 	protected Rectangle bounds;
 	
-	/**   */
-	private Integer clickActionCode;
+	/** Mouse event actions.  */
+	private EntityActions actions;
 	
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
 	 * @param depth
 	 */
-	public AbstractEntity(int depth, int clickActionCode) {
+	public AbstractEntity(int depth, EntityActions actions) {
 		setDepth(depth);
-		setClickActionCode(clickActionCode);
 	}
 	
 	/**
@@ -65,6 +64,24 @@ public abstract class AbstractEntity {
 	}
 	
 	/**
+	 * Get the actions
+	 *
+	 * @return the actions
+	 */
+	public EntityActions getActions() {
+		return actions;
+	}
+
+	/**
+	 * Set the actions
+	 *
+	 * @param actions the actions to set
+	 */
+	public void setActions(EntityActions actions) {
+		this.actions = actions;
+	}
+	
+	/**
 	 * @param graphic
 	 * @return
 	 */
@@ -75,22 +92,5 @@ public abstract class AbstractEntity {
 	 */
 	public abstract void paint(Graphics2D g, int scrollPosition) throws ResourceAccessException ;
 
-	/**
-	 * Get the clickActionCode
-	 *
-	 * @return the clickActionCode
-	 */
-	public Integer getClickActionCode() {
-		return clickActionCode;
-	}
-
-	/**
-	 * Set the clickActionCode
-	 *
-	 * @param clickActionCode the clickActionCode to set
-	 */
-	public void setClickActionCode(Integer clickActionCode) {
-		this.clickActionCode = clickActionCode;
-	}
 
 }
