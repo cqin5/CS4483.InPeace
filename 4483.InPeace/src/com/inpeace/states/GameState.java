@@ -1,5 +1,7 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.StateManager.StateID;
+
 
 
 /**
@@ -19,7 +21,7 @@ public class GameState extends AbstractState {
 	 * @param historical
 	 */
 	public GameState() {
-		super(0, 0, false);
+		super(StateType.IN_GAME, StateID.GAME_PLAY, true);
 		// TODO Auto-generated constructor stub
 	}
 

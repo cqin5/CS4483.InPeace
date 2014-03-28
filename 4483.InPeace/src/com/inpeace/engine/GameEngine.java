@@ -1,5 +1,6 @@
 package com.inpeace.engine;
 
+import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.events.AbstractEvent;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.views.DefaultView;
@@ -98,7 +99,7 @@ public class GameEngine implements Runnable {
 		switch (request.routingCode) {
 		case Request.ROUTE_TO_STATES:
 			try {
-				states.loadState((Integer) request.value);
+				states.loadState((StateID) request.value);
 			} catch (StateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -24,6 +24,7 @@ import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
 import com.inpeace.states.AbstractState;
+import com.inpeace.states.AbstractState.StateType;
 
 /**
  * 
@@ -44,7 +45,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private Point mousePosition = new Point(0, 0);
 
 	/**   */
-	private int stateType = 0;
+	private StateType stateType = StateType.NONE;
 
 	/*
 	 * Background variables.
@@ -137,15 +138,27 @@ public class DefaultView extends Canvas implements AbstractView {
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
 		try {
-			repaintBackground(g);
-			if (stateType > AbstractState.SPLASH_SCREEN) {
+			switch (stateType) {
+			case SPLASH:
+				repaintBackground(g);
+				break;
+			case DEFAULT:
+				repaintBackground(g);
 				repaintForeground(g);
-			}
-			if (stateType == AbstractState.GAME_SCREEN) {
+				break;
+			case IN_GAME:
+				repaintBackground(g);
+				repaintForeground(g);
 				repaintHUD(g);
-			}
-			if (stateType == AbstractState.OVERLAY_SCREEN) {
+				break;
+			case OVERLAY:
+				repaintBackground(g);
+				repaintForeground(g);
+				repaintHUD(g);
 				repaintOverlay(g);
+				break;
+			default:
+				break;
 			}
 		} catch (ResourceAccessException e) {
 			// TODO Auto-generated catch block
@@ -173,7 +186,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private void repaintForeground(Graphics2D g) throws ResourceAccessException {				
 
 		boolean active = false;
-		if (stateType == AbstractState.GAME_SCREEN || stateType == AbstractState.DEFAULT_SCREEN) {
+		if (stateType == StateType.IN_GAME || stateType == StateType.DEFAULT) {
 			active = true;
 		}
 		if (foregroundObjects != null) {
@@ -194,7 +207,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 
 		boolean active = false;
-		if (stateType == AbstractState.GAME_SCREEN) {
+		if (stateType == StateType.IN_GAME) {
 			active = true;
 		}
 		if (hudObjects != null) {
@@ -222,7 +235,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 		
 		boolean active = false;
-		if (stateType == AbstractState.OVERLAY_SCREEN) {
+		if (stateType == StateType.OVERLAY) {
 			active = true;
 		}
 		if (overlayObjects != null) {
@@ -241,7 +254,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	public void update(PropertyChangeEvent e) {
 
 		if (e.getPropertyName().equals(AbstractState.STATE_TYPE)) {
-			stateType = (Integer) e.getNewValue();
+			stateType = (StateType) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(DefaultController.HORIZONTAL_SCROLL_POSITION)) {
 			scrollPosition = (Integer) e.getNewValue();
@@ -288,7 +301,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	public AbstractEntity getEntityAt(Point p) {
 		switch (stateType) {
-		case AbstractState.GAME_SCREEN:
+		case IN_GAME:
 			boolean hudSpace = false;
 			if (hudScreenCoverage != null) {
 				for (Rectangle bound: hudScreenCoverage) {
@@ -309,10 +322,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				break;
 			}
 			//Fall through is on purpose
-		case AbstractState.DEFAULT_SCREEN:
-			if (stateType == AbstractState.OVERLAY_SCREEN) {
-				System.out.print("error\n");
-			}
+		case DEFAULT:
 			if (foregroundObjects != null) {
 				for (AbstractEntity entity: foregroundObjects) {
 					if (entity.contains(p)) {
@@ -321,7 +331,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				}
 			}
 			break;
-		case AbstractState.OVERLAY_SCREEN:
+		case OVERLAY:
 			if (overlayObjects != null) {
 				for (AbstractEntity entity: overlayObjects) {
 					if (entity.contains(p)) {
@@ -329,6 +339,8 @@ public class DefaultView extends Canvas implements AbstractView {
 					}
 				}
 			}
+			break;
+		default:
 			break;
 		}
 		return null;

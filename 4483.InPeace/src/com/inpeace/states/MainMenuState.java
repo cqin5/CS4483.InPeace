@@ -8,7 +8,7 @@ import com.inpeace.actions.SoundFXAction;
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
-import com.inpeace.engine.StateManager;
+import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.models.DefaultGraphicsModel;
@@ -36,7 +36,7 @@ public class MainMenuState extends AbstractState {
 	 * @param historical
 	 */
 	public MainMenuState() {
-		super(AbstractState.DEFAULT_SCREEN, StateManager.MAIN_MENU, true);
+		super(StateType.DEFAULT, StateID.MAIN_MENU, true);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -71,7 +71,7 @@ public class MainMenuState extends AbstractState {
 	
 		ImageEntity entity = null;
 		try {
-			MultiAction action = new MultiAction(new ChangeStateAction(StateManager.SCROLL),
+			MultiAction action = new MultiAction(new ChangeStateAction(StateID.SCROLL),
 					new SoundFXAction("woow"));
 			entity = new ImageEntity(1, action, "1-0-0-128-128", true, true, 4, new Point(0,0));
 		} catch (EntityException e) {

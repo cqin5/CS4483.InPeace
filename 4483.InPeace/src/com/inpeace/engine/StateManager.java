@@ -25,19 +25,11 @@ import com.inpeace.states.SplashState;
 public class StateManager {
 
 	/** State id codes.  */
-	public static final int PREVIOUS_HISTORICAL_STATE = -1;
-	public static final int UWO_SPLASH = 1;
-	public static final int MAIN_MENU = 2;
-	public static final int LOAD_GAME = 3;
-	public static final int NEW_GAME = 4;
-	public static final int CREDITS = 5;
-	public static final int GAME_MENU = 6;
-	public static final int SETTINGS_SCREEN = 7;
-	public static final int COLLECTIBLES = 8;
-	public static final int GAME_PLAY = 9;
-	public static final int PAUSE_MENU = 10;
-	public static final int SETTINGS_OVERLAY = 11;
-	public static final int SCROLL = 12;
+	public static enum StateID {
+			PREVIOUS_HISTORICAL_STATE, UWO_SPLASH, MAIN_MENU, LOAD_GAME, NEW_GAME, 
+				CREDITS, GAME_MENU, SETTINGS_SCREEN, COLLECTIBLES, GAME_PLAY, PAUSE_MENU,
+				SETTINGS_OVERLAY, SCROLL
+	}
 
 	/** A request property name.  */
 	public static final String LOAD_STATE = "loadState";
@@ -46,7 +38,7 @@ public class StateManager {
 	private History history;
 
 	/**   */
-	private int currentStateID;
+	private StateID currentStateID;
 
 	/**
 	 * Constructs a new StateManager object.
@@ -54,7 +46,7 @@ public class StateManager {
 	 */
 	public StateManager() {
 		history = new History();
-		currentStateID = 0;
+		currentStateID = null;
 	}
 
 	/**
@@ -65,9 +57,9 @@ public class StateManager {
 	 * @param stateID
 	 * @throws StateException
 	 */
-	public void loadState(int stateID) throws StateException {
+	public void loadState(StateID stateID) throws StateException {
 
-		if (stateID == PREVIOUS_HISTORICAL_STATE) {
+		if (stateID == StateID.PREVIOUS_HISTORICAL_STATE) {
 			stateID = history.back();
 			if (currentStateID == stateID) {
 				throw new StateException("State change failed, already in state");
@@ -113,6 +105,8 @@ public class StateManager {
 				break;
 			case SCROLL:
 				history.registerState(new ScrollState());
+				break;
+			default:
 				break;
 			}
 		}

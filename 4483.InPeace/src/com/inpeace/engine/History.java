@@ -2,6 +2,7 @@ package com.inpeace.engine;
 
 import java.util.Stack;
 
+import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.states.AbstractState;
 
@@ -39,7 +40,7 @@ public class History {
 	/**
 	 * @throws StateException
 	 */
-	public int back() throws StateException {
+	public StateID back() throws StateException {
 		if (history.isEmpty()) {
 			throw new StateException("State History: unable to go back, no historical views registered");
 		}

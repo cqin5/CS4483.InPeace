@@ -1,5 +1,7 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.StateManager.StateID;
+
 
 /**
  * 
@@ -14,16 +16,15 @@ public abstract class AbstractState {
 	public static final String STATE_TYPE = "StateType";
 	
 	/** State type codes. */
-	public static final int SPLASH_SCREEN = 0;
-	public static final int DEFAULT_SCREEN = 1;
-	public static final int GAME_SCREEN = 2;
-	public static final int OVERLAY_SCREEN = 3;
+	public static enum StateType {
+		NONE, SPLASH, DEFAULT, IN_GAME, OVERLAY
+	}
 
 	/**   */
-	protected final int stateType;
+	protected final StateType stateType;
 	
 	/**   */
-	private final int stateID;
+	private final StateID id;
 	
 	/**   */
 	private final boolean historical;
@@ -32,12 +33,12 @@ public abstract class AbstractState {
 	 * Constructs a new AbstractState object.
 	 *
 	 * @param type
-	 * @param stateID
+	 * @param id
 	 * @param historical
 	 */
-	public AbstractState(int type, int stateID, boolean historical) {
+	public AbstractState(StateType type, StateID id, boolean historical) {
 		this.stateType = type;
-		this.stateID = stateID;
+		this.id = id;
 		this.historical = historical;
 	}
 	
@@ -46,7 +47,7 @@ public abstract class AbstractState {
 	 *
 	 * @return the type
 	 */
-	public int getType() {
+	public StateType getType() {
 		return stateType;
 	}
 
@@ -55,8 +56,8 @@ public abstract class AbstractState {
 	 *
 	 * @return the stateID
 	 */
-	public int getStateID() {
-		return stateID;
+	public StateID getStateID() {
+		return id;
 	}
 	
 	/**

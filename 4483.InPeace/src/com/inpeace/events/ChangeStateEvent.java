@@ -3,6 +3,7 @@ package com.inpeace.events;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
+import com.inpeace.engine.StateManager.StateID;
 
 /**
  * 
@@ -13,16 +14,16 @@ import com.inpeace.engine.StateManager;
  */
 public class ChangeStateEvent extends AbstractEvent {
 	
-	private final int newStateCode;
+	private final StateID newID;
 
 	/**
 	 * Constructs a new ChangeStateEvent object.
 	 *
 	 * @param time
 	 */
-	public ChangeStateEvent(int newStateCode) {
+	public ChangeStateEvent(StateID newID) {
 		super();
-		this.newStateCode = newStateCode;
+		this.newID = newID;
 	}
 
 	/* (non-Javadoc)
@@ -30,7 +31,7 @@ public class ChangeStateEvent extends AbstractEvent {
 	 */
 	@Override
 	public void execute() {
-		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, newStateCode, 
+		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, newID, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 	}
 

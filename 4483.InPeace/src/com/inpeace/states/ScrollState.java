@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
-import com.inpeace.engine.StateManager;
+import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.models.OverlayGraphicsModel;
 
 /**
@@ -27,7 +27,7 @@ public class ScrollState extends AbstractState {
 	 * @param historical
 	 */
 	public ScrollState() {
-		super(AbstractState.OVERLAY_SCREEN, StateManager.SCROLL, false);
+		super(StateType.OVERLAY, StateID.SCROLL, false);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,5 +1,7 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.StateManager.StateID;
+
 
 
 /**
@@ -19,7 +21,7 @@ public class PauseMenuState extends AbstractState {
 	 * @param historical
 	 */
 	public PauseMenuState() {
-		super(0, 0, false);
+		super(StateType.OVERLAY, StateID.PAUSE_MENU, true);
 		// TODO Auto-generated constructor stub
 	}
 

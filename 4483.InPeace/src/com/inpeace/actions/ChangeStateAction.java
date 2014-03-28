@@ -3,6 +3,7 @@ package com.inpeace.actions;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
+import com.inpeace.engine.StateManager.StateID;
 
 /**
  * 
@@ -14,15 +15,15 @@ import com.inpeace.engine.StateManager;
 public class ChangeStateAction extends AbstractAction {
 
 	/**   */
-	private int stateID;
+	private StateID newID;
 	
 	/**
 	 * Constructs a new CollectAction object.
 	 *
 	 * @param item
 	 */
-	public ChangeStateAction(int stateID) {
-		this.stateID = stateID;
+	public ChangeStateAction(StateID newID) {
+		this.newID = newID;
 	}
 
 	/* (non-Javadoc)
@@ -30,7 +31,7 @@ public class ChangeStateAction extends AbstractAction {
 	 */
 	@Override
 	public void performAction() {
-		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, stateID, 
+		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, newID, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
 		
 	}

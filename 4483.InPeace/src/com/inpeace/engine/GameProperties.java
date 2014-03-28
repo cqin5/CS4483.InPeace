@@ -1,5 +1,7 @@
 package com.inpeace.engine;
 
+import com.inpeace.engine.StateManager.StateID;
+
 /**
  * 
  * 
@@ -14,7 +16,7 @@ public class GameProperties {
 	
 	public static final String TITLE = "In Peace: A Ghost Story (Demo)";
 	
-	public static final int LAUNCH_STATE = StateManager.UWO_SPLASH;
+	public static final StateID LAUNCH_STATE = StateID.UWO_SPLASH;
 	
 	public static final int DEFAULT_WIDTH = 1440; //TODO: update with proper width
 	

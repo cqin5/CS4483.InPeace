@@ -1,5 +1,7 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.StateManager.StateID;
+
 
 
 /**
@@ -19,7 +21,7 @@ public class SettingsOverlayState extends AbstractState {
 	 * @param historical
 	 */
 	public SettingsOverlayState() {
-		super(0, 0, false);
+		super(StateType.OVERLAY, StateID.SETTINGS_OVERLAY, true);
 		// TODO Auto-generated constructor stub
 	}
 

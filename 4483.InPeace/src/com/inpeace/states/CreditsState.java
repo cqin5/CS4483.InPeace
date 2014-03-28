@@ -2,6 +2,8 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
+import com.inpeace.engine.StateManager.StateID;
+
 /**
  * 
  * 
@@ -19,7 +21,7 @@ public class CreditsState extends AbstractState {
 	 * @param historical
 	 */
 	public CreditsState() {
-		super(0, 0, false);
+		super(StateType.DEFAULT, StateID.CREDITS, false);
 		// TODO Auto-generated constructor stub
 	}
 

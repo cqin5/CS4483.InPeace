@@ -1,5 +1,7 @@
 package com.inpeace.states;
 
+import com.inpeace.engine.StateManager.StateID;
+
 
 
 /**
@@ -19,7 +21,7 @@ public class SettingsScreenState extends AbstractState {
 	 * @param historical
 	 */
 	public SettingsScreenState() {
-		super(0, 0, false);
+		super(StateType.DEFAULT, StateID.SETTINGS_SCREEN, true);
 		// TODO Auto-generated constructor stub
 	}
 
