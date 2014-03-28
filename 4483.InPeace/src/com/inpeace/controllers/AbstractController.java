@@ -48,7 +48,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 	/**
 	 * @param model
 	 */
-	public void deregisterMode(AbstractModel model) {
+	public void deregisterModel(AbstractModel model) {
 		registeredModels.remove(model);
 		model.removeListener(this);
 	}
@@ -96,7 +96,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 		}
 		else if (request.type == Request.DEREGISTRATION_REQUEST) {
 			if (request.propertyName.equals(MODEL)) {
-				deregisterMode((AbstractModel) request.value);
+				deregisterModel((AbstractModel) request.value);
 			}
 			else if (request.propertyName.equals(VIEW)) {
 				deregisterView((AbstractView) request.value);

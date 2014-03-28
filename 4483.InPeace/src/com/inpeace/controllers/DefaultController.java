@@ -8,7 +8,7 @@ package com.inpeace.controllers;
  * @version 1.0
  * @since   23 Mar 2014
  */
-public class GraphicsController extends AbstractController {
+public class DefaultController extends AbstractController {
 	
 	public static final String HORIZONTAL_SCROLL_POSITION = "HorizontalScrollPosition";
 	public static final String BACKGROUND_IMAGE_NAME = "BackgroundName";
@@ -21,5 +21,7 @@ public class GraphicsController extends AbstractController {
 	public static final String OVERLAY_GRAPHIC_SPRITE_CODE = "OverlaySpriteCode";
 	public static final String OVERLAY_OBJECTS = "OverlayObjects";
 	public static final String OVERLAY_OBJECT_ENTITY = "OverlayObjectEntity";
+	public static final String BACKGROUND_MUSIC_NAME = "MusicName";
+	public static final String SOUND_EFFECT = "SoundEffect";
 	
 }

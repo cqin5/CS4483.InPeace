@@ -3,12 +3,13 @@
 import java.awt.Point;
 
 import com.inpeace.actions.ChangeStateAction;
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.exceptions.EntityException;
+import com.inpeace.models.DefaultGraphicsModel;
 
 /**
  * 
@@ -62,9 +63,10 @@ public class MainMenuState extends AbstractState {
 	@Override
 	public void load() {
 		
-		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		DefaultGraphicsModel model = new DefaultGraphicsModel();
 		
+		model.setBackgroundName(backgroundName);
+	
 		ImageEntity entity = null;
 		try {
 			entity = new ImageEntity(1, new ChangeStateAction(StateManager.SCROLL), null, 
@@ -73,10 +75,11 @@ public class MainMenuState extends AbstractState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		MailRoom.getInstance().postRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, stateType, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		model.setForegroundObjectEntity(entity);
+		
+		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, model,
+				Request.REGISTRATION_REQUEST);
+		
 	}
 
 	/* (non-Javadoc)

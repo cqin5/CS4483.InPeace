@@ -2,12 +2,13 @@ package com.inpeace.engine;
 
 import com.inpeace.events.AbstractEvent;
 import com.inpeace.exceptions.StateException;
+import com.inpeace.views.DefaultView;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   23 Mar 2014
  */
 public class GameEngine implements Runnable {
@@ -19,8 +20,6 @@ public class GameEngine implements Runnable {
 	private long runTime, startTime;
 
 	/**   */
-	private GraphicsManager graphics;
-	private AudioManager audio;
 	private DataManager data;
 	private StateManager states;
 
@@ -32,8 +31,6 @@ public class GameEngine implements Runnable {
 		running = false;
 		runTime = 0;
 		startTime = 0;
-		graphics = new GraphicsManager();
-		audio = new AudioManager();
 		data = new DataManager();
 		states = new StateManager();
 	}
@@ -46,14 +43,13 @@ public class GameEngine implements Runnable {
 		running = true;
 		startTime = System.currentTimeMillis();
 
+		routeRequest(new Request(DataManager.VIEW, new DefaultView(),
+				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_DATA));
+		routeRequest(new Request(DataManager.VIEW, new AudioManager(), 
+				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_DATA));
+
 		routeRequest(new Request(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
-
-		Thread graphicsThread = new Thread(graphics);
-		graphicsThread.start();
-
-		//Thread audioThread = new Thread(audio);
-		//audioThread.start();
 
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
@@ -61,6 +57,7 @@ public class GameEngine implements Runnable {
 			Scheduler.getInstance().updateRunTime(runTime);
 			executeMaturedEvents();
 			processRequests();
+			data.callRefresh();
 
 			try {
 				Thread.sleep(1000 / GameProperties.FPS);
@@ -69,8 +66,6 @@ public class GameEngine implements Runnable {
 			}
 		}
 		running = false;
-		graphicsThread.interrupt();
-		//audioThread.interrupt();
 
 	}
 
@@ -100,26 +95,18 @@ public class GameEngine implements Runnable {
 	 * @param request
 	 */
 	private void routeRequest(Request request) {
-		for (int code: request.routingCodes) {
-			switch (code) {
-			case Request.ROUTE_TO_GRAPHICS:
-				graphics.makeChangeRequest(request);
-				break;
-			case Request.ROUTE_TO_STATES:
-				try {
-					states.loadState((Integer) request.value);
-				} catch (StateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-			case Request.ROUTE_TO_AUDIO:
-				audio.makeChangeRequest(request);
-				break;
-			case Request.ROUTE_TO_DATA:
-				data.makeChangeRequest(request);
-				break;
+		switch (request.routingCode) {
+		case Request.ROUTE_TO_STATES:
+			try {
+				states.loadState((Integer) request.value);
+			} catch (StateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			break;
+		case Request.ROUTE_TO_DATA:
+			data.makeChangeRequest(request);
+			break;
 		}
 	}
 

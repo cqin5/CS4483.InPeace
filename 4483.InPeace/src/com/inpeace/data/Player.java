@@ -2,11 +2,13 @@ package com.inpeace.data;
 
 import java.io.Serializable;
 
+import com.inpeace.levels.Level;
+
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   18 Mar 2014
  */
 public class Player implements Serializable {
@@ -15,16 +17,16 @@ public class Player implements Serializable {
 	private static final long serialVersionUID = 8771165689031839746L;
 	
 	/**   */
-	private String username;
+	private String username = null;
 	
 	/**   */
-	private Settings settings;
+	private Settings settings = null;
 	
 	/**   */
-	private Collectibles collectibles;
+	private Level currentLevel = null;
 	
 	/**   */
-	private Level currentLevel;
+	private boolean[] collectibles = null;
 
 	/**
 	 * Get the username
@@ -63,24 +65,6 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get the collectibles
-	 *
-	 * @return the collectibles
-	 */
-	public Collectibles getCollectibles() {
-		return collectibles;
-	}
-
-	/**
-	 * Set the collectibles
-	 *
-	 * @param collectibles the collectibles to set
-	 */
-	public void setCollectibles(Collectibles collectibles) {
-		this.collectibles = collectibles;
-	}
-
-	/**
 	 * Get the currentLevel
 	 *
 	 * @return the currentLevel
@@ -96,6 +80,30 @@ public class Player implements Serializable {
 	 */
 	public void setCurrentLevel(Level currentLevel) {
 		this.currentLevel = currentLevel;
+	}
+
+	/**
+	 * Get the collectibles
+	 *
+	 * @return the collectibles
+	 */
+	public boolean[] getCollectibles() {
+		return collectibles;
+	}
+
+	/**
+	 * Set the collectibles
+	 *
+	 * @param collectibles the collectibles to set
+	 */
+	public void setCollectibles(boolean[] collectibles) {
+		this.collectibles = collectibles;
+	}
+	
+	public void setCollected(int index) {
+		if (index < collectibles.length && index >= 0) {
+			collectibles[index] = true;
+		}
 	}
 
 }

@@ -3,7 +3,7 @@ package com.inpeace.models;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.states.AbstractState;
 
@@ -59,7 +59,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void setBackgroundName(String backgroundName) {
 		if (this.backgroundName != backgroundName) {
 			this.backgroundName = backgroundName;
-			fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName);
+			fireChange(DefaultController.BACKGROUND_IMAGE_NAME, backgroundName);
 		}
 	}
 	
@@ -71,15 +71,6 @@ public class DefaultGraphicsModel extends AbstractModel {
 	}
 
 	/**
-	 * Get the scrollPosition
-	 *
-	 * @return the scrollPosition
-	 */
-	public int getHorizontalScrollPosition() {
-		return scrollPosition;
-	}
-
-	/**
 	 * Set the scrollPosition
 	 *
 	 * @param scrollPosition the scrollPosition to set
@@ -87,7 +78,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void setHorizontalScrollPosition(Integer scrollPosition) {
 		if (this.scrollPosition != scrollPosition) {
 			this.scrollPosition = scrollPosition;
-			fireChange(GraphicsController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
+			fireChange(DefaultController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
 		}
 	}
 	
@@ -103,7 +94,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 */
 	public void setForegroundObjectEntity(AbstractEntity entity) {
 		objects.put(entity.getDepth(), entity);
-		fireChange(GraphicsController.FOREGROUND_OBJECTS, 
+		fireChange(DefaultController.FOREGROUND_OBJECTS, 
 				new ArrayList<AbstractEntity>(objects.values()));
 	}
 	
@@ -113,7 +104,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void clearForegroundObjectEntity(Integer depth) {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
-			fireChange(GraphicsController.FOREGROUND_OBJECTS,
+			fireChange(DefaultController.FOREGROUND_OBJECTS,
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
@@ -124,7 +115,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void clearForegroundObjects() {
 		if (objects != null) {
 			objects.clear();
-			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
+			fireChange(DefaultController.FOREGROUND_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}
@@ -134,13 +125,13 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName);
-		fireChange(GraphicsController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
+		fireChange(DefaultController.BACKGROUND_IMAGE_NAME, backgroundName);
+		fireChange(DefaultController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
 		if (objects != null || !objects.isEmpty()) {
-			fireChange(GraphicsController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
+			fireChange(DefaultController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
 		}
 		else {
-			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
+			fireChange(DefaultController.FOREGROUND_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}

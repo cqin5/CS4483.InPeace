@@ -3,7 +3,7 @@ package com.inpeace.models;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
 
 /**
@@ -43,7 +43,7 @@ public class OverlayGraphicsModel extends AbstractModel {
 	public void setOverlaySpriteCode(String spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
-			fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
+			fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	public void setOverlayObjectEntity(AbstractEntity entity) {
 		objects.put(entity.getDepth(), entity);
-		fireChange(GraphicsController.OVERLAY_OBJECTS, 
+		fireChange(DefaultController.OVERLAY_OBJECTS, 
 				new ArrayList<AbstractEntity>(objects.values()));
 	}
 
@@ -69,7 +69,7 @@ public class OverlayGraphicsModel extends AbstractModel {
 	public void clearOverlayObjectEntity(Integer depth) {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
-			fireChange(GraphicsController.OVERLAY_OBJECTS, 
+			fireChange(DefaultController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
@@ -80,7 +80,7 @@ public class OverlayGraphicsModel extends AbstractModel {
 	public void clearOverlayObjects() {
 		if (objects != null) {
 			objects.clear();
-			fireChange(GraphicsController.OVERLAY_OBJECTS, 
+			fireChange(DefaultController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}
@@ -90,13 +90,13 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
+		fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
 		if (objects != null || !objects.isEmpty()) {
-			fireChange(GraphicsController.OVERLAY_OBJECT_ENTITY, 
+			fireChange(DefaultController.OVERLAY_OBJECT_ENTITY, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 		else {
-			fireChange(GraphicsController.OVERLAY_OBJECTS, 
+			fireChange(DefaultController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}

@@ -1,11 +1,12 @@
 package com.inpeace.states;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.Scheduler;
 import com.inpeace.engine.StateManager;
 import com.inpeace.events.ChangeStateEvent;
+import com.inpeace.models.DefaultGraphicsModel;
 
 
 /**
@@ -49,14 +50,16 @@ public class SplashState extends AbstractState {
 	@Override
 	public void load() {
 		
-		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, getType(), 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		DefaultGraphicsModel model = new DefaultGraphicsModel();
+		
+		model.setBackgroundName(graphicName);
+		
+		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, model, 
+				Request.REGISTRATION_REQUEST);
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
 
-		// TODO add audio and event to load
+		// TODO add audio model
 		
 	}
 

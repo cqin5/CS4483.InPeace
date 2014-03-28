@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.controllers.DefaultController;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
@@ -45,12 +45,6 @@ public class DefaultView extends Canvas implements AbstractView {
 
 	/**   */
 	private int stateType = 0;
-
-	/**   */
-	//TODO: determine what to do about window size
-	private static final Dimension size = new Dimension(GameProperties.DEFAULT_WIDTH,
-			GameProperties.DEFAULT_HEIGHT);
-
 
 	/*
 	 * Background variables.
@@ -101,7 +95,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 *
 	 * @param controller
 	 */
-	public DefaultView(GraphicsController controller) {
+	public DefaultView() {
 		initialiser();
 	}
 
@@ -111,24 +105,27 @@ public class DefaultView extends Canvas implements AbstractView {
 	public void initialiser() {
 		JFrame window = new JFrame(GameProperties.TITLE);
 		JPanel panel = (JPanel) window.getContentPane();
+		Dimension size = new Dimension(GameProperties.DEFAULT_WIDTH, 
+				GameProperties.DEFAULT_HEIGHT);
 		panel.setPreferredSize(size);
 		panel.setLayout(null);
-
+		
 		setBounds(0, 0, size.width, size.height);
 		setBackground(Color.BLACK);
 		DefaultMouseAdapter adapter = new DefaultMouseAdapter(this);
 		addMouseListener(adapter);
 		addMouseMotionListener(adapter);
 		setIgnoreRepaint(true);
-		panel.add(this);
 
+		panel.add(this);
+		
 		window.pack();
 		window.setResizable(false);
 		window.setVisible(true);
-
+		
 		createBufferStrategy(2);
 		buffer = getBufferStrategy();
-
+		
 		requestFocus();
 	}
 
@@ -246,10 +243,10 @@ public class DefaultView extends Canvas implements AbstractView {
 		if (e.getPropertyName().equals(AbstractState.STATE_TYPE)) {
 			stateType = (Integer) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(GraphicsController.HORIZONTAL_SCROLL_POSITION)) {
+		else if (e.getPropertyName().equals(DefaultController.HORIZONTAL_SCROLL_POSITION)) {
 			scrollPosition = (Integer) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(GraphicsController.BACKGROUND_IMAGE_NAME)) {
+		else if (e.getPropertyName().equals(DefaultController.BACKGROUND_IMAGE_NAME)) {
 			try {
 				background = Librarian.getInstance().getBackground(e.getNewValue().toString());
 			} catch (ResourceAccessException e1) {
@@ -258,10 +255,10 @@ public class DefaultView extends Canvas implements AbstractView {
 			}
 		}
 
-		else if (e.getPropertyName().equals(GraphicsController.FOREGROUND_OBJECTS)) {
+		else if (e.getPropertyName().equals(DefaultController.FOREGROUND_OBJECTS)) {
 			foregroundObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(GraphicsController.HUD_GRAPHIC_SPRITE_CODE)) {
+		else if (e.getPropertyName().equals(DefaultController.HUD_GRAPHIC_SPRITE_CODE)) {
 			try {
 				hudGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
 			} catch (ResourceAccessException e1) {
@@ -269,10 +266,10 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.HUD_OBJECTS)) {
+		else if (e.getPropertyName().equals(DefaultController.HUD_OBJECTS)) {
 			hudObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
+		else if (e.getPropertyName().equals(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
 			try {
 				overlayGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
 			} catch (ResourceAccessException e1) {
@@ -280,7 +277,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(GraphicsController.OVERLAY_OBJECTS)) {
+		else if (e.getPropertyName().equals(DefaultController.OVERLAY_OBJECTS)) {
 			overlayObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
 	}
@@ -353,8 +350,8 @@ public class DefaultView extends Canvas implements AbstractView {
 		if ((background.getWidth() - newScroll) < GameProperties.DEFAULT_WIDTH) {
 			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
 		}
-		MailRoom.getInstance().postRequest(GraphicsController.HORIZONTAL_SCROLL_POSITION, newScroll, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		MailRoom.getInstance().postRequest(DefaultController.HORIZONTAL_SCROLL_POSITION, newScroll, 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_DATA);
 	}
 
 

@@ -2,10 +2,11 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
+import com.inpeace.models.OverlayGraphicsModel;
 
 /**
  * 
@@ -57,10 +58,12 @@ public class ScrollState extends AbstractState {
 	@Override
 	public void load() {
 		
-		MailRoom.getInstance().postRequest(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, graphicSpriteCode, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, stateType, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
+		OverlayGraphicsModel model = new OverlayGraphicsModel();
+		
+		model.setOverlaySpriteCode(graphicSpriteCode);
+
+		MailRoom.getInstance().postRequest(DataManager.OVERLAY_GRAPHICS_MODEL, model, 
+				Request.REGISTRATION_REQUEST);
 		
 		// TODO Auto-generated method stub
 		

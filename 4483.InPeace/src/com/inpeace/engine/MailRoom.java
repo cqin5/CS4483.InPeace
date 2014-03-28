@@ -52,8 +52,21 @@ public class MailRoom {
 	 * @param requestType
 	 * @param routingCode
 	 */
-	public void postRequest(String propertyName, Object value, int requestType, int... routingCodes) {
-		requests.add(new Request(propertyName, value, requestType, routingCodes));
+	public void postRequest(String propertyName, Object value, int requestType, int routingCode) {
+		requests.add(new Request(propertyName, value, requestType, routingCode));
+	}
+	
+	/**
+	 * @param propertyName
+	 * @param value
+	 * @param requestType
+	 */
+	public void postRequest(String propertyName, Object value, int requestType) {
+		requests.add(new Request(propertyName, value, requestType, Request.ROUTE_TO_DATA));
 	}
 
+	public void postRequest(String propertyName, Object value) {
+		requests.add(new Request(propertyName, value, Request.CHANGE_PROPERTY_REQUEST,
+				Request.ROUTE_TO_DATA));
+	}
 }

@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import com.inpeace.controllers.GraphicsController;
+import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
 
 /**
@@ -41,7 +41,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	public void setHUDSpriteCode(String spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
-			fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
+			fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	public void setHUDScreenCoverage(ArrayList<Rectangle> screenCoverage) {
 		this.screenCoverage = screenCoverage;
-		fireChange(GraphicsController.HUD_SCREEN_COVERAGE, this.screenCoverage);
+		fireChange(DefaultController.HUD_SCREEN_COVERAGE, this.screenCoverage);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	public void setHUDObjectEntity(AbstractEntity entity) {
 		objects.put(entity.getDepth(), entity);
-		fireChange(GraphicsController.HUD_OBJECTS, 
+		fireChange(DefaultController.HUD_OBJECTS, 
 				new ArrayList<AbstractEntity>(objects.values()));
 	}
 
@@ -84,7 +84,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	public void clearHUDObjectEntity(Integer depth) {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
-			fireChange(GraphicsController.HUD_OBJECTS, 
+			fireChange(DefaultController.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
@@ -95,7 +95,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	public void clearHUDObjects() {
 		if (objects != null) {
 			objects.clear();
-			fireChange(GraphicsController.HUD_OBJECTS, 
+			fireChange(DefaultController.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}
@@ -105,13 +105,13 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(GraphicsController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
+		fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
 		if (objects != null || !objects.isEmpty()) {
-			fireChange(GraphicsController.HUD_OBJECTS, 
+			fireChange(DefaultController.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 		else {
-			fireChange(GraphicsController.HUD_OBJECTS, 
+			fireChange(DefaultController.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 	}
