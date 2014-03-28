@@ -10,6 +10,9 @@ package com.inpeace.states;
  */
 public abstract class AbstractState {
 	
+	/** Property names.  */
+	public static final String STATE_TYPE = "StateType";
+	
 	/** State type codes. */
 	public static final int SPLASH_SCREEN = 0;
 	public static final int DEFAULT_SCREEN = 1;

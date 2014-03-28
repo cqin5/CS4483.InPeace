@@ -75,7 +75,7 @@ public class MainMenuState extends AbstractState {
 		}
 		MailRoom.getInstance().postRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(GraphicsController.STATE_TYPE, stateType, 
+		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, stateType, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 	}
 

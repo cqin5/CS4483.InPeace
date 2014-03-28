@@ -243,7 +243,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	@Override
 	public void update(PropertyChangeEvent e) {
 
-		if (e.getPropertyName().equals(GraphicsController.STATE_TYPE)) {
+		if (e.getPropertyName().equals(AbstractState.STATE_TYPE)) {
 			stateType = (Integer) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(GraphicsController.HORIZONTAL_SCROLL_POSITION)) {

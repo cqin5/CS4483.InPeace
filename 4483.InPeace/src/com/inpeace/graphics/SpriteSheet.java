@@ -75,7 +75,7 @@ public class SpriteSheet {
 			chunks[1] = Integer.toString(x + (columnsAcross * width));
 			chunks[2] = Integer.toString(y + (rowsDown * height));
 			
-			return chunks[0] + chunks[1] + chunks[2] + chunks[3] + chunks[4];
+			return chunks[0] + "-" + chunks[1] + "-" + chunks[2] + "-" + chunks[3] + "-" + chunks[4];
 		} catch (NumberFormatException e) {
 			return null;
 		}

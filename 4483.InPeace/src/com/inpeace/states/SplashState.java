@@ -51,8 +51,8 @@ public class SplashState extends AbstractState {
 		
 		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, graphicName, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, getStateID(), 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
+		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, getType(), 
+				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
 

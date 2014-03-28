@@ -59,7 +59,7 @@ public class ScrollState extends AbstractState {
 		
 		MailRoom.getInstance().postRequest(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, graphicSpriteCode, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
-		MailRoom.getInstance().postRequest(GraphicsController.STATE_TYPE, stateType, 
+		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, stateType, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
 		// TODO Auto-generated method stub

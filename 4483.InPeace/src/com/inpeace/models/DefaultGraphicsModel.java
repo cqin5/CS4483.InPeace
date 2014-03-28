@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.states.AbstractState;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void setStateType(Integer stateType) {
 		if (this.stateType != stateType) {
 			this.stateType = stateType;
-			fireChange(GraphicsController.STATE_TYPE, stateType);
+			fireChange(AbstractState.STATE_TYPE, stateType);
 		}
 	}
 	
