@@ -22,5 +22,4 @@ public class GameProperties {
 	
 	public static final int DEFAULT_VERTICAL_ALIGNMENT = 0;
 	
-	
 }

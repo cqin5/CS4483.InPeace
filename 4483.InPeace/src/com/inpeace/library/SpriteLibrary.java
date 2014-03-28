@@ -16,7 +16,7 @@ import com.inpeace.graphics.SpriteSheet;
 public class SpriteLibrary {
 
 	/**   */
-	private final String spritePath = "/com/inpeace/images/sprites/";
+	private static final String spritePath = "/com/inpeace/images/sprites/";
 
 	/**   */
 	HashMap<Integer, SpriteSheet> library;

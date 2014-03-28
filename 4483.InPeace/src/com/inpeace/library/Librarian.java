@@ -2,6 +2,8 @@ package com.inpeace.library;
 
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteSheet;
 
@@ -22,6 +24,9 @@ public class Librarian {
 	
 	/**   */
 	private BackgroundLibrary backgrounds;
+	
+	/**   */
+	private SoundLibrary sounds;
 
 	/**
 	 * Constructs a new SpriteLibrarian object.
@@ -30,6 +35,7 @@ public class Librarian {
 	private Librarian() {
 		sprites = new SpriteLibrary();
 		backgrounds = new BackgroundLibrary();
+		sounds = new SoundLibrary();
 	}
 
 	/**
@@ -80,6 +86,10 @@ public class Librarian {
 	 */
 	public BufferedImage getBackground(String name) throws ResourceAccessException {
 		return backgrounds.get(name);
+	}
+	
+	public Clip getSound(String name) throws ResourceAccessException {
+		return sounds.get(name);
 	}
 
 }

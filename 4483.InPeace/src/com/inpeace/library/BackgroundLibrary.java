@@ -16,7 +16,7 @@ import com.inpeace.graphics.BufferedImageLoader;
 public class BackgroundLibrary {
 
 	/**   */
-	private final String backgroundPath = "/com/inpeace/images/backgrounds/";
+	private static final String backgroundPath = "/com/inpeace/images/backgrounds/";
 	
 	/**   */
 	HashMap<String, BufferedImage> library;
@@ -51,7 +51,7 @@ public class BackgroundLibrary {
 	
 	/**
 	 * 
-	 * @param code
+	 * @param name
 	 * @throws ResourceAccessException
 	 */
 	private void add(String name) throws ResourceAccessException {
