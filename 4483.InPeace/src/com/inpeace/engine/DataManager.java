@@ -47,7 +47,7 @@ public class DataManager {
 	/**
 	 * @param request
 	 */
-	public void makeChangeRequest(Request request) {
+	public void makeRequest(Request request) {
 		if (request.type == Request.REGISTRATION_REQUEST) {
 			if (request.propertyName == VIEW) {
 				controller.registerView((AbstractView) request.value);

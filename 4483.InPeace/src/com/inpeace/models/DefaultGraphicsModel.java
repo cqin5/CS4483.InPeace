@@ -127,12 +127,13 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void fireAll() {
 		fireChange(DefaultController.BACKGROUND_IMAGE_NAME, backgroundName);
 		fireChange(DefaultController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
-		if (objects != null || !objects.isEmpty()) {
-			fireChange(DefaultController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
+		if (objects == null || objects.isEmpty()) {
+			fireChange(DefaultController.FOREGROUND_OBJECTS, 
+					new ArrayList<AbstractEntity>());
 		}
 		else {
 			fireChange(DefaultController.FOREGROUND_OBJECTS, 
-					new ArrayList<AbstractEntity>());
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 	

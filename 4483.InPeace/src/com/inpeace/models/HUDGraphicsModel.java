@@ -106,13 +106,13 @@ public class HUDGraphicsModel extends AbstractModel {
 	@Override
 	public void fireAll() {
 		fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
-		if (objects != null || !objects.isEmpty()) {
+		if (objects == null || objects.isEmpty()) {
 			fireChange(DefaultController.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 		else {
 			fireChange(DefaultController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntity>());
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 

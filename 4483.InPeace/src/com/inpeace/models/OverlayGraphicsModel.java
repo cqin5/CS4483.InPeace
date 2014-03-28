@@ -91,13 +91,13 @@ public class OverlayGraphicsModel extends AbstractModel {
 	@Override
 	public void fireAll() {
 		fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
-		if (objects != null || !objects.isEmpty()) {
+		if (objects == null || objects.isEmpty()) {
 			fireChange(DefaultController.OVERLAY_OBJECT_ENTITY, 
-					new ArrayList<AbstractEntity>(objects.values()));
+					new ArrayList<AbstractEntity>());
 		}
 		else {
 			fireChange(DefaultController.OVERLAY_OBJECTS, 
-					new ArrayList<AbstractEntity>());
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 

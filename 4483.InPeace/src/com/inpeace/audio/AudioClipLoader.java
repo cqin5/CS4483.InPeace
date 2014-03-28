@@ -23,8 +23,9 @@ public class AudioClipLoader {
 			clip = AudioSystem.getClip();
 			clip.open(stream);
 		} catch (Exception e) {
+			System.out.print(e.getMessage());
 			throw new ResourceAccessException("Opps! It appears there was trouble finding "
-					+ "the audio clip: " + relativePath + " (AudioClipLoader");
+					+ "the audio clip: " + relativePath + " (AudioClipLoader)");
 		}
 		return clip;
 	}

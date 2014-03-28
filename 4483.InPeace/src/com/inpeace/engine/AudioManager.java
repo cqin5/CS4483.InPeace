@@ -24,6 +24,11 @@ public class AudioManager implements AbstractView {
 	private Clip backgroundMusic = null;
 
 	private Queue<Clip> soundEffects = new LinkedList<Clip>();
+	
+	public AudioManager() {
+		backgroundMusic = null;
+		soundEffects = new LinkedList<Clip>();
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.views.AbstractView#update(java.beans.PropertyChangeEvent)
