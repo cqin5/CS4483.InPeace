@@ -42,7 +42,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	private BufferStrategy buffer;
 
 	/**   */
-	private Point mousePosition = new Point(0, 0);
+	private Point mousePosition = new Point(-1, -1);
 
 	/**   */
 	private StateType stateType = StateType.NONE;

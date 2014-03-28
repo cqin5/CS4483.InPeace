@@ -22,7 +22,7 @@ import com.inpeace.library.Librarian;
 public class ImageEntity extends AbstractEntity {
 
 	/**   */
-	private String defaultSpriteCode;
+	private final String defaultSpriteCode;
 
 	/**   */
 	private BufferedImage[][] images;

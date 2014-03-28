@@ -2,8 +2,9 @@ package com.inpeace.entities;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
-import com.inpeace.actions.AbstractAction;
+import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
@@ -14,6 +15,25 @@ import com.inpeace.exceptions.ResourceAccessException;
  * @since   27 Mar 2014
  */
 public class CharacterEntity extends AbstractEntity {
+	
+	/**   */
+	private final String defaultSpriteCode;
+	
+	/**   */
+	private int versionCount;
+	
+	/**   */
+	private int currentVersion;
+	
+	/**   */
+	private BufferedImage[][] images;
+	
+	/**   */
+	private boolean canRun;
+	
+	/**   */
+	private boolean walking;
+	private boolean running;
 
 	/**
 	 * Constructs a new CharacterEntity object.
@@ -23,10 +43,17 @@ public class CharacterEntity extends AbstractEntity {
 	 * @param enterAction
 	 * @param position
 	 */
-	public CharacterEntity(int depth, AbstractAction pressAction,
-			AbstractAction enterAction, Point position) {
-		super(depth, pressAction, enterAction, position);
-		// TODO Auto-generated constructor stub
+	public CharacterEntity(int depth, Point position, String defaultSpriteCode, int versionCount, 
+			boolean canRun) {
+		super(depth, null, null, position);
+		this.defaultSpriteCode = defaultSpriteCode;
+		currentVersion = 0;
+		int lines = 3;
+		if (canRun) {
+			lines = 5;
+		}
+		this.images = new BufferedImage[lines][currentVersion];
+		
 	}
 
 	/* (non-Javadoc)
@@ -37,6 +64,20 @@ public class CharacterEntity extends AbstractEntity {
 			boolean active) throws ResourceAccessException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void run(int speed) throws EntityException {
+		if (canRun) {
+			if (speed < 0) {
+				
+			}
+			else {
+				
+			}
+		}
+		else {
+			throw new EntityException("Character can not run");
+		}
 	}
 
 }

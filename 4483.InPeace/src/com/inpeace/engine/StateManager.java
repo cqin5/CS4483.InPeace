@@ -28,9 +28,9 @@ public class StateManager {
 
 	/** State id codes.  */
 	public static enum StateID {
-			PREVIOUS_HISTORICAL_STATE, UWO_SPLASH, MAIN_MENU, LOAD_GAME, NEW_GAME, 
-				CREDITS, GAME_MENU, SETTINGS_SCREEN, COLLECTIBLES, GAME_PLAY, PAUSE_MENU,
-				SETTINGS_OVERLAY, SCROLL
+		PREVIOUS_HISTORICAL_STATE, UWO_SPLASH, MAIN_MENU, LOAD_GAME, NEW_GAME, 
+		CREDITS, GAME_MENU, SETTINGS_SCREEN, COLLECTIBLES, GAME_PLAY, PAUSE_MENU,
+		SETTINGS_OVERLAY, SCROLL
 	}
 
 	/** A request property name.  */
@@ -62,7 +62,7 @@ public class StateManager {
 	public void loadState(StateID stateID) throws StateException {
 
 		AbstractState oldState = history.getCurrentState();
-		
+
 		if (stateID == StateID.PREVIOUS_HISTORICAL_STATE) {
 			stateID = history.back();
 			if (currentStateID == stateID) {
@@ -115,16 +115,20 @@ public class StateManager {
 			}
 		}
 		currentStateID = stateID;
-		
+
 		if (oldState == null) {
 			history.getCurrentState().load();
 		}
-		else if (oldState.getType() == StateType.OVERLAY 
-				&& history.getCurrentState().getType() != StateType.OVERLAY) {
-			
+		else if (oldState.getType() != StateType.OVERLAY) {
+			oldState.close();
 			history.getCurrentState().load();
+		} else {
+			oldState.close();
+			if (history.getCurrentState().getType() != StateType.OVERLAY) {
+				history.getCurrentState().load();
+			}
 		}
-		
+
 		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, history.getCurrentState().getType(), 
 				RequestType.CHANGE_PROPERTY);
 	}
