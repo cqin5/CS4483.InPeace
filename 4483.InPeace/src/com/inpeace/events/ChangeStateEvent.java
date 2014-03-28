@@ -1,7 +1,8 @@
 package com.inpeace.events;
 
 import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request;
+import com.inpeace.engine.Request.RequestType;
+import com.inpeace.engine.Request.RouteTo;
 import com.inpeace.engine.StateManager;
 import com.inpeace.engine.StateManager.StateID;
 
@@ -31,8 +32,8 @@ public class ChangeStateEvent extends AbstractEvent {
 	 */
 	@Override
 	public void execute() {
-		MailRoom.getInstance().postRequest(StateManager.LOAD_STATE, newID, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES);
+		MailRoom.getInstance().postRequest(StateManager.STATE, newID, 
+				RequestType.CHANGE_PROPERTY, RouteTo.STATES);
 	}
 
 }

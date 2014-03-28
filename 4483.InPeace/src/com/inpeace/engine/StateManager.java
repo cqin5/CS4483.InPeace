@@ -1,5 +1,6 @@
 package com.inpeace.engine;
 
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.states.AbstractState;
 import com.inpeace.states.CollectiblesState;
@@ -32,7 +33,7 @@ public class StateManager {
 	}
 
 	/** A request property name.  */
-	public static final String LOAD_STATE = "loadState";
+	public static final String STATE = "loadState";
 
 	/**   */
 	private History history;
@@ -115,7 +116,7 @@ public class StateManager {
 		history.getCurrentState().load();
 		
 		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, history.getCurrentState().getType(), 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_DATA);
+				RequestType.CHANGE_PROPERTY);
 	}
 
 }

@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.library.Librarian;
@@ -363,7 +363,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
 		}
 		MailRoom.getInstance().postRequest(DefaultController.HORIZONTAL_SCROLL_POSITION, newScroll, 
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_DATA);
+				RequestType.CHANGE_PROPERTY);
 	}
 
 

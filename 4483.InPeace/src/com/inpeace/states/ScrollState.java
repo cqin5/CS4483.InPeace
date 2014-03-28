@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.models.OverlayGraphicsModel;
 
@@ -63,7 +63,7 @@ public class ScrollState extends AbstractState {
 		model.setOverlaySpriteCode(graphicSpriteCode);
 
 		MailRoom.getInstance().postRequest(DataManager.OVERLAY_GRAPHICS_MODEL, model, 
-				Request.REGISTRATION_REQUEST);
+				RequestType.REGISTER);
 		
 		// TODO Auto-generated method stub
 		

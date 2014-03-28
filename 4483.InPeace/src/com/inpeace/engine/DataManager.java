@@ -1,6 +1,7 @@
 package com.inpeace.engine;
 
 import com.inpeace.controllers.DefaultController;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDGraphicsModel;
@@ -48,7 +49,7 @@ public class DataManager {
 	 * @param request
 	 */
 	public void makeRequest(Request request) {
-		if (request.type == Request.REGISTRATION_REQUEST) {
+		if (request.type == RequestType.REGISTER) {
 			if (request.propertyName == VIEW) {
 				controller.registerView((AbstractView) request.value);
 			}

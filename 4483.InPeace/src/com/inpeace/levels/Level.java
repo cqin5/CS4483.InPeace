@@ -18,6 +18,7 @@ public abstract class Level implements Serializable {
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = -7604971177826975662L;
 	
+	/**   */
 	private String musicName = null;
 	
 	/**   */
@@ -26,26 +27,12 @@ public abstract class Level implements Serializable {
 	/**   */
 	private ArrayList<AbstractEvent> events = null;
 	
+	/**
+	 * Constructs a new Level object.
+	 *
+	 */
 	public Level() {
 		construct();
-	}
-
-	/**
-	 * Get the musicName
-	 *
-	 * @return the musicName
-	 */
-	public String getMusicName() {
-		return musicName;
-	}
-
-	/**
-	 * Set the musicName
-	 *
-	 * @param musicName the musicName to set
-	 */
-	public void setMusicName(String musicName) {
-		this.musicName = musicName;
 	}
 
 	/**
@@ -64,6 +51,25 @@ public abstract class Level implements Serializable {
 	 */
 	public void setGraphicsModel(DefaultGraphicsModel graphicsModel) {
 		this.graphicsModel = graphicsModel;
+	}
+	
+
+	/**
+	 * Get the musicName
+	 *
+	 * @return the musicName
+	 */
+	public String getMusicName() {
+		return musicName;
+	}
+
+	/**
+	 * Set the musicName
+	 *
+	 * @param musicName the musicName to set
+	 */
+	public void setMusicName(String audioModel) {
+		this.musicName = audioModel;
 	}
 
 	/**

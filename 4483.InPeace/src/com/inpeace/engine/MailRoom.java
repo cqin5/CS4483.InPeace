@@ -3,6 +3,9 @@ package com.inpeace.engine;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.inpeace.engine.Request.RequestType;
+import com.inpeace.engine.Request.RouteTo;
+
 /**
  * 
  * 
@@ -52,21 +55,16 @@ public class MailRoom {
 	 * @param requestType
 	 * @param routingCode
 	 */
-	public void postRequest(String propertyName, Object value, int requestType, int routingCode) {
+	public void postRequest(String propertyName, Object value, RequestType requestType, RouteTo routingCode) {
 		requests.add(new Request(propertyName, value, requestType, routingCode));
 	}
 	
 	/**
 	 * @param propertyName
 	 * @param value
-	 * @param requestType
+	 * @param type
 	 */
-	public void postRequest(String propertyName, Object value, int requestType) {
-		requests.add(new Request(propertyName, value, requestType, Request.ROUTE_TO_DATA));
-	}
-
-	public void postRequest(String propertyName, Object value) {
-		requests.add(new Request(propertyName, value, Request.CHANGE_PROPERTY_REQUEST,
-				Request.ROUTE_TO_DATA));
+	public void postRequest(String propertyName, Object value, RequestType type) {
+		requests.add(new Request(propertyName, value, type, RouteTo.DATA));
 	}
 }

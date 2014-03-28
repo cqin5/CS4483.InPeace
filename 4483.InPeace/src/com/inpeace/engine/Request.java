@@ -11,21 +11,20 @@ package com.inpeace.engine;
 public class Request {
 	
 	/** Request type codes.  */
-	public static final int CLEAR_PROPERTY_REQUEST = 0;
-	public static final int CHANGE_PROPERTY_REQUEST = 1;
-	public static final int REGISTRATION_REQUEST = 2;
-	public static final int DEREGISTRATION_REQUEST = 3;
-	public static final int SAVE = 4;
+	public static enum RequestType {
+		CLEAR_PROPERTY, CHANGE_PROPERTY, REGISTER, DEREGISTER, SAVE, LOAD
+	}
 	
 	/** Routing codes.  */
-	public static final int ROUTE_TO_STATES = 1;
-	public static final int ROUTE_TO_DATA = 2;
+	public static enum RouteTo {
+		STATES, DATA
+	}
 
 	/**   */
-	public final int type;
+	public final RequestType type;
 	
 	/**   */
-	public final int routingCode;
+	public final RouteTo routingCode;
 	
 	/**   */
 	public final String propertyName;
@@ -39,10 +38,10 @@ public class Request {
 	 * @param propertyName
 	 * @param value
 	 */
-	public Request(String propertyName, Object value, int requestType, int routingCode) {
+	public Request(String propertyName, Object value, RequestType type, RouteTo routingCode) {
 		this.propertyName = propertyName;
 		this.value = value;
-		this.type = requestType;
+		this.type = type;
 		this.routingCode = routingCode;
 	}
 	

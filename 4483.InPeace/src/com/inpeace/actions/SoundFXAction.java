@@ -2,6 +2,7 @@ package com.inpeace.actions;
 
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.engine.MailRoom;
+import com.inpeace.engine.Request.RequestType;
 
 /**
  * 
@@ -29,7 +30,8 @@ public class SoundFXAction extends AbstractAction {
 	 */
 	@Override
 	public void performAction() {
-		MailRoom.getInstance().postRequest(DefaultController.SOUND_EFFECT, soundName);
+		MailRoom.getInstance().postRequest(DefaultController.SOUND_EFFECT, soundName,
+				RequestType.CHANGE_PROPERTY);
 	}
 
 }

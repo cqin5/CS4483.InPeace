@@ -1,5 +1,7 @@
 package com.inpeace.engine;
 
+import com.inpeace.engine.Request.RequestType;
+import com.inpeace.engine.Request.RouteTo;
 import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.events.AbstractEvent;
 import com.inpeace.exceptions.StateException;
@@ -45,12 +47,12 @@ public class GameEngine implements Runnable {
 		startTime = System.currentTimeMillis();
 
 		routeRequest(new Request(DataManager.VIEW, new DefaultView(),
-				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_DATA));
+				RequestType.REGISTER, RouteTo.DATA));
 		routeRequest(new Request(DataManager.VIEW, new AudioManager(), 
-				Request.REGISTRATION_REQUEST, Request.ROUTE_TO_DATA));
+				RequestType.REGISTER, RouteTo.DATA));
 
-		routeRequest(new Request(StateManager.LOAD_STATE, GameProperties.LAUNCH_STATE,
-				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_STATES));
+		routeRequest(new Request(StateManager.STATE, GameProperties.LAUNCH_STATE,
+				RequestType.CHANGE_PROPERTY, RouteTo.STATES));
 
 		while (running) {
 			runTime = System.currentTimeMillis() - startTime;
@@ -97,7 +99,7 @@ public class GameEngine implements Runnable {
 	 */
 	private void routeRequest(Request request) {
 		switch (request.routingCode) {
-		case Request.ROUTE_TO_STATES:
+		case STATES:
 			try {
 				states.loadState((StateID) request.value);
 			} catch (StateException e) {
@@ -105,7 +107,7 @@ public class GameEngine implements Runnable {
 				e.printStackTrace();
 			}
 			break;
-		case Request.ROUTE_TO_DATA:
+		case DATA:
 			data.makeRequest(request);
 			break;
 		}

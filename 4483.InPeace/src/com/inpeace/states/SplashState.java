@@ -2,7 +2,7 @@ package com.inpeace.states;
 
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.Scheduler;
 import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.events.ChangeStateEvent;
@@ -56,12 +56,12 @@ public class SplashState extends AbstractState {
 		graphicModel.setBackgroundName(graphicName);
 		
 		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, graphicModel, 
-				Request.REGISTRATION_REQUEST);
+				RequestType.REGISTER);
 		
 		AudioModel audioModel = new AudioModel();
 		audioModel.setMusicName("elevator");
 		MailRoom.getInstance().postRequest(DataManager.AUDIO_MODEL, audioModel, 
-				Request.REGISTRATION_REQUEST);
+				RequestType.REGISTER);
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateID.MAIN_MENU), duration);
 

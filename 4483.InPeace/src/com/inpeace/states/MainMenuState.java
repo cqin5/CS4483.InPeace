@@ -7,7 +7,7 @@ import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.SoundFXAction;
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.exceptions.EntityException;
@@ -81,7 +81,7 @@ public class MainMenuState extends AbstractState {
 		model.setForegroundObjectEntity(entity);
 		
 		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, model,
-				Request.REGISTRATION_REQUEST);
+				RequestType.REGISTER);
 		
 	}
 

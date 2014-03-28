@@ -82,27 +82,31 @@ public abstract class AbstractController implements PropertyChangeListener {
 	 */
 	public void processRequest(Request request) {
 
-		if (request.type == Request.CHANGE_PROPERTY_REQUEST ||
-				request.type == Request.CLEAR_PROPERTY_REQUEST) {
+		switch (request.type) {
+		case CHANGE_PROPERTY:
+			//Fall through on purpose
+		case CLEAR_PROPERTY:
 			processPropertyRequest(request);
-		}
-		else if (request.type == Request.REGISTRATION_REQUEST) {
-			if (request.propertyName.equals(MODEL)) {
-				registerModel((AbstractModel) request.value);
-			}
-			else if (request.propertyName.equals(VIEW)) {
-				registerView((AbstractView) request.value);
-			}
-		}
-		else if (request.type == Request.DEREGISTRATION_REQUEST) {
+			break;
+		case DEREGISTER:
 			if (request.propertyName.equals(MODEL)) {
 				deregisterModel((AbstractModel) request.value);
 			}
 			else if (request.propertyName.equals(VIEW)) {
 				deregisterView((AbstractView) request.value);
 			}
+			break;
+		case REGISTER:
+			if (request.propertyName.equals(MODEL)) {
+				registerModel((AbstractModel) request.value);
+			}
+			else if (request.propertyName.equals(VIEW)) {
+				registerView((AbstractView) request.value);
+			}
+			break;
+		default:
+			break;
 		}
-
 	}
 	
 	/**
@@ -111,14 +115,15 @@ public abstract class AbstractController implements PropertyChangeListener {
 	private void processPropertyRequest(Request request) {
 		try {
 			String methodName = "";
-			if (request.type == Request.CHANGE_PROPERTY_REQUEST) {
+			switch (request.type) {
+			case CHANGE_PROPERTY:
 				methodName =  "set" + request.propertyName;
-			}
-			else if (request.type == Request.CLEAR_PROPERTY_REQUEST) {
+				break;
+			case CLEAR_PROPERTY:
 				methodName =  "clear" + request.propertyName;
-			}
-			else {
-				throw new Exception();
+				break;
+			default:
+				throw new Exception();			
 			}
 
 			for (AbstractModel model: registeredModels) {
