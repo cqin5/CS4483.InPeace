@@ -3,6 +3,7 @@ package com.inpeace.engine;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.states.AbstractState;
+import com.inpeace.states.AbstractState.StateType;
 import com.inpeace.states.CollectiblesState;
 import com.inpeace.states.CreditsState;
 import com.inpeace.states.GameMenuState;
@@ -60,6 +61,8 @@ public class StateManager {
 	 */
 	public void loadState(StateID stateID) throws StateException {
 
+		StateType oldType = history.getCurrentState().getType();
+		
 		if (stateID == StateID.PREVIOUS_HISTORICAL_STATE) {
 			stateID = history.back();
 			if (currentStateID == stateID) {
@@ -112,8 +115,10 @@ public class StateManager {
 			}
 		}
 		currentStateID = stateID;
-
-		history.getCurrentState().load();
+		
+		if (oldType == StateType.OVERLAY && history.getCurrentState().getType() != StateType.OVERLAY) {
+			history.getCurrentState().load();
+		}
 		
 		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, history.getCurrentState().getType(), 
 				RequestType.CHANGE_PROPERTY);
