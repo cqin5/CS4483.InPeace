@@ -61,7 +61,7 @@ public class StateManager {
 	 */
 	public void loadState(StateID stateID) throws StateException {
 
-		StateType oldType = history.getCurrentState().getType();
+		AbstractState oldState = history.getCurrentState();
 		
 		if (stateID == StateID.PREVIOUS_HISTORICAL_STATE) {
 			stateID = history.back();
@@ -116,7 +116,12 @@ public class StateManager {
 		}
 		currentStateID = stateID;
 		
-		if (oldType == StateType.OVERLAY && history.getCurrentState().getType() != StateType.OVERLAY) {
+		if (oldState == null) {
+			history.getCurrentState().load();
+		}
+		else if (oldState.getType() == StateType.OVERLAY 
+				&& history.getCurrentState().getType() != StateType.OVERLAY) {
+			
 			history.getCurrentState().load();
 		}
 		

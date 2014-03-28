@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.states.AbstractState;
+import com.inpeace.states.AbstractState.StateType;
 
 /**
  * 
@@ -17,7 +18,7 @@ import com.inpeace.states.AbstractState;
 public class DefaultGraphicsModel extends AbstractModel {
 	
 	/** Type of state  */
-	private int stateType;
+	private StateType stateType;
 	
 	/** The name of the background image.  */
 	private String backgroundName;
@@ -35,7 +36,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public DefaultGraphicsModel() {
 		backgroundName = "";
 		scrollPosition = 0;
-		stateType = 0;
+		stateType = StateType.NONE;
 		objects = new TreeMap<Integer, AbstractEntity>();
 	}
 	
@@ -44,7 +45,7 @@ public class DefaultGraphicsModel extends AbstractModel {
 	 * 
 	 * @param stateType	the state type to set
 	 */
-	public void setStateType(Integer stateType) {
+	public void setStateType(StateType stateType) {
 		if (this.stateType != stateType) {
 			this.stateType = stateType;
 			fireChange(AbstractState.STATE_TYPE, stateType);

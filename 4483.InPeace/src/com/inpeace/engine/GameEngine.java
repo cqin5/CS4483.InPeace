@@ -108,7 +108,7 @@ public class GameEngine implements Runnable {
 			}
 			break;
 		case DATA:
-			data.makeRequest(request);
+			data.processRequest(request);
 			break;
 		}
 	}
