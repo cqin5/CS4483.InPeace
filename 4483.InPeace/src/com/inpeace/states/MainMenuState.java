@@ -3,6 +3,8 @@
 import java.awt.Point;
 
 import com.inpeace.actions.ChangeStateAction;
+import com.inpeace.actions.MultiAction;
+import com.inpeace.actions.SoundFXAction;
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
@@ -69,8 +71,9 @@ public class MainMenuState extends AbstractState {
 	
 		ImageEntity entity = null;
 		try {
-			entity = new ImageEntity(1, new ChangeStateAction(StateManager.SCROLL), null, 
-					"1-0-0-128-128", true, true, 4, new Point(0,0));
+			MultiAction action = new MultiAction(new ChangeStateAction(StateManager.SCROLL),
+					new SoundFXAction("woow"));
+			entity = new ImageEntity(1, action, "1-0-0-128-128", true, true, 4, new Point(0,0));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

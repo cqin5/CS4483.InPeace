@@ -1,6 +1,5 @@
 package com.inpeace.states;
 
-import com.inpeace.controllers.DefaultController;
 import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
@@ -52,15 +51,17 @@ public class SplashState extends AbstractState {
 	@Override
 	public void load() {
 		
-		DefaultGraphicsModel model = new DefaultGraphicsModel();
+		DefaultGraphicsModel graphicModel = new DefaultGraphicsModel();
 		
-		model.setBackgroundName(graphicName);
+		graphicModel.setBackgroundName(graphicName);
 		
-		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, model, 
+		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, graphicModel, 
 				Request.REGISTRATION_REQUEST);
-		MailRoom.getInstance().postRequest(DataManager.AUDIO_MODEL, new AudioModel(), 
+		
+		AudioModel audioModel = new AudioModel();
+		audioModel.setMusicName("elevator");
+		MailRoom.getInstance().postRequest(DataManager.AUDIO_MODEL, audioModel, 
 				Request.REGISTRATION_REQUEST);
-		MailRoom.getInstance().postRequest(DefaultController.SOUND_EFFECT, "woow");
 		
 		Scheduler.getInstance().registerEvent(new ChangeStateEvent(StateManager.MAIN_MENU), duration);
 

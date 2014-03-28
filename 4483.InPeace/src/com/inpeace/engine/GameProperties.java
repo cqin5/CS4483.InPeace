@@ -10,7 +10,7 @@ package com.inpeace.engine;
 public class GameProperties {
 
 	/**   */
-	public static final int FPS = 100;
+	public static final int FPS = 60;
 	
 	public static final String TITLE = "In Peace: A Ghost Story (Demo)";
 	

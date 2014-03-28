@@ -22,6 +22,9 @@ public class DefaultController extends AbstractController {
 	public static final String OVERLAY_OBJECTS = "OverlayObjects";
 	public static final String OVERLAY_OBJECT_ENTITY = "OverlayObjectEntity";
 	public static final String BACKGROUND_MUSIC_NAME = "MusicName";
+	public static final String BACKGROUND_MUSIC_VOLUME = "MusicVolume";
 	public static final String SOUND_EFFECT = "SoundEffect";
+	public static final String SOUND_EFFECTS_VOLUME = "FXVolume";
+	
 	
 }

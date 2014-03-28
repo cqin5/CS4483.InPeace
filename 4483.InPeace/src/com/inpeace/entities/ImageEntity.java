@@ -45,11 +45,11 @@ public class ImageEntity extends AbstractEntity {
 	 * @param mouseOverSpriteCode
 	 * @throws EntityException 
 	 */
-	public ImageEntity(int depth, AbstractAction pressAction, AbstractAction enterAction, 
-			String defaultSpriteCode, boolean highlightable, boolean pressable, 
-			int versionCount, Point position) throws EntityException {
+	public ImageEntity(int depth, AbstractAction pressAction, String defaultSpriteCode, 
+			boolean highlightable, boolean pressable, int versionCount, Point position)
+					throws EntityException {
 
-		super(depth, pressAction, enterAction, position);
+		super(depth, pressAction, null, position);
 		this.defaultSpriteCode = defaultSpriteCode;
 		this.versionCount = versionCount;
 		int lines = 1;

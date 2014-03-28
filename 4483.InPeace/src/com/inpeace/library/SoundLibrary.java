@@ -44,7 +44,7 @@ public class SoundLibrary {
 		clip = library.get(name);
 		if (clip == null) {
 			add(name);
-			return get(name);
+			return library.get(name);
 		}
 		return clip;
 	}
