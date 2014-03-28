@@ -1,5 +1,7 @@
 package com.inpeace.events;
 
+import com.inpeace.engine.LogicElement;
+
 
 
 /**
@@ -10,7 +12,7 @@ package com.inpeace.events;
  * @version 1.0
  * @since   26 Mar 2014
  */
-public abstract class AbstractEvent {
+public abstract class AbstractEvent implements LogicElement {
 
 	/**   */
 	private Long time;
@@ -75,10 +77,5 @@ public abstract class AbstractEvent {
 		}
 		return false;
 	}
-	
-	/**
-	 * 
-	 */
-	public abstract void execute();
 	
 }

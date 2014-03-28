@@ -146,7 +146,7 @@ public abstract class AbstractEntity {
 	 */
 	public void press() {
 		if (mousePressID != null && mousePressID != 0) {
-			ActionRegistrar.getInstance().getAction(mousePressID).performAction();
+			ActionRegistrar.getInstance().getAction(mousePressID).execute();
 		}
 	}
 
@@ -155,7 +155,7 @@ public abstract class AbstractEntity {
 	 */
 	public void enter() {
 		if (enterID != null && enterID != 0) {
-			ActionRegistrar.getInstance().getAction(enterID).performAction();
+			ActionRegistrar.getInstance().getAction(enterID).execute();
 		}
 	}
 

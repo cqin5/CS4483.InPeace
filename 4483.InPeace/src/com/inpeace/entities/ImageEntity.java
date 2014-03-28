@@ -9,7 +9,7 @@ import com.inpeace.actions.AbstractAction;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.ResourceAccessException;
-import com.inpeace.graphics.SpriteSheet;
+import com.inpeace.graphics.SpriteCodeUtility;
 import com.inpeace.library.Librarian;
 
 /**
@@ -110,25 +110,25 @@ public class ImageEntity extends AbstractEntity {
 	public void paint(Graphics2D g, int scrollPosition, Point mouse, boolean active) 
 			throws ResourceAccessException {
 		int x = getPosition().x - scrollPosition;
-		int width = SpriteSheet.getSpriteWidth(defaultSpriteCode);
+		int width = SpriteCodeUtility.getSpriteWidth(defaultSpriteCode);
 		if (x < (GameProperties.DEFAULT_WIDTH + width) && x > (0 - width)) {
 			if (active && isPressed()) {
 				if (images[pressedLine][currentVersion] == null) {
-					String code = SpriteSheet.convertCode(defaultSpriteCode, pressedLine, currentVersion);
+					String code = SpriteCodeUtility.convertCode(defaultSpriteCode, pressedLine, currentVersion);
 					images[pressedLine][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
 				g.drawImage(images[pressedLine][currentVersion] , x, getPosition().y, null);
 			}
 			else if (active && contains(mouse)) {
 				if (images[highlightLine][currentVersion] == null) {
-					String code = SpriteSheet.convertCode(defaultSpriteCode, highlightLine, currentVersion);
+					String code = SpriteCodeUtility.convertCode(defaultSpriteCode, highlightLine, currentVersion);
 					images[highlightLine][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
 				g.drawImage(images[highlightLine][currentVersion] , x, getPosition().y, null);
 			}
 			else {
 				if (images[0][currentVersion] == null) {
-					String code = SpriteSheet.convertCode(defaultSpriteCode, 0, currentVersion);
+					String code = SpriteCodeUtility.convertCode(defaultSpriteCode, 0, currentVersion);
 					images[0][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
 				g.drawImage(images[0][currentVersion] , x, getPosition().y, null);

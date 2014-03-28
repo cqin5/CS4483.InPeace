@@ -31,7 +31,7 @@ public class ChangeStateAction extends AbstractAction {
 	 * @see com.inpeace.actions.Action#performAction()
 	 */
 	@Override
-	public void performAction() {
+	public void execute() {
 		MailRoom.getInstance().postRequest(StateManager.STATE, newID, 
 				RequestType.CHANGE_PROPERTY, RouteTo.STATES);
 		

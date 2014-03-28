@@ -1,5 +1,7 @@
 package com.inpeace.actions;
 
+import com.inpeace.engine.LogicElement;
+
 /**
  * 
  * 
@@ -10,20 +12,20 @@ package com.inpeace.actions;
 public class MultiAction extends AbstractAction {
 	
 	/**   */
-	private AbstractAction[] actions;
+	private LogicElement[] elements;
 	
-	public MultiAction(AbstractAction... actions) {
-		this.actions = actions;
+	public MultiAction(LogicElement... elements) {
+		this.elements = elements;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.actions.AbstractAction#performAction()
 	 */
 	@Override
-	public void performAction() {
+	public void execute() {
 		
-		for (AbstractAction action: actions) {
-			action.performAction();
+		for (LogicElement element: elements) {
+			element.execute();
 		}
 	}
 

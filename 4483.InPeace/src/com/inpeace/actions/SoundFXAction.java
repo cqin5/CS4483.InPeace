@@ -29,7 +29,7 @@ public class SoundFXAction extends AbstractAction {
 	 * @see com.inpeace.actions.AbstractAction#performAction()
 	 */
 	@Override
-	public void performAction() {
+	public void execute() {
 		MailRoom.getInstance().postRequest(DefaultController.SOUND_EFFECT, soundName,
 				RequestType.CHANGE_PROPERTY);
 	}

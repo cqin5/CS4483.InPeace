@@ -1,5 +1,6 @@
 package com.inpeace.events;
 
+import com.inpeace.actions.AbstractAction;
 import com.inpeace.engine.Scheduler;
 
 /**
@@ -9,21 +10,28 @@ import com.inpeace.engine.Scheduler;
  * @version 1.0
  * @since   28 Mar 2014
  */
-public abstract class RecurringEvent extends AbstractEvent {
+public class RecurringEvent extends Event {
 	
 	/**   */
 	private double period;
-	
-	/**   */
-	private AbstractEvent event;
-	
+		
 	/**
 	 * Constructs a new AbstractRecurringEvent object.
 	 *
-	 * @param recurrancePeriodSeconds
+	 * @param periodSeconds
 	 */
-	public RecurringEvent(double recurrancePeriodSeconds, AbstractEvent event) {
-		this.period = recurrancePeriodSeconds;
+	public RecurringEvent(double periodSeconds, AbstractAction... actions) {
+		super(actions);
+		this.period = periodSeconds;
+	}
+
+	/**
+	 * Get the period
+	 *
+	 * @return the period
+	 */
+	public double getPeriod() {
+		return period;
 	}
 
 	/* (non-Javadoc)
@@ -31,7 +39,7 @@ public abstract class RecurringEvent extends AbstractEvent {
 	 */
 	@Override
 	public void execute() {
-		event.execute();
+		super.execute();
 		Scheduler.getInstance().registerEvent(this, period);
 	}
 

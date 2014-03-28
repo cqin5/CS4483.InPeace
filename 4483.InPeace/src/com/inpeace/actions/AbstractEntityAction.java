@@ -10,7 +10,7 @@ import com.inpeace.entities.AbstractEntity;
  * @version 1.0
  * @since   27 Mar 2014
  */
-public class AbstractEntityAction {
+public abstract class AbstractEntityAction extends AbstractAction {
 	
 	/**   */
 	private final AbstractEntity entity;

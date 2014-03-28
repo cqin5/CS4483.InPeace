@@ -1,5 +1,7 @@
 package com.inpeace.actions;
 
+import com.inpeace.engine.LogicElement;
+
 
 
 /**
@@ -11,7 +13,7 @@ package com.inpeace.actions;
  * @version 1.0
  * @since   18 Mar 2014
  */
-public abstract class AbstractAction {
+public abstract class AbstractAction implements LogicElement {
 	
 	/**   */
 	private Integer actionID = 0;
@@ -33,10 +35,5 @@ public abstract class AbstractAction {
 	public void setActionID(Integer actionID) {
 		this.actionID = actionID;
 	}
-	
-	/**
-	 * 
-	 */
-	public abstract void performAction();
 	
 }
