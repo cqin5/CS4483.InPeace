@@ -10,7 +10,7 @@ import com.inpeace.exceptions.ResourceAccessException;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   27 Mar 2014
  */
 public class CharacterEntity extends AbstractEntity {
@@ -21,10 +21,11 @@ public class CharacterEntity extends AbstractEntity {
 	 * @param depth
 	 * @param pressAction
 	 * @param enterAction
+	 * @param position
 	 */
 	public CharacterEntity(int depth, AbstractAction pressAction,
-			AbstractAction enterAction) {
-		super(depth, pressAction, enterAction);
+			AbstractAction enterAction, Point position) {
+		super(depth, pressAction, enterAction, position);
 		// TODO Auto-generated constructor stub
 	}
 

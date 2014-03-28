@@ -34,9 +34,6 @@ public class ImageEntity extends AbstractEntity {
 	private int pressedLine;
 
 	/**   */
-	private Point position;
-
-	/**   */
 	private int currentVersion;
 
 	/**
@@ -52,10 +49,9 @@ public class ImageEntity extends AbstractEntity {
 			String defaultSpriteCode, boolean highlightable, boolean pressable, 
 			int versionCount, Point position) throws EntityException {
 
-		super(depth, pressAction, enterAction);
+		super(depth, pressAction, enterAction, position);
 		this.defaultSpriteCode = defaultSpriteCode;
 		this.versionCount = versionCount;
-		this.position = position;
 		int lines = 1;
 		if (highlightable && pressable) {
 			highlightLine = 1;
@@ -85,20 +81,11 @@ public class ImageEntity extends AbstractEntity {
 	}
 
 	/**
-	 * Get the position
-	 *
-	 * @return the position
-	 */
-	public Point getPosition() {
-		return position;
-	}
-
-	/**
 	 * 
 	 */
 	private void setBounds() {
 		String[] chunks = defaultSpriteCode.split("-");
-		bounds = new Rectangle(position.x, position.y, Integer.parseInt(chunks[3]), 
+		bounds = new Rectangle(getPosition().x, getPosition().y, Integer.parseInt(chunks[3]), 
 				Integer.parseInt(chunks[4]));
 	}
 
@@ -122,7 +109,7 @@ public class ImageEntity extends AbstractEntity {
 	@Override
 	public void paint(Graphics2D g, int scrollPosition, Point mouse, boolean active) 
 			throws ResourceAccessException {
-		int x = position.x - scrollPosition;
+		int x = getPosition().x - scrollPosition;
 		int width = SpriteSheet.getSpriteWidth(defaultSpriteCode);
 		if (x < (GameProperties.DEFAULT_WIDTH + width) && x > (0 - width)) {
 			if (active && isPressed()) {
@@ -130,21 +117,21 @@ public class ImageEntity extends AbstractEntity {
 					String code = SpriteSheet.convertCode(defaultSpriteCode, pressedLine, currentVersion);
 					images[pressedLine][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
-				g.drawImage(images[pressedLine][currentVersion] , x, position.y, null);
+				g.drawImage(images[pressedLine][currentVersion] , x, getPosition().y, null);
 			}
 			else if (active && contains(mouse)) {
 				if (images[highlightLine][currentVersion] == null) {
 					String code = SpriteSheet.convertCode(defaultSpriteCode, highlightLine, currentVersion);
 					images[highlightLine][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
-				g.drawImage(images[highlightLine][currentVersion] , x, position.y, null);
+				g.drawImage(images[highlightLine][currentVersion] , x, getPosition().y, null);
 			}
 			else {
 				if (images[0][currentVersion] == null) {
 					String code = SpriteSheet.convertCode(defaultSpriteCode, 0, currentVersion);
 					images[0][currentVersion] = Librarian.getInstance().getSprite(code);
 				}
-				g.drawImage(images[0][currentVersion] , x, position.y, null);
+				g.drawImage(images[0][currentVersion] , x, getPosition().y, null);
 			}
 		}
 	}

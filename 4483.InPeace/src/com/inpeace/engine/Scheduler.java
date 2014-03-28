@@ -42,9 +42,9 @@ public class Scheduler {
 	/**
 	 * @param event
 	 */
-	public Integer registerEvent(AbstractEvent event, int secondsUntil) {
+	public Integer registerEvent(AbstractEvent event, double secondsUntil) {
 		event.setEventID(++lastIssuedID);
-		event.setTime(runTime + (1000 * secondsUntil));
+		event.setTime(runTime + (long)(1000 * secondsUntil));
 		schedule.add(event);
 		return lastIssuedID;
 	}
