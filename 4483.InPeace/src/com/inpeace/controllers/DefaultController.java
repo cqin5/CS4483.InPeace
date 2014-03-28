@@ -26,5 +26,4 @@ public class DefaultController extends AbstractController {
 	public static final String SOUND_EFFECT = "SoundEffect";
 	public static final String SOUND_EFFECTS_VOLUME = "FXVolume";
 	
-	
 }

@@ -33,7 +33,7 @@ public class StateManager {
 	}
 
 	/** A request property name.  */
-	public static final String STATE = "loadState";
+	public static final String STATE = "State";
 
 	/**   */
 	private History history;
