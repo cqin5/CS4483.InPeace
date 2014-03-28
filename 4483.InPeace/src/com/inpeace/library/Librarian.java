@@ -66,7 +66,11 @@ public class Librarian {
 	 * @throws ResourceAccessException
 	 */
 	public BufferedImage getSprite(String spriteCode) throws ResourceAccessException {
-		return getSpriteSheet(spriteCode).getSprite(spriteCode);
+		SpriteSheet sheet = getSpriteSheet(spriteCode);
+		if (sheet != null) {
+			return sheet.getSprite(spriteCode);
+		}
+		return null;
 	}
 	
 	/**

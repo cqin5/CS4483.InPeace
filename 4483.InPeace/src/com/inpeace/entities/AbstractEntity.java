@@ -6,7 +6,6 @@ import java.awt.Rectangle;
 
 import com.inpeace.actions.AbstractAction;
 import com.inpeace.engine.ActionRegistrar;
-import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
@@ -25,7 +24,7 @@ public abstract class AbstractEntity {
 	protected Rectangle bounds;
 
 	/**   */
-	private boolean mousePress;
+	private boolean pressed;
 
 	/**   */
 	private Integer mousePressID = null;
@@ -40,9 +39,9 @@ public abstract class AbstractEntity {
 	 */
 	public AbstractEntity(int depth, AbstractAction pressAction, AbstractAction enterAction) {
 		setDepth(depth);
-		setMousePress(false);
+		setPressed(false);
 		setMousePressAction(pressAction);
-		this.setEnterAction(enterAction);
+		setEnterAction(enterAction);
 	}
 
 	/**
@@ -78,21 +77,21 @@ public abstract class AbstractEntity {
 	}
 
 	/**
-	 * Get the mousePress
+	 * Get the pressed
 	 *
-	 * @return the mousePress
+	 * @return the pressed
 	 */
-	public boolean isMousePress() {
-		return mousePress;
+	public boolean isPressed() {
+		return pressed;
 	}
 
 	/**
-	 * Set the mousePress
+	 * Set the pressed
 	 *
-	 * @param mousePress the mousePress to set
+	 * @param pressed the pressed to set
 	 */
-	public void setMousePress(boolean mousePress) {
-		this.mousePress = mousePress;
+	public void setPressed(boolean pressed) {
+		this.pressed = pressed;
 	}
 
 
@@ -137,12 +136,6 @@ public abstract class AbstractEntity {
 			ActionRegistrar.getInstance().getAction(enterID).performAction();
 		}
 	}
-
-	/**
-	 * @param graphic
-	 * @return
-	 */
-	public abstract boolean update(AbstractEntity graphic) throws IncompatibleObjectException;
 
 	/**
 	 * @param g

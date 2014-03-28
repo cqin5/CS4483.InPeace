@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.inpeace.actions.AbstractAction;
-import com.inpeace.exceptions.IncompatibleObjectException;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
@@ -27,16 +26,6 @@ public class CharacterEntity extends AbstractEntity {
 			AbstractAction enterAction) {
 		super(depth, pressAction, enterAction);
 		// TODO Auto-generated constructor stub
-	}
-
-	/* (non-Javadoc)
-	 * @see com.inpeace.entities.AbstractEntity#update(com.inpeace.entities.AbstractEntity)
-	 */
-	@Override
-	public boolean update(AbstractEntity graphic)
-			throws IncompatibleObjectException {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	/* (non-Javadoc)

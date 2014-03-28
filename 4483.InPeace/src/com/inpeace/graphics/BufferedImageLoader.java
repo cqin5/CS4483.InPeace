@@ -1,7 +1,6 @@
 package com.inpeace.graphics;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -26,9 +25,9 @@ public final class BufferedImageLoader {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(BufferedImageLoader.class.getResource(relativePath));
-		} catch (IOException e) {
-			throw new ResourceAccessException("Opps! It appears we were "
-					+ "unable to load the image: " + relativePath + " (BufferedImageLoader");
+		} catch (Exception e) {
+			throw new ResourceAccessException("Opps! It appears there was trouble finding "
+					+ "the image: " + relativePath + " (BufferedImageLoader");
 		}
 		return img;
 	}

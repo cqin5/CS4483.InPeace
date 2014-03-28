@@ -37,6 +37,9 @@ public class BackgroundLibrary {
 	 */
 	public BufferedImage get(String name) throws ResourceAccessException {
 		BufferedImage background = null;
+		if (name.equals("")) {
+			return null;
+		}
 		name.toLowerCase();
 		background = library.get(name);
 		if (background == null) {
@@ -52,7 +55,6 @@ public class BackgroundLibrary {
 	 * @throws ResourceAccessException
 	 */
 	private void add(String name) throws ResourceAccessException {
-		name.toLowerCase();
 		library.put(name, BufferedImageLoader.loadImage(backgroundPath + name + ".jpg"));
 	}
 	

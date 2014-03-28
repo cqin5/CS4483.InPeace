@@ -392,7 +392,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		public void mousePressed(MouseEvent e) {
 			pressedEntity = view.getEntityAt(e.getPoint());
 			if (pressedEntity != null) {
-				pressedEntity.setMousePress(true);
+				pressedEntity.setPressed(true);
 				pressedEntity.press();
 			}
 		}
@@ -402,7 +402,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		 */
 		public void mouseReleased(MouseEvent e) {
 			if (pressedEntity != null) {
-				pressedEntity.setMousePress(false);
+				pressedEntity.setPressed(false);
 
 			}
 			dragPosX = -1;

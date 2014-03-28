@@ -5,7 +5,6 @@ import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.entities.AbstractEntity;
-import com.inpeace.exceptions.IncompatibleObjectException;
 
 /**
  * 
@@ -57,47 +56,19 @@ public class OverlayGraphicsModel extends AbstractModel {
 
 	/**
 	 * @param entity
-	 * @throws IncompatibleObjectException
 	 */
-	public void setOverlayObjectEntity(AbstractEntity entity)
-			throws IncompatibleObjectException {
-		if (!objects.containsKey(entity.getDepth())) {
-			addObjectEntity(entity, entity.getDepth());
-		}
-		else {
-			updateObjectEntity(entity, entity.getDepth());		
-		}
+	public void setOverlayObjectEntity(AbstractEntity entity) {
+		objects.put(entity.getDepth(), entity);
+		fireChange(GraphicsController.OVERLAY_OBJECTS, 
+				new ArrayList<AbstractEntity>(objects.values()));
 	}
-	
+
 	/**
 	 * @param depth
 	 */
 	public void clearOverlayObjectEntity(Integer depth) {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
-			fireChange(GraphicsController.OVERLAY_OBJECTS, 
-					new ArrayList<AbstractEntity>(objects.values()));
-		}
-	}
-
-	/**
-	 * @param graphic
-	 * @param depth
-	 */
-	private void addObjectEntity(AbstractEntity graphic, int depth) {
-		objects.put(depth, graphic);
-		fireChange(GraphicsController.OVERLAY_OBJECTS, 
-				new ArrayList<AbstractEntity>(objects.values()));
-	}
-
-	/**
-	 * @param graphic
-	 * @param depth
-	 * @throws IncompatibleObjectException 
-	 */
-	private void updateObjectEntity(AbstractEntity graphic, int depth)
-			throws IncompatibleObjectException {
-		if (objects.get(depth).update(graphic)) {
 			fireChange(GraphicsController.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
@@ -120,8 +91,14 @@ public class OverlayGraphicsModel extends AbstractModel {
 	@Override
 	public void fireAll() {
 		fireChange(GraphicsController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
-		fireChange(GraphicsController.OVERLAY_OBJECTS, 
-				new ArrayList<AbstractEntity>());
+		if (objects != null || !objects.isEmpty()) {
+			fireChange(GraphicsController.OVERLAY_OBJECT_ENTITY, 
+					new ArrayList<AbstractEntity>(objects.values()));
+		}
+		else {
+			fireChange(GraphicsController.OVERLAY_OBJECTS, 
+					new ArrayList<AbstractEntity>());
+		}
 	}
 
 }

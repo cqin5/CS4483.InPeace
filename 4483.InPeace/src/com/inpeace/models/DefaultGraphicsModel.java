@@ -5,7 +5,6 @@ import java.util.TreeMap;
 
 import com.inpeace.controllers.GraphicsController;
 import com.inpeace.entities.AbstractEntity;
-import com.inpeace.exceptions.IncompatibleObjectException;
 
 /**
  * 
@@ -100,16 +99,11 @@ public class DefaultGraphicsModel extends AbstractModel {
 
 	/**
 	 * @param entity
-	 * @throws IncompatibleObjectException
 	 */
-	public void setForegroundObjectEntity(AbstractEntity entity)
-			throws IncompatibleObjectException {
-		if (!objects.containsKey(entity.getDepth())) {
-			addObjectEntity(entity, entity.getDepth());
-		}
-		else {
-			updateObjectEntity(entity, entity.getDepth());		
-		}
+	public void setForegroundObjectEntity(AbstractEntity entity) {
+		objects.put(entity.getDepth(), entity);
+		fireChange(GraphicsController.FOREGROUND_OBJECTS, 
+				new ArrayList<AbstractEntity>(objects.values()));
 	}
 	
 	/**
@@ -119,29 +113,6 @@ public class DefaultGraphicsModel extends AbstractModel {
 		if (objects.containsKey(depth)) {
 			objects.remove(depth);
 			fireChange(GraphicsController.FOREGROUND_OBJECTS,
-					new ArrayList<AbstractEntity>(objects.values()));
-		}
-	}
-
-	/**
-	 * @param graphic
-	 * @param depth
-	 */
-	private void addObjectEntity(AbstractEntity graphic, int depth) {
-		objects.put(depth, graphic);
-		fireChange(GraphicsController.FOREGROUND_OBJECTS, 
-				new ArrayList<AbstractEntity>(objects.values()));
-	}
-
-	/**
-	 * @param graphic
-	 * @param depth
-	 * @throws IncompatibleObjectException 
-	 */
-	private void updateObjectEntity(AbstractEntity graphic, int depth)
-			throws IncompatibleObjectException {
-		if (objects.get(depth).update(graphic)) {
-			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
@@ -164,7 +135,13 @@ public class DefaultGraphicsModel extends AbstractModel {
 	public void fireAll() {
 		fireChange(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName);
 		fireChange(GraphicsController.HORIZONTAL_SCROLL_POSITION, scrollPosition);
-		fireChange(GraphicsController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
+		if (objects != null || !objects.isEmpty()) {
+			fireChange(GraphicsController.FOREGROUND_OBJECTS, new ArrayList<AbstractEntity>());
+		}
+		else {
+			fireChange(GraphicsController.FOREGROUND_OBJECTS, 
+					new ArrayList<AbstractEntity>());
+		}
 	}
 	
 }

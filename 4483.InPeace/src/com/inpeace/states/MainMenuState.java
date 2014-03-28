@@ -8,6 +8,7 @@ import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request;
 import com.inpeace.engine.StateManager;
 import com.inpeace.entities.ImageEntity;
+import com.inpeace.exceptions.EntityException;
 
 /**
  * 
@@ -64,8 +65,14 @@ public class MainMenuState extends AbstractState {
 		MailRoom.getInstance().postRequest(GraphicsController.BACKGROUND_IMAGE_NAME, backgroundName, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		
-		ImageEntity entity = new ImageEntity(1, new ChangeStateAction(StateManager.SCROLL), null, 
-				"1-0-0-128-128", "1-0-128-128-128", "1-0-256-128-128", new Point(0,0));
+		ImageEntity entity = null;
+		try {
+			entity = new ImageEntity(1, new ChangeStateAction(StateManager.SCROLL), null, 
+					"1-0-0-128-128", true, true, 4, new Point(0,0));
+		} catch (EntityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		MailRoom.getInstance().postRequest(GraphicsController.FOREGROUND_OBJECT_ENTITY, entity, 
 				Request.CHANGE_PROPERTY_REQUEST, Request.ROUTE_TO_GRAPHICS);
 		MailRoom.getInstance().postRequest(GraphicsController.STATE_TYPE, stateType, 

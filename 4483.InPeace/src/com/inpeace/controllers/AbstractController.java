@@ -42,7 +42,7 @@ public abstract class AbstractController implements PropertyChangeListener {
 	public void registerModel(AbstractModel model) {
 		registeredModels.add(model);
 		model.addListener(this);
-		//model.fireAll();
+		model.fireAll();
 	}
 
 	/**

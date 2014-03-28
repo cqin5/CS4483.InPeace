@@ -14,13 +14,13 @@ import com.inpeace.graphics.SpriteSheet;
  * @since   23 Mar 2014
  */
 public class SpriteLibrary {
-	
+
 	/**   */
 	private final String spritePath = "/com/inpeace/images/sprites/";
-	
+
 	/**   */
 	HashMap<Integer, SpriteSheet> library;
-		
+
 	/**
 	 * Constructs a new SpriteLibrary object.
 	 *
@@ -52,10 +52,18 @@ public class SpriteLibrary {
 	 * @throws ResourceAccessException
 	 */
 	public SpriteSheet getSheet(String spriteCode) throws ResourceAccessException {
-		String[] chunks = spriteCode.split("-");
-		return getSheet(Integer.parseInt(chunks[0]));
+		if (spriteCode.equals("")) {
+			return null;
+		}
+		try {
+			String[] chunks = spriteCode.split("-");
+			return getSheet(Integer.parseInt(chunks[0]));
+		} catch (NumberFormatException e) {
+			throw new ResourceAccessException("Opps! It seems " + spriteCode 
+					+ " is not a valid spriteCode:(  (SpriteLibrary)");
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @param sheetNum
@@ -65,5 +73,5 @@ public class SpriteLibrary {
 		library.put(sheetNum, new SpriteSheet(BufferedImageLoader.loadImage(
 				spritePath + sheetNum + ".png")));
 	}
-	
+
 }
