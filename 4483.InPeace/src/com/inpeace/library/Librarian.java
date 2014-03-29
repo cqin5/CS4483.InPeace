@@ -25,9 +25,6 @@ public class Librarian {
 	/**   */
 	private BackgroundLibrary backgrounds;
 	
-	/**   */
-	private SoundLibrary sounds;
-
 	/**
 	 * Constructs a new SpriteLibrarian object.
 	 *
@@ -35,7 +32,6 @@ public class Librarian {
 	private Librarian() {
 		sprites = new SpriteLibrary();
 		backgrounds = new BackgroundLibrary();
-		sounds = new SoundLibrary();
 	}
 
 	/**
@@ -89,7 +85,7 @@ public class Librarian {
 	}
 	
 	public Clip getSound(String name) throws ResourceAccessException {
-		return sounds.get(name);
+		return SoundLibrary.get(name);
 	}
 
 }
