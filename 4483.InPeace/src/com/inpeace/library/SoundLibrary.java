@@ -23,6 +23,7 @@ public class SoundLibrary {
 	 * @throws ResourceAccessException
 	 */
 	public static Clip get(String name) throws ResourceAccessException {
+		name.toLowerCase();
 		return AudioLoader.loadAudio(soundsPath + name + ".wav");
 	}
 
