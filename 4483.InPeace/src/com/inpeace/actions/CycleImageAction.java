@@ -1,12 +1,13 @@
 package com.inpeace.actions;
 
-import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.AbstractImageEntity;
+import com.inpeace.exceptions.EntityException;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   28 Mar 2014
  */
 public class CycleImageAction extends AbstractEntityAction {
@@ -16,9 +17,8 @@ public class CycleImageAction extends AbstractEntityAction {
 	 *
 	 * @param entity
 	 */
-	public CycleImageAction(AbstractEntity entity) {
+	public CycleImageAction(AbstractImageEntity entity) {
 		super(entity);
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -26,8 +26,15 @@ public class CycleImageAction extends AbstractEntityAction {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+		int currentVersion = ((AbstractImageEntity) getEntity()).getCurrentVersion();
+		try {
+			((AbstractImageEntity) getEntity()).setCurrentVersion(currentVersion);
+		} catch (EntityException e) {
+			try {
+				((AbstractImageEntity) getEntity()).setCurrentVersion(0);
+			} catch (EntityException e1) {
+				//NULL BODY
+			}
+		}		
 	}
-
 }

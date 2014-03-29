@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.BufferedImageLoader;
+import com.inpeace.graphics.SpriteCode;
 import com.inpeace.graphics.SpriteSheet;
 
 /**
@@ -19,7 +20,7 @@ public class SpriteLibrary {
 	private static final String spritePath = "/com/inpeace/images/sprites/";
 
 	/**   */
-	HashMap<Integer, SpriteSheet> library;
+	private HashMap<Integer, SpriteSheet> library;
 
 	/**
 	 * Constructs a new SpriteLibrary object.
@@ -30,48 +31,25 @@ public class SpriteLibrary {
 	}
 
 	/**
-	 * 
-	 * @param sheetNum
+	 * @param code
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSheet(int sheetNum) throws ResourceAccessException {
-		SpriteSheet sheet = null;
-		sheet = library.get(sheetNum);
-		if (sheet == null) {
-			add(sheetNum);
-			return getSheet(sheetNum);
+	public SpriteSheet getSheet(SpriteCode code) throws ResourceAccessException {
+		if (!library.containsKey(code.sheet)) {
+			add(code);
 		}
-		return sheet;
+		return library.get(code.sheet);
 	}
 
 	/**
-	 * 
-	 * @param spriteCode
-	 * @return
+	 * @param code
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSheet(String spriteCode) throws ResourceAccessException {
-		if (spriteCode.equals("")) {
-			return null;
-		}
-		try {
-			String[] chunks = spriteCode.split("-");
-			return getSheet(Integer.parseInt(chunks[0]));
-		} catch (NumberFormatException e) {
-			throw new ResourceAccessException("Opps! It seems " + spriteCode 
-					+ " is not a valid spriteCode:(  (SpriteLibrary)");
-		}
+	private void add(SpriteCode code) throws ResourceAccessException {
+		library.put(code.sheet, new SpriteSheet(BufferedImageLoader.loadImage(
+				spritePath + code.sheet + ".png")));
 	}
-
-	/**
-	 * 
-	 * @param sheetNum
-	 * @throws ResourceAccessException
-	 */
-	private void add(int sheetNum) throws ResourceAccessException {
-		library.put(sheetNum, new SpriteSheet(BufferedImageLoader.loadImage(
-				spritePath + sheetNum + ".png")));
-	}
+	
 
 }

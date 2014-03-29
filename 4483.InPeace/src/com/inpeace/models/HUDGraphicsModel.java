@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.graphics.SpriteCode;
 
 /**
  * 
@@ -17,7 +18,7 @@ import com.inpeace.entities.AbstractEntity;
 public class HUDGraphicsModel extends AbstractModel {
 
 	/**   */
-	private String spriteCode;
+	private SpriteCode spriteCode;
 
 	/**   */
 	private TreeMap<Integer, AbstractEntity> objects;
@@ -30,7 +31,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 *
 	 */
 	public HUDGraphicsModel() {
-		spriteCode = "";
+		spriteCode = null;
 		objects = new TreeMap<Integer, AbstractEntity>();
 		screenCoverage = new ArrayList<Rectangle>();
 	}
@@ -38,7 +39,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	/**
 	 * @param spriteCode
 	 */
-	public void setHUDSpriteCode(String spriteCode) {
+	public void setHUDSpriteCode(SpriteCode spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
 			fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
@@ -49,7 +50,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 * 
 	 */
 	public void clearHUDSpriteCode() {
-		setHUDSpriteCode("");
+		setHUDSpriteCode(null);
 	}
 
 	/**

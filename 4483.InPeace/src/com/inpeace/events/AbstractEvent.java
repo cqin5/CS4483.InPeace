@@ -64,7 +64,9 @@ public abstract class AbstractEvent implements LogicElement {
 	 * @param eventID the eventID to set
 	 */
 	public void setEventID(Integer eventID) {
-		this.eventID = eventID;
+		if (eventID == 0) {
+			this.eventID = eventID;
+		}
 	}
 
 	/**

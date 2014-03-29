@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.graphics.SpriteCode;
 
 /**
  * 
@@ -16,7 +17,7 @@ import com.inpeace.entities.AbstractEntity;
 public class OverlayGraphicsModel extends AbstractModel {
 
 	/**   */
-	private String spriteCode;
+	private SpriteCode spriteCode;
 
 	/**   */
 	private TreeMap<Integer, AbstractEntity> objects;
@@ -26,21 +27,21 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 *
 	 */
 	public OverlayGraphicsModel() {
-		spriteCode = "";
+		spriteCode = null;
 		objects = new TreeMap<Integer, AbstractEntity>();
 	}
 
 	/**
 	 * @return
 	 */
-	public String getOverlaySpriteCode() {
+	public SpriteCode getOverlaySpriteCode() {
 		return spriteCode;
 	}
 
 	/**
 	 * @param spriteCode
 	 */
-	public void setOverlaySpriteCode(String spriteCode) {
+	public void setOverlaySpriteCode(SpriteCode spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
 			fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
@@ -51,7 +52,7 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 * 
 	 */
 	public void clearOverlaySpriteCode() {
-		setOverlaySpriteCode("");
+		setOverlaySpriteCode(null);
 	}
 
 	/**

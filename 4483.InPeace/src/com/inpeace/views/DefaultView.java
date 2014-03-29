@@ -22,6 +22,7 @@ import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.SpriteCode;
 import com.inpeace.library.Librarian;
 import com.inpeace.states.AbstractState;
 import com.inpeace.states.AbstractState.StateType;
@@ -273,7 +274,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 		else if (e.getPropertyName().equals(DefaultController.HUD_GRAPHIC_SPRITE_CODE)) {
 			try {
-				hudGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
+				hudGraphic = Librarian.getInstance().getSprite((SpriteCode) e.getNewValue());
 			} catch (ResourceAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -284,7 +285,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 		else if (e.getPropertyName().equals(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
 			try {
-				overlayGraphic = Librarian.getInstance().getSprite((String) e.getNewValue());
+				overlayGraphic = Librarian.getInstance().getSprite((SpriteCode) e.getNewValue());
 			} catch (ResourceAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

@@ -3,14 +3,14 @@ package com.inpeace.entities;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.inpeace.actions.CycleImageAction;
+import com.inpeace.actions.MoveEntityAction;
 import com.inpeace.engine.Scheduler;
-import com.inpeace.events.Event;
 import com.inpeace.events.RecurringEvent;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.graphics.SpriteCode;
 
 /**
  * 
@@ -19,57 +19,141 @@ import com.inpeace.exceptions.ResourceAccessException;
  * @version 1.0
  * @since   27 Mar 2014
  */
-public class CharacterEntity extends AbstractEntity {
-	
+public class CharacterEntity extends AbstractImageEntity {
+
 	/**   */
-	private final double animationSpeed = 1f;
-	private final double idleSpeed = 1f;
-	
+	private final double animationSpeed = 0.5f;
+	private final double idleSpeed = 5f;
+
 	/**   */
-	private final String defaultSpriteCode;
-	
-	/**   */
-	private int versionCount;
-	
-	/**   */
-	private int currentVersion;
-	private int imageState;
-	
-	/**   */
-	private BufferedImage[][] images;
-	
+	private int motionState;
+
 	/**   */
 	private boolean canRun;
-	
+
 	/**   */
 	private int movementEventID;
-	
-	private Rectangle confines;
 
+	/**   */
+	private Rectangle confines;
+	
 	/**
 	 * Constructs a new CharacterEntity object.
 	 *
 	 * @param depth
-	 * @param pressAction
-	 * @param enterAction
+	 * @param spriteCode
 	 * @param position
+	 * @param canRun
+	 * @param movementConfines
 	 */
-	public CharacterEntity(int depth, Point position, String defaultSpriteCode, int versionCount, 
-			boolean canRun, Rectangle confines) {
-		super(depth, null, null, position);
-		this.defaultSpriteCode = defaultSpriteCode;
-		currentVersion = 0;
-		imageState = 0;
-		int lines = 3;
-		if (canRun) {
-			lines = 5;
-		}
-		this.images = new BufferedImage[lines][currentVersion];
-		Event event = new Event();
+	public CharacterEntity(int depth, SpriteCode spriteCode, Point position, boolean canRun,
+			Rectangle movementConfines) {
+		
+		super(depth, null, spriteCode, position);
+		this.canRun = canRun;
+		this.confines = movementConfines;
+		this.motionState = 0;
+		
 		movementEventID = Scheduler.getInstance().registerEvent(
 				new RecurringEvent(idleSpeed, new CycleImageAction(this)), idleSpeed);
 	}
 
+	/**
+	 * Get the confines
+	 *
+	 * @return the confines
+	 */
+	public Rectangle getConfines() {
+		return confines;
+	}
+
+
+
+	/**
+	 * Set the confines
+	 *
+	 * @param confines the confines to set
+	 */
+	public void setConfines(Rectangle confines) {
+		this.confines = confines;
+	}
+
+
+
+	/**
+	 * Get the animationSpeed
+	 *
+	 * @return the animationSpeed
+	 */
+	public double getAnimationSpeed() {
+		return animationSpeed;
+	}
+
+	/**
+	 * Get the idleSpeed
+	 *
+	 * @return the idleSpeed
+	 */
+	public double getIdleSpeed() {
+		return idleSpeed;
+	}
+
+	/**
+	 * Get the motionState
+	 *
+	 * @return the motionState
+	 */
+	public int getMotionState() {
+		return motionState;
+	}
+
+	/**
+	 * @param speed
+	 * @throws EntityException
+	 */
+	public void run(int speed) throws EntityException {
+		if (canRun) {
+			if (speed < 0) {
+				motionState = 4;
+			}
+			else {
+				motionState = 3;
+			}
+			Point translation = new Point(speed, 0);
+			movementEventID = Scheduler.getInstance().registerEvent(
+					new RecurringEvent(animationSpeed, new CycleImageAction(this), 
+							new MoveEntityAction(this, translation, confines)), animationSpeed);
+		}
+		else {
+			throw new EntityException("Character can not run");
+		}
+	}
+
+	/**
+	 * @param speed
+	 * @throws EntityException
+	 */
+	public void walk(int speed) throws EntityException {
+		if (speed < 0) {
+			motionState = 2;
+		}
+		else {
+			motionState = 1;
+		}
+		Point translation = new Point(speed, 0);
+		movementEventID = Scheduler.getInstance().registerEvent(
+				new RecurringEvent(animationSpeed, new CycleImageAction(this), 
+						new MoveEntityAction(this, translation, confines)), animationSpeed);
+	}
+	
+	/**
+	 * 
+	 */
+	public void stop() {
+		Scheduler.getInstance().deregisterEvent(movementEventID);
+		motionState = 0;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.inpeace.entities.AbstractEntity#paint(java.awt.Graphics2D, int, java.awt.Point, boolean)
 	 */
@@ -77,40 +161,6 @@ public class CharacterEntity extends AbstractEntity {
 	public void paint(Graphics2D g, int scrollPosition, Point mousePosition,
 			boolean active) throws ResourceAccessException {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public void run(int speed) throws EntityException {
-		if (canRun) {
-			if (speed < 0) {
-				imageState = 4;
-			}
-			else {
-				imageState = 3;
-			}
-			Event event = new Event();
-			movementEventID = Scheduler.getInstance().registerEvent(
-					new RecurringEvent(animationSpeed, new CycleImageAction(this)), animationSpeed);
-		}
-		else {
-			throw new EntityException("Character can not run");
-		}
-	}
-	
-	public void walk(int speed) throws EntityException {
-		if (canRun) {
-			if (speed < 0) {
-				imageState = 2;
-			}
-			else {
-				imageState = 1;
-			}
-			Event event = new Event();
-			movementEventID = Scheduler.getInstance().registerEvent(
-					new RecurringEvent(animationSpeed, new CycleImageAction(this)), animationSpeed);
-		}
-		else {
-			throw new EntityException("Character can not run");
-		}
+
 	}
 }

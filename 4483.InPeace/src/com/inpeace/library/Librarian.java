@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import javax.sound.sampled.Clip;
 
 import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.exceptions.SpriteCodeException;
+import com.inpeace.graphics.SpriteCode;
 import com.inpeace.graphics.SpriteSheet;
 
 /**
@@ -44,35 +46,51 @@ public class Librarian {
 		return instance;
 	}
 
-	/**
-	 * @param spriteCode
-	 * @return
-	 * @throws ResourceAccessException
-	 */
-	public SpriteSheet getSpriteSheet(String spriteCode) throws ResourceAccessException {
-		return sprites.getSheet(spriteCode);
-	}
 	
 	/**
 	 * @param sheetNum
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public SpriteSheet getSpriteSheet(int sheetNum) throws ResourceAccessException {
-		return sprites.getSheet(sheetNum);
+	public SpriteSheet getSpriteSheet(SpriteCode spriteCode) throws ResourceAccessException {
+		return sprites.getSheet(spriteCode);
 	}
 
 	/**
 	 * @param spriteCode
 	 * @return
 	 * @throws ResourceAccessException
+	 * @throws SpriteCodeException
 	 */
-	public BufferedImage getSprite(String spriteCode) throws ResourceAccessException {
+	public SpriteSheet getSpriteSheet(String spriteCode) 
+			throws ResourceAccessException, SpriteCodeException {
+		
+		return getSpriteSheet(SpriteCode.get(spriteCode));
+	}
+	
+	/**
+	 * @param spriteCode
+	 * @return
+	 * @throws ResourceAccessException
+	 */
+	public BufferedImage getSprite(SpriteCode spriteCode) throws ResourceAccessException {
 		SpriteSheet sheet = getSpriteSheet(spriteCode);
 		if (sheet != null) {
 			return sheet.getSprite(spriteCode);
 		}
 		return null;
+	}
+	
+	/**
+	 * @param spriteCode
+	 * @return
+	 * @throws ResourceAccessException
+	 * @throws SpriteCodeException
+	 */
+	public BufferedImage getSprite(String spriteCode) 
+			throws ResourceAccessException, SpriteCodeException {
+		
+		return getSprite(SpriteCode.get(spriteCode));
 	}
 	
 	/**
@@ -84,6 +102,11 @@ public class Librarian {
 		return backgrounds.get(name);
 	}
 	
+	/**
+	 * @param name
+	 * @return
+	 * @throws ResourceAccessException
+	 */
 	public Clip getSound(String name) throws ResourceAccessException {
 		return SoundLibrary.get(name);
 	}

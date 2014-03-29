@@ -2,7 +2,7 @@ package com.inpeace.graphics;
 
 import java.awt.image.BufferedImage;
 
-import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.exceptions.SpriteCodeException;
 
 /**
  * 
@@ -26,35 +26,19 @@ public class SpriteSheet {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * @param spriteCode
 	 * @return
 	 */
-	private BufferedImage getSprite(int x, int y, int width, int height) {
-		return spriteSheet.getSubimage(x, y, width, height);
+	public BufferedImage getSprite(SpriteCode code) {
+		return spriteSheet.getSubimage(code.x, code.y, code.width, code.height);
 	}
 
 	/**
 	 * @param spriteCode
 	 * @return
-	 * @throws ResourceAccessException 
+	 * @throws SpriteCodeException 
 	 */
-	public BufferedImage getSprite(String spriteCode) throws ResourceAccessException {
-		try {
-			String[] chuncks = spriteCode.split("-");
-			int x = Integer.parseInt(chuncks[1]);
-			int y = Integer.parseInt(chuncks[2]);
-			int width = Integer.parseInt(chuncks[3]);
-			int height = Integer.parseInt(chuncks[4]);
-
-			return getSprite((int) x, y, width, height);
-		} catch (NumberFormatException e) {
-			throw new ResourceAccessException("Opps! It seems " + spriteCode 
-					+ " is not a valid spriteCode:(  (SpriteSheet)");
-		}
+	public BufferedImage getSprite(String spriteCode) throws SpriteCodeException {
+		return getSprite(SpriteCode.get(spriteCode));
 	}
 }

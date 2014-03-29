@@ -6,6 +6,8 @@ import com.inpeace.engine.DataManager;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
+import com.inpeace.exceptions.SpriteCodeException;
+import com.inpeace.graphics.SpriteCode;
 import com.inpeace.models.OverlayGraphicsModel;
 
 /**
@@ -17,7 +19,7 @@ import com.inpeace.models.OverlayGraphicsModel;
  */
 public class ScrollState extends AbstractState {
 	
-	private final static String graphicSpriteCode = "1-0-0-128-128";
+	private final static String graphicSpriteCode = "1-0-0-128-128-4-4";
 
 	/**
 	 * Constructs a new ScrollState object.
@@ -60,7 +62,12 @@ public class ScrollState extends AbstractState {
 		
 		OverlayGraphicsModel model = new OverlayGraphicsModel();
 		
-		model.setOverlaySpriteCode(graphicSpriteCode);
+		try {
+			model.setOverlaySpriteCode(SpriteCode.get(graphicSpriteCode));
+		} catch (SpriteCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		MailRoom.getInstance().postRequest(DataManager.OVERLAY_GRAPHICS_MODEL, model, 
 				RequestType.REGISTER);

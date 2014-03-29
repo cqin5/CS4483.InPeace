@@ -31,21 +31,18 @@ public abstract class AbstractEntity {
 
 	/**   */
 	private Integer enterID = null;
-	
-	/**   */
-	private Point position;
 
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
 	 * @param depth
 	 */
-	public AbstractEntity(int depth, AbstractAction pressAction, AbstractAction enterAction, Point position) {
+	public AbstractEntity(int depth, AbstractAction pressAction, AbstractAction enterAction, Rectangle bounds) {
 		setDepth(depth);
 		setPressed(false);
 		setMousePressAction(pressAction);
 		setEnterAction(enterAction);
-		setPosition(position);
+		this.bounds = bounds;
 	}
 
 	/**
@@ -64,6 +61,15 @@ public abstract class AbstractEntity {
 	 */
 	public void setDepth(int depth) {
 		this.depth = depth;
+	}
+	
+	/**
+	 * Set the bounds
+	 *
+	 * @param bounds the bounds to set
+	 */
+	public void setBounds(Rectangle bounds) {
+		this.bounds = bounds;
 	}
 
 	/**
@@ -129,7 +135,7 @@ public abstract class AbstractEntity {
 	 * @return the position
 	 */
 	public Point getPosition() {
-		return position;
+		return bounds.getLocation();
 	}
 
 	/**
@@ -138,7 +144,14 @@ public abstract class AbstractEntity {
 	 * @param position the position to set
 	 */
 	public void setPosition(Point position) {
-		this.position = position;
+		bounds.add(position);
+	}
+	
+	/**
+	 * @return
+	 */
+	public Rectangle getBounds() {
+		return bounds;
 	}
 
 	/**
