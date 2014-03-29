@@ -1,10 +1,8 @@
 package com.inpeace.library;
 
-import java.util.HashMap;
-
 import javax.sound.sampled.Clip;
 
-import com.inpeace.audio.AudioClipLoader;
+import com.inpeace.audio.AudioLoader;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
@@ -17,17 +15,6 @@ import com.inpeace.exceptions.ResourceAccessException;
 public class SoundLibrary {
 
 	private static final String soundsPath = "/com/inpeace/sounds/";
-	
-	/**   */
-	HashMap<String, Clip> library;
-	
-	/**
-	 * Constructs a new SoundLibrary object.
-	 *
-	 */
-	public SoundLibrary() {
-		library = new HashMap<String, Clip>();
-	}
 
 	/**
 	 * 
@@ -35,27 +22,8 @@ public class SoundLibrary {
 	 * @return
 	 * @throws ResourceAccessException
 	 */
-	public Clip get(String name) throws ResourceAccessException {
-		Clip clip = null;
-		if (name.equals("")) {
-			return null;
-		}
-		name.toLowerCase();
-		clip = library.get(name);
-		if (clip == null) {
-			add(name);
-			return library.get(name);
-		}
-		return clip;
+	public static Clip get(String name) throws ResourceAccessException {
+		return AudioLoader.loadAudio(soundsPath + name + ".wav");
 	}
-	
-	/**
-	 * 
-	 * @param name
-	 * @throws ResourceAccessException
-	 */
-	private void add(String name) throws ResourceAccessException {
-		library.put(name, AudioClipLoader.loadClip(soundsPath + name + ".wav"));
-	}
-	
+
 }

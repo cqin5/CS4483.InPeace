@@ -1,4 +1,4 @@
-package com.inpeace.actions;
+	package com.inpeace.actions;
 
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.engine.MailRoom;

@@ -43,8 +43,7 @@ public class BackgroundLibrary {
 		name.toLowerCase();
 		background = library.get(name);
 		if (background == null) {
-			add(name);
-			return get(name);
+			background = add(name);
 		}
 		return background;
 	}
@@ -54,8 +53,8 @@ public class BackgroundLibrary {
 	 * @param name
 	 * @throws ResourceAccessException
 	 */
-	private void add(String name) throws ResourceAccessException {
-		library.put(name, BufferedImageLoader.loadImage(backgroundPath + name + ".jpg"));
+	private BufferedImage add(String name) throws ResourceAccessException {
+		return library.put(name, BufferedImageLoader.loadImage(backgroundPath + name + ".jpg"));
 	}
 	
 }

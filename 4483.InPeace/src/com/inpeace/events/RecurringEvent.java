@@ -11,10 +11,14 @@ import com.inpeace.engine.Scheduler;
  * @since   28 Mar 2014
  */
 public class RecurringEvent extends Event {
-	
+
 	/**   */
 	private double period;
-		
+
+	/**   */
+	private int stopAt;
+	private int count;
+
 	/**
 	 * Constructs a new AbstractRecurringEvent object.
 	 *
@@ -23,6 +27,13 @@ public class RecurringEvent extends Event {
 	public RecurringEvent(double periodSeconds, AbstractAction... actions) {
 		super(actions);
 		this.period = periodSeconds;
+		this.stopAt = 0;
+		this.count = 0;
+	}
+
+	public RecurringEvent(double periodSeconds, int stopAt, AbstractAction... actions) {
+		this(periodSeconds, actions);
+		this.stopAt = stopAt;
 	}
 
 	/**
@@ -40,7 +51,10 @@ public class RecurringEvent extends Event {
 	@Override
 	public void execute() {
 		super.execute();
-		Scheduler.getInstance().registerEvent(this, period);
+		count++;
+		if (stopAt == 0 || count < stopAt) {
+			Scheduler.getInstance().registerEvent(this, period);
+		}
 	}
 
 }

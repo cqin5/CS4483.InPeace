@@ -96,7 +96,6 @@ public class AudioModel extends AbstractModel {
 		fireChange(DefaultController.BACKGROUND_MUSIC_NAME, musicName);
 		fireChange(DefaultController.BACKGROUND_MUSIC_VOLUME, musicVolume);
 		fireChange(DefaultController.SOUND_EFFECTS_VOLUME, fxVolume);
-
 	}
 
 }

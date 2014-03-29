@@ -11,6 +11,10 @@ import com.inpeace.engine.Scheduler;
  * @since   28 Mar 2014
  */
 public class RecurringPeriodicEventSeries extends PeriodicEventSeries {
+	
+	/**   */
+	private int stopAt;
+	private int count;
 
 	/**
 	 * Constructs a new RecurringPeriodicEventSeries object.
@@ -18,15 +22,29 @@ public class RecurringPeriodicEventSeries extends PeriodicEventSeries {
 	 * @param intervalSeconds
 	 * @param actions
 	 */
-	public RecurringPeriodicEventSeries(double intervalSeconds, AbstractAction[] actions) {
+	public RecurringPeriodicEventSeries(double intervalSeconds, int stopAt, AbstractAction[] actions) {
 		super(intervalSeconds, actions);
+		this.stopAt = stopAt;
+		this.count = 0;
 	}
 	
+	/**
+	 * Constructs a new RecurringPeriodicEventSeries object.
+	 *
+	 * @param intervalSeconds
+	 * @param actions
+	 */
+	public RecurringPeriodicEventSeries(double intervalSeconds, AbstractAction[] actions) {
+		this(intervalSeconds, 0, actions);
+	}
+
 	public void execute() {
 		super.execute();
 		if (getNext() >= getActions().length) {
-			setNext(0);
-			Scheduler.getInstance().registerEvent(this, getInterval());
+			if (stopAt == 0 || count < stopAt) {
+				setNext(0);
+				Scheduler.getInstance().registerEvent(this, getInterval());
+			}
 		}
 	}
 
