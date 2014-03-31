@@ -49,8 +49,12 @@ public class Keyboard implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
+		HotKey hotKey = null;
 		if (focus != null) {
 			focus.keyPress(e);
+		}
+		else if ((hotKey = hotkeys.get(e.getKeyChar())) != null) {
+			hotKey.pressed();
 		}
 	}
 

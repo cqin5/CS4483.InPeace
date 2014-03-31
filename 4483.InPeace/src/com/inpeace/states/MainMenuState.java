@@ -13,6 +13,7 @@ import com.inpeace.engine.StateManager.StateID;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.entities.TextFieldEntity;
 import com.inpeace.exceptions.EntityException;
+import com.inpeace.exceptions.KeyboardException;
 import com.inpeace.exceptions.SpriteCodeException;
 import com.inpeace.graphics.SpriteCode;
 import com.inpeace.models.DefaultGraphicsModel;
@@ -77,14 +78,19 @@ public class MainMenuState extends AbstractState {
 		try {
 			MultiAction action = new MultiAction(new ChangeStateAction(StateID.SCROLL),
 					new SoundFXAction("woow"));
-			entity = new ImageEntity(1, action, (char) 0, SpriteCode.get("1-0-0-128-128-4-4"),
+			entity = new ImageEntity(1, action, '1', SpriteCode.get("1-0-0-128-128-4-4"),
 					true, true, new Point(0,0));
+			entity.registerHotKey();
 		} catch (EntityException | SpriteCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyboardException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		model.setForegroundObjectEntity(entity);
 		
+		/*
 		TextFieldEntity text = null;
 		try {
 			text = new TextFieldEntity(2, SpriteCode.get("1-0-0-128-128-4-4"),
@@ -96,7 +102,7 @@ public class MainMenuState extends AbstractState {
 			e.printStackTrace();
 		}
 		model.setForegroundObjectEntity(text);
-		
+		*/
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
 		

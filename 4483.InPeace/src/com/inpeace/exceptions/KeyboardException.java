@@ -7,7 +7,7 @@ package com.inpeace.exceptions;
  * @version 1.0
  * @since   31 Mar 2014
  */
-public class InputException extends Exception {
+public class KeyboardException extends Exception {
 
 	/**   */
 	private static final long serialVersionUID = -8690638568044683538L;
@@ -17,7 +17,7 @@ public class InputException extends Exception {
 	 *
 	 * @param message
 	 */
-	public InputException(String message) {
+	public KeyboardException(String message) {
 		super(message);
 	}
 }

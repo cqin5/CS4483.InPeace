@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.inpeace.actions.AbstractAction;
-import com.inpeace.exceptions.InputException;
+import com.inpeace.exceptions.KeyboardException;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.input.HotKey;
 import com.inpeace.input.Keyboard;
@@ -44,7 +44,7 @@ public abstract class AbstractEntity {
 		setDepth(depth);
 		setPressed(false);
 		setMousePressAction(pressAction);
-
+		setHotKey(hotKey);
 		setBounds(bounds);
 	}
 
@@ -174,10 +174,10 @@ public abstract class AbstractEntity {
 	}
 
 	/**
-	 * @throws InputException
+	 * @throws KeyboardException
 	 */
-	public void registerHotKey() throws InputException {
-		if (hotKey != (char) 0) {
+	public void registerHotKey() throws KeyboardException {
+		if (hotKey != '\u0000') {
 			Keyboard.getInstance().registerHotKey(new HotKey(hotKey, this));
 		}
 	}

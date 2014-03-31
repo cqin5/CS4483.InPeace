@@ -1,7 +1,7 @@
 package com.inpeace.input;
 
 import com.inpeace.entities.AbstractEntity;
-import com.inpeace.exceptions.InputException;
+import com.inpeace.exceptions.KeyboardException;
 
 /**
  * 
@@ -23,15 +23,15 @@ public class HotKey {
 	 *
 	 * @param key
 	 * @param entity
-	 * @throws InputException
+	 * @throws KeyboardException
 	 */
-	public HotKey(char key, AbstractEntity entity) throws InputException {
+	public HotKey(char key, AbstractEntity entity) throws KeyboardException {
 		this.key = key;
 		if (entity != null) {
 			this.entity = entity;
 		}
 		else {
-			throw new InputException("HotKey cannot have a null entity member. (HotKey");
+			throw new KeyboardException("HotKey cannot have a null entity member. (HotKey");
 		}
 	}
 
@@ -53,6 +53,9 @@ public class HotKey {
 		return entity;
 	}
 
+	/**
+	 * 
+	 */
 	public void pressed() {
 		entity.press();
 	}
