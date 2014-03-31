@@ -1,9 +1,11 @@
 package com.inpeace.engine;
 
+import com.inpeace.GameProperties;
 import com.inpeace.controllers.DefaultController;
 import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.exceptions.StateException;
+import com.inpeace.models.SettingsModel;
 import com.inpeace.views.DefaultView;
 
 /**
@@ -42,6 +44,8 @@ public class GameEngine implements Runnable {
 		running = true;
 
 		MailRoom.getInstance().postRequest(PropertyName.VIEW, new DefaultView(),
+				RequestType.REGISTER);
+		MailRoom.getInstance().postRequest(PropertyName.SETTINGS_MODEL, new SettingsModel(), 
 				RequestType.REGISTER);
 		controller.processRequests();
 		

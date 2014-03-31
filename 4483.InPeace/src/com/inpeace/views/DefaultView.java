@@ -22,8 +22,8 @@ import javax.sound.sampled.FloatControl;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.inpeace.GameProperties;
 import com.inpeace.controllers.PropertyName;
-import com.inpeace.engine.GameProperties;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager;
@@ -107,12 +107,15 @@ public class DefaultView extends Canvas implements AbstractView {
 	/**   */
 	private Queue<Clip> soundEffects = new LinkedList<Clip>();
 
+	/*
+	 * Settings variables.
+	 */
+	
 	/**   */
-	private float musicVolume = -10f;
+	private float musicVolume;
 
 	/**   */
-	private float fxVolume = -5f;
-	
+	private float fxVolume;
 
 	/**
 	 * Constructs a new View object.
@@ -192,7 +195,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		g.dispose();
 		buffer.show();
 	}
@@ -320,7 +323,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		else if (e.getPropertyName().equals(PropertyName.OVERLAY_OBJECTS.toString())) {
 			overlayObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
-		if (e.getPropertyName().equals(PropertyName.BACKGROUND_MUSIC_NAME.toString())) {
+		if (e.getPropertyName().equals(PropertyName.MUSIC_NAME.toString())) {
 			try {
 				if (backgroundMusic != null) {
 					backgroundMusic.stop();
@@ -347,7 +350,7 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(PropertyName.BACKGROUND_MUSIC_VOLUME.toString())) {
+		else if (e.getPropertyName().equals(PropertyName.MUSIC_VOLUME.toString())) {
 			musicVolume = (float) e.getNewValue();
 		}
 		else if (e.getPropertyName().equals(PropertyName.SOUND_EFFECTS_VOLUME.toString())) {

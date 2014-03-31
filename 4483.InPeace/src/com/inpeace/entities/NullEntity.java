@@ -32,8 +32,7 @@ public class NullEntity extends AbstractEntity {
 	@Override
 	public void paint(Graphics2D g, int scrollPosition, Point mousePosition,
 			boolean active) throws ResourceAccessException {
-		// TODO Auto-generated method stub
-		
+		//NULL BODY
 	}
 
 }

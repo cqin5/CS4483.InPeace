@@ -9,6 +9,7 @@ import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDGraphicsModel;
 import com.inpeace.models.OverlayGraphicsModel;
+import com.inpeace.models.SettingsModel;
 import com.inpeace.views.AbstractView;
 
 /**
@@ -88,6 +89,13 @@ public class DefaultController extends AbstractController {
 				}
 				instance.setAudioModel((AudioModel) request.value);
 				registerModel(instance.getAudioModel());
+			}
+			else if (request.propertyName == PropertyName.AUDIO_MODEL) {
+				if (instance.getSettingsModel() != null) {
+					deregisterModel(instance.getSettingsModel());
+				}
+				instance.setSettingsModel((SettingsModel) request.value);
+				registerModel(instance.getSettingsModel());
 			}
 		} catch (MVCException e) {
 			// TODO Auto-generated catch block

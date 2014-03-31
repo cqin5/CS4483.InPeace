@@ -10,7 +10,6 @@ import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDGraphicsModel;
 import com.inpeace.models.OverlayGraphicsModel;
-import com.inpeace.models.PlayerModel;
 import com.inpeace.models.SettingsModel;
 
 /**
@@ -45,6 +44,62 @@ public class DataManager {
 	
 	/**
 	 * @return
+	 * @see com.inpeace.data.SaveData#getUsername()
+	 */
+	public String getUsername() {
+		return save.getUsername();
+	}
+
+	/**
+	 * @param username
+	 * @see com.inpeace.data.SaveData#setUsername(java.lang.String)
+	 */
+	public void setUsername(String username) {
+		save.setUsername(username);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getCurrentLevel()
+	 */
+	public int getCurrentLevel() {
+		return save.getCurrentLevel();
+	}
+
+	/**
+	 * @param currentLevel
+	 * @see com.inpeace.data.SaveData#setCurrentLevel(int)
+	 */
+	public void setCurrentLevel(int currentLevel) {
+		save.setCurrentLevel(currentLevel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getCollectibles()
+	 */
+	public boolean[] getCollectibles() {
+		return save.getCollectibles();
+	}
+
+	/**
+	 * @param collectibles
+	 * @see com.inpeace.data.SaveData#setCollectibles(boolean[])
+	 */
+	public void setCollectibles(boolean[] collectibles) {
+		save.setCollectibles(collectibles);
+	}
+
+	/**
+	 * @param index
+	 * @see com.inpeace.data.SaveData#setCollected(int)
+	 */
+	public void setCollected(int index) {
+		save.setCollected(index);
+	}
+
+	/**
+	 * @return
 	 * @see com.inpeace.data.SaveData#getEvents()
 	 */
 	public ArrayList<AbstractEvent> getEvents() {
@@ -57,22 +112,6 @@ public class DataManager {
 	 */
 	public void setEvents(ArrayList<AbstractEvent> events) {
 		save.setEvents(events);
-	}
-
-	/**
-	 * @return
-	 * @see com.inpeace.data.SaveData#getPlayerModel()
-	 */
-	public PlayerModel getPlayerModel() {
-		return save.getPlayerModel();
-	}
-
-	/**
-	 * @param playerModel
-	 * @see com.inpeace.data.SaveData#setPlayerModel(com.inpeace.models.PlayerModel)
-	 */
-	public void setPlayerModel(PlayerModel playerModel) {
-		save.setPlayerModel(playerModel);
 	}
 
 	/**
@@ -164,15 +203,8 @@ public class DataManager {
 	public Level loadLevel(int levelNum) {
 		Level level = LevelFactory.buildLevel(levelNum);
 		level.load();
-		getPlayerModel().setCurrentLevel(levelNum);
+		setCurrentLevel(levelNum);
 		return level;
-	}
-	
-	/**
-	 * @param collectibleIndex
-	 */
-	public void foundCollectible(int collectibleIndex) {
-		getPlayerModel().setCollected(collectibleIndex);
 	}
 
 }

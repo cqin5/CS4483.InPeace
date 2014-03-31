@@ -3,8 +3,8 @@ package com.inpeace.entities;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import com.inpeace.GameProperties;
 import com.inpeace.actions.AbstractAction;
-import com.inpeace.engine.GameProperties;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;

@@ -1,4 +1,4 @@
-package com.inpeace.engine;
+package com.inpeace;
 
 import com.inpeace.engine.StateManager.StateID;
 

@@ -34,7 +34,7 @@ public class AudioModel extends AbstractModel {
 	public void setMusicName(String musicName) {
 		if (this.musicName != musicName) {
 			this.musicName = musicName;
-			fireChange(PropertyName.BACKGROUND_MUSIC_NAME, musicName);
+			fireChange(PropertyName.MUSIC_NAME, musicName);
 		}
 	}
 
@@ -50,7 +50,7 @@ public class AudioModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(PropertyName.BACKGROUND_MUSIC_NAME, musicName);
+		fireChange(PropertyName.MUSIC_NAME, musicName);
 	}
 
 }

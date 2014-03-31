@@ -14,6 +14,7 @@ public enum PropertyName {
 	HUD_GRAPHICS_MODEL ("HUDModel"),
 	OVERLAY_GRAPHICS_MODEL ("OverlayModel"),
 	AUDIO_MODEL ("AudioModel"),
+	SETTINGS_MODEL ("SettingsModel"),
 	HORIZONTAL_SCROLL_POSITION ("HorizontalScrollPosition"),
 	BACKGROUND_IMAGE_NAME ("BackgroundName"),
 	FOREGROUND_OBJECTS ("ForegroundObjects"),
@@ -25,10 +26,12 @@ public enum PropertyName {
 	OVERLAY_GRAPHIC_SPRITE_CODE ("OverlaySpriteCode"),
 	OVERLAY_OBJECTS ("OverlayObjects"),
 	OVERLAY_OBJECT_ENTITY ("OverlayObjectEntity"),
-	BACKGROUND_MUSIC_NAME ("MusicName"),
-	BACKGROUND_MUSIC_VOLUME ("MusicVolume"),
+	MUSIC_NAME ("MusicName"),
 	SOUND_EFFECT ("SoundEffect"),
-	SOUND_EFFECTS_VOLUME ("FXVolume");
+	MUSIC_VOLUME ("MusicVolume"),
+	SOUND_EFFECTS_VOLUME ("SoundEffectsVolume"),
+	BRIGHTNESS ("Brightness"),
+	HINT_DELAY ("HintDelay");
 	
 	/**   */
 	private final String name;       

@@ -8,7 +8,6 @@ import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDGraphicsModel;
 import com.inpeace.models.OverlayGraphicsModel;
-import com.inpeace.models.PlayerModel;
 import com.inpeace.models.SettingsModel;
 
 /**
@@ -24,15 +23,84 @@ public class SaveData implements Serializable {
 	private static final long serialVersionUID = 8771165689031839746L;
 	
 	/**   */
+	private String username = null;
+	
+	/**   */
+	private int currentLevel = 1;
+	
+	/**   */
+	private boolean[] collectibles = {false};
+	
+	/**   */
 	private ArrayList<AbstractEvent> events;
 	
 	/**   */
-	private PlayerModel playerModel = null;
 	private SettingsModel settingsModel = null;
 	private DefaultGraphicsModel defaultGraphicsModel = null;
 	private HUDGraphicsModel hudGraphicsModel = null;
 	private OverlayGraphicsModel overlayGraphicsModel = null;
 	private AudioModel audioModel = null;
+
+	/**
+	 * Get the username
+	 *
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * Set the username
+	 *
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * Get the currentLevel
+	 *
+	 * @return the currentLevel
+	 */
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	/**
+	 * Set the currentLevel
+	 *
+	 * @param currentLevel the currentLevel to set
+	 */
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	/**
+	 * Get the collectibles
+	 *
+	 * @return the collectibles
+	 */
+	public boolean[] getCollectibles() {
+		return collectibles;
+	}
+
+	/**
+	 * Set the collectibles
+	 *
+	 * @param collectibles the collectibles to set
+	 */
+	public void setCollectibles(boolean[] collectibles) {
+		this.collectibles = collectibles;
+	}
+	
+	public void setCollected(int index) {
+		if (index < collectibles.length && index >= 0) {
+			collectibles[index] = true;
+		}
+	}
+	
 	/**
 	 * Get the events
 	 *
@@ -49,22 +117,7 @@ public class SaveData implements Serializable {
 	public void setEvents(ArrayList<AbstractEvent> events) {
 		this.events = events;
 	}
-	/**
-	 * Get the playerModel
-	 *
-	 * @return the playerModel
-	 */
-	public PlayerModel getPlayerModel() {
-		return playerModel;
-	}
-	/**
-	 * Set the playerModel
-	 *
-	 * @param playerModel the playerModel to set
-	 */
-	public void setPlayerModel(PlayerModel playerModel) {
-		this.playerModel = playerModel;
-	}
+
 	/**
 	 * Get the settingsModel
 	 *
