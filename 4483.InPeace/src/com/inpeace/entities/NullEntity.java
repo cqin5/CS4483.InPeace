@@ -23,7 +23,7 @@ public class NullEntity extends AbstractEntity {
 	 * @param bounds
 	 */
 	public NullEntity(int depth) {
-		super(depth, null, null);
+		super(depth, null, (char) 0, null);
 	}
 
 	/* (non-Javadoc)

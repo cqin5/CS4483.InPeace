@@ -1,6 +1,9 @@
 package com.inpeace.states;
 
+import java.util.ArrayList;
+
 import com.inpeace.engine.StateManager.StateID;
+import com.inpeace.input.HotKey;
 
 
 /**
@@ -9,6 +12,13 @@ import com.inpeace.engine.StateManager.StateID;
  * @author  James Anderson
  * @version 1.0
  * @since   24 Mar 2014
+ */
+/**
+ * 
+ * 
+ * @author  James Anderson
+ * @version 0.0
+ * @since   31 Mar 2014
  */
 public abstract class AbstractState {
 	
@@ -26,6 +36,8 @@ public abstract class AbstractState {
 	/**   */
 	private final boolean historical;
 	
+	private ArrayList<HotKey> hotKeys;
+	
 	/**
 	 * Constructs a new AbstractState object.
 	 *
@@ -37,6 +49,7 @@ public abstract class AbstractState {
 		this.stateType = type;
 		this.id = id;
 		this.historical = historical;
+		this.setHotKeys(new ArrayList<HotKey>());
 	}
 	
 	/**
@@ -65,6 +78,32 @@ public abstract class AbstractState {
 	}
 	
 	/**
+	 * Get the hotKeys
+	 *
+	 * @return the hotKeys
+	 */
+	public ArrayList<HotKey> getHotKeys() {
+		return hotKeys;
+	}
+
+	/**
+	 * Set the hotKeys
+	 *
+	 * @param hotKeys the hotKeys to set
+	 */
+	public void setHotKeys(ArrayList<HotKey> hotKeys) {
+		this.hotKeys = hotKeys;
+	}
+	
+	/**
+	 * @param hotKey
+	 * @return
+	 */
+	public boolean addHotKey(HotKey hotKey) {
+		return hotKeys.add(hotKey);
+	}
+	
+	/**
 	 * @param graphics
 	 * @param audio
 	 * @param logic
@@ -77,4 +116,5 @@ public abstract class AbstractState {
 	 * this method if they require actions to be performed on close.
 	 */
 	public abstract void close();
+	
 }

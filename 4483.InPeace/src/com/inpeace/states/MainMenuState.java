@@ -2,7 +2,6 @@
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MultiAction;
@@ -11,8 +10,8 @@ import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
-import com.inpeace.entities.AlphaNumTextFieldEntity;
 import com.inpeace.entities.ImageEntity;
+import com.inpeace.entities.TextFieldEntity;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.SpriteCodeException;
 import com.inpeace.graphics.SpriteCode;
@@ -78,7 +77,7 @@ public class MainMenuState extends AbstractState {
 		try {
 			MultiAction action = new MultiAction(new ChangeStateAction(StateID.SCROLL),
 					new SoundFXAction("woow"));
-			entity = new ImageEntity(1, action, SpriteCode.get("1-0-0-128-128-4-4"),
+			entity = new ImageEntity(1, action, (char) 0, SpriteCode.get("1-0-0-128-128-4-4"),
 					true, true, new Point(0,0));
 		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
@@ -86,8 +85,16 @@ public class MainMenuState extends AbstractState {
 		}
 		model.setForegroundObjectEntity(entity);
 		
-		AlphaNumTextFieldEntity text = new AlphaNumTextFieldEntity(2, new Rectangle(200,200,200,30), entity,
-				"Test...", Color.RED, 20);
+		TextFieldEntity text = null;
+		try {
+			text = new TextFieldEntity(2, SpriteCode.get("1-0-0-128-128-4-4"),
+					new Point(200,200), entity, 20);
+			text.setFontColour(Color.red);
+			text.setKeyboardFocus(true);
+		} catch (SpriteCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		model.setForegroundObjectEntity(text);
 		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,

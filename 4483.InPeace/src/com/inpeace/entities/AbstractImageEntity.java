@@ -39,10 +39,10 @@ public abstract class AbstractImageEntity extends AbstractEntity {
 	 * @param imageSets
 	 * @param position
 	 */
-	public AbstractImageEntity(int depth, AbstractAction pressAction,
+	public AbstractImageEntity(int depth, AbstractAction pressAction, char hotKey,
 			SpriteCode spriteCode, Point position) {
 		
-		super(depth, pressAction, new Rectangle(position, spriteCode.getDimensions()));
+		super(depth, pressAction, hotKey, new Rectangle(position, spriteCode.getDimensions()));
 		
 		this.spriteCode = spriteCode;
 		this.images = new BufferedImage[spriteCode.sets][spriteCode.versions];

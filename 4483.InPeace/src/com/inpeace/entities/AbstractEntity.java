@@ -5,8 +5,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.inpeace.actions.AbstractAction;
-import com.inpeace.engine.ActionRegistrar;
+import com.inpeace.exceptions.InputException;
 import com.inpeace.exceptions.ResourceAccessException;
+import com.inpeace.input.HotKey;
+import com.inpeace.input.Keyboard;
 
 /**
  * The extendible superclass of all Entities.
@@ -27,18 +29,23 @@ public abstract class AbstractEntity {
 	private boolean pressed;
 
 	/**   */
-	private Integer mousePressID = null;
+	private AbstractAction pressAction;
+
+	/**   */
+	private char hotKey;
 
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
 	 * @param depth
 	 */
-	public AbstractEntity(int depth, AbstractAction pressAction, Rectangle bounds) {
+	public AbstractEntity(int depth, AbstractAction pressAction, char hotKey, 
+			Rectangle bounds) {
 		setDepth(depth);
 		setPressed(false);
 		setMousePressAction(pressAction);
-		this.bounds = bounds;
+
+		setBounds(bounds);
 	}
 
 	/**
@@ -58,7 +65,7 @@ public abstract class AbstractEntity {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	
+
 	/**
 	 * Set the bounds
 	 *
@@ -102,15 +109,10 @@ public abstract class AbstractEntity {
 
 
 	/**
-	 * @param action
+	 * @param pressAction
 	 */
-	public void setMousePressAction(AbstractAction action) {
-		if (action != null) {
-			mousePressID = ActionRegistrar.getInstance().registerAction(action);
-		}
-		else {
-			mousePressID = null;
-		}
+	public void setMousePressAction(AbstractAction pressAction) {
+		this.pressAction = pressAction;
 	}
 
 	/**
@@ -130,7 +132,7 @@ public abstract class AbstractEntity {
 	public void setPosition(Point position) {
 		bounds.add(position);
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -142,8 +144,8 @@ public abstract class AbstractEntity {
 	 * @return
 	 */
 	public void press() {
-		if (mousePressID != null && mousePressID != 0) {
-			ActionRegistrar.getInstance().getAction(mousePressID).execute();
+		if (pressAction != null) {
+			pressAction.execute();
 		}
 	}
 
@@ -152,5 +154,32 @@ public abstract class AbstractEntity {
 	 */
 	public abstract void paint(Graphics2D g, int scrollPosition, Point mousePosition, boolean active)
 			throws ResourceAccessException;
+
+	/**
+	 * Get the hotKey
+	 *
+	 * @return the hotKey
+	 */
+	public char getHotKey() {
+		return hotKey;
+	}
+
+	/**
+	 * Set the hotKey
+	 *
+	 * @param hotKey the hotKey to set
+	 */
+	public void setHotKey(char hotKey) {
+		this.hotKey = hotKey;
+	}
+
+	/**
+	 * @throws InputException
+	 */
+	public void registerHotKey() throws InputException {
+		if (hotKey != (char) 0) {
+			Keyboard.getInstance().registerHotKey(new HotKey(hotKey, this));
+		}
+	}
 
 }

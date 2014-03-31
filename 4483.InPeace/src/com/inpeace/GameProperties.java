@@ -1,5 +1,7 @@
 package com.inpeace;
 
+import java.awt.Font;
+
 import com.inpeace.engine.StateManager.StateID;
 
 /**
@@ -23,5 +25,7 @@ public class GameProperties {
 	public static final int DEFAULT_HEIGHT = (int) (DEFAULT_WIDTH / 1.78);
 	
 	public static final int DEFAULT_VERTICAL_ALIGNMENT = 0;
+	
+	public static final Font DEFAULT_FONT = new Font(Font.SANS_SERIF, Font.PLAIN , 20);
 	
 }

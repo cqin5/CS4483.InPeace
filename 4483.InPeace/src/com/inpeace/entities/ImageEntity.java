@@ -31,11 +31,11 @@ public class ImageEntity extends AbstractImageEntity {
 	 * @param mouseOverSpriteCode
 	 * @throws EntityException 
 	 */
-	public ImageEntity(int depth, AbstractAction pressAction, SpriteCode spriteCode, 
+	public ImageEntity(int depth, AbstractAction pressAction, char hotKey, SpriteCode spriteCode, 
 			boolean highlightable, boolean pressable, Point position)
 					throws EntityException {
 
-		super(depth, pressAction, spriteCode, position);
+		super(depth, pressAction, hotKey, spriteCode, position);
 		
 		highlightLine = 0;
 		pressedLine = 0;

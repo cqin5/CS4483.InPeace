@@ -31,6 +31,7 @@ import com.inpeace.engine.StateManager;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;
+import com.inpeace.input.Keyboard;
 import com.inpeace.library.Librarian;
 import com.inpeace.states.AbstractState.StateType;
 
@@ -148,6 +149,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		DefaultMouseAdapter adapter = new DefaultMouseAdapter(this);
 		addMouseListener(adapter);
 		addMouseMotionListener(adapter);
+		addKeyListener(Keyboard.getInstance());
 		setIgnoreRepaint(true);
 
 		panel.add(this);

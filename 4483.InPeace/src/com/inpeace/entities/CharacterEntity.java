@@ -49,7 +49,7 @@ public class CharacterEntity extends AbstractImageEntity {
 	public CharacterEntity(int depth, SpriteCode spriteCode, Point position, boolean canRun,
 			Rectangle movementConfines) {
 		
-		super(depth, null, spriteCode, position);
+		super(depth, null, (char) 0, spriteCode, position);
 		this.canRun = canRun;
 		this.confines = movementConfines;
 		this.motionState = 0;
@@ -163,4 +163,5 @@ public class CharacterEntity extends AbstractImageEntity {
 		// TODO Auto-generated method stub
 
 	}
+	
 }
