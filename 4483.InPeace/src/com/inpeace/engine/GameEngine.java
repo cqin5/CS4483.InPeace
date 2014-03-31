@@ -1,9 +1,8 @@
 package com.inpeace.engine;
 
+import com.inpeace.controllers.DefaultController;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.Request.RequestType;
-import com.inpeace.engine.Request.RouteTo;
-import com.inpeace.engine.StateManager.StateID;
-import com.inpeace.events.AbstractEvent;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.views.DefaultView;
 
@@ -20,11 +19,10 @@ public class GameEngine implements Runnable {
 	private boolean running;
 
 	/**   */
-	private long runTime, startTime;
+	private long loopTime;
 
 	/**   */
-	private DataManager data;
-	private StateManager states;
+	private DefaultController controller;
 
 	/**
 	 * Constructs a new GameEngine object.
@@ -32,10 +30,8 @@ public class GameEngine implements Runnable {
 	 */
 	public GameEngine() {
 		running = false;
-		runTime = 0;
-		startTime = 0;
-		data = new DataManager();
-		states = new StateManager();
+		loopTime = 0;
+		controller = new DefaultController();
 	}
 
 	/* (non-Javadoc)
@@ -44,80 +40,33 @@ public class GameEngine implements Runnable {
 	@Override
 	public void run() {
 		running = true;
-		startTime = System.currentTimeMillis();
 
-		routeRequest(new Request(DataManager.VIEW, new DefaultView(),
-				RequestType.REGISTER, RouteTo.DATA));
-		routeRequest(new Request(DataManager.VIEW, new AudioManager(), 
-				RequestType.REGISTER, RouteTo.DATA));
-
-		routeRequest(new Request(StateManager.STATE, GameProperties.LAUNCH_STATE,
-				RequestType.CHANGE_PROPERTY, RouteTo.STATES));
+		MailRoom.getInstance().postRequest(PropertyName.VIEW, new DefaultView(),
+				RequestType.REGISTER);
+		controller.processRequests();
+		
+		try {
+			StateManager.getInstance().changeState(GameProperties.LAUNCH_STATE);
+		} catch (StateException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		while (running) {
-			runTime = System.currentTimeMillis() - startTime;
+			loopTime = System.currentTimeMillis() - loopTime;
 
-			Scheduler.getInstance().updateRunTime(runTime);
-			executeMaturedEvents();
-			processRequests();
-			data.callRefresh();
+			Scheduler.getInstance().executeMaturedEvents();
+			controller.processRequests();
+			controller.refresh();
 
 			try {
-				Thread.sleep(1000 / GameProperties.FPS);
+				Thread.sleep((1000 / GameProperties.FPS) - loopTime);
 			} catch (Exception e) {
 				//NULL BODY
 			}
 		}
 		running = false;
 
-	}
-
-	/**
-	 * 
-	 */
-	public void executeMaturedEvents() {
-		AbstractEvent event = Scheduler.getInstance().getMaturedEvent();
-		while (event != null) {
-			event.execute();
-			event = Scheduler.getInstance().getMaturedEvent();
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void processRequests() {
-		Request request = MailRoom.getInstance().getRequest();
-		while (request != null) {
-			routeRequest(request);
-			request = MailRoom.getInstance().getRequest();
-		}
-	}
-
-	/**
-	 * @param request
-	 */
-	private void routeRequest(Request request) {
-		switch (request.routingCode) {
-		case STATES:
-			try {
-				states.loadState((StateID) request.value);
-			} catch (StateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
-		case DATA:
-			data.processRequest(request);
-			break;
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public long getRunTime() {
-		return runTime;
 	}
 
 }

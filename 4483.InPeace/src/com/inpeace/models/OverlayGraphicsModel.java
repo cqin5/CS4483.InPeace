@@ -3,8 +3,9 @@ package com.inpeace.models;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import com.inpeace.controllers.DefaultController;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.NullEntity;
 import com.inpeace.graphics.SpriteCode;
 
 /**
@@ -17,6 +18,9 @@ import com.inpeace.graphics.SpriteCode;
 public class OverlayGraphicsModel extends AbstractModel {
 
 	/**   */
+	private static final long serialVersionUID = 2366740043176152479L;
+
+	/**   */
 	private SpriteCode spriteCode;
 
 	/**   */
@@ -27,15 +31,9 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 *
 	 */
 	public OverlayGraphicsModel() {
+		super();
 		spriteCode = null;
 		objects = new TreeMap<Integer, AbstractEntity>();
-	}
-
-	/**
-	 * @return
-	 */
-	public SpriteCode getOverlaySpriteCode() {
-		return spriteCode;
 	}
 
 	/**
@@ -44,45 +42,21 @@ public class OverlayGraphicsModel extends AbstractModel {
 	public void setOverlaySpriteCode(SpriteCode spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
-			fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
+			fireChange(PropertyName.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void clearOverlaySpriteCode() {
-		setOverlaySpriteCode(null);
 	}
 
 	/**
 	 * @param entity
 	 */
 	public void setOverlayObjectEntity(AbstractEntity entity) {
-		objects.put(entity.getDepth(), entity);
-		fireChange(DefaultController.OVERLAY_OBJECTS, 
-				new ArrayList<AbstractEntity>(objects.values()));
-	}
-
-	/**
-	 * @param depth
-	 */
-	public void clearOverlayObjectEntity(Integer depth) {
-		if (objects.containsKey(depth)) {
-			objects.remove(depth);
-			fireChange(DefaultController.OVERLAY_OBJECTS, 
-					new ArrayList<AbstractEntity>(objects.values()));
+		if (entity.getClass().equals(NullEntity.class)) {
+			objects.remove(entity.getDepth());
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void clearOverlayObjects() {
-		if (objects != null) {
-			objects.clear();
-			fireChange(DefaultController.OVERLAY_OBJECTS, 
-					new ArrayList<AbstractEntity>());
+		else {
+			objects.put(entity.getDepth(), entity);
+			fireChange(PropertyName.OVERLAY_OBJECTS, 
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -91,13 +65,13 @@ public class OverlayGraphicsModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
+		fireChange(PropertyName.OVERLAY_GRAPHIC_SPRITE_CODE, spriteCode);
 		if (objects == null || objects.isEmpty()) {
-			fireChange(DefaultController.OVERLAY_OBJECT_ENTITY, 
+			fireChange(PropertyName.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 		else {
-			fireChange(DefaultController.OVERLAY_OBJECTS, 
+			fireChange(PropertyName.OVERLAY_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}

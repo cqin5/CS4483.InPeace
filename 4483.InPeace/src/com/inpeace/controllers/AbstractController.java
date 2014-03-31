@@ -2,10 +2,11 @@ package com.inpeace.controllers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import com.inpeace.engine.Request;
+import com.inpeace.exceptions.MVCException;
 import com.inpeace.models.AbstractModel;
 import com.inpeace.views.AbstractView;
 
@@ -17,7 +18,7 @@ import com.inpeace.views.AbstractView;
  * @since   24 Mar 2014
  */
 public abstract class AbstractController implements PropertyChangeListener {
-	
+
 	public static final String MODEL = "Model";
 	public static final String VIEW = "View";
 
@@ -38,33 +39,53 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 	/**
 	 * @param model
+	 * @throws MVCException 
 	 */
-	public void registerModel(AbstractModel model) {
-		registeredModels.add(model);
-		model.addListener(this);
-		model.fireAll();
+	public void registerModel(AbstractModel model) throws MVCException {
+		if (registeredModels.add(model)) {
+			model.addListener(this);
+			model.fireAll();
+		}
+		else {
+			throw new MVCException("Unable to register model, model already registered"
+					+ " (AbstractController)");
+		}
 	}
 
 	/**
 	 * @param model
+	 * @throws MVCException 
 	 */
-	public void deregisterModel(AbstractModel model) {
-		registeredModels.remove(model);
-		model.removeListener(this);
+	public void deregisterModel(AbstractModel model) throws MVCException {
+		if (registeredModels.remove(model)) {
+			model.removeListener(this);
+		}
+		else {
+			throw new MVCException("Unable to deregister model, model was not registered"
+					+ " (AbstractController)");
+		}
 	}
 
 	/**
 	 * @param view
+	 * @throws MVCException 
 	 */
-	public void registerView(AbstractView view) {
-		registeredViews.add(view);
+	public void registerView(AbstractView view) throws MVCException {
+		if (!registeredViews.add(view)) {
+			throw new MVCException("Unable to register view, view already registered"
+					+ " (AbstractController)");
+		}
 	}
 
 	/**
 	 * @param view
+	 * @throws MVCException 
 	 */
-	public void deregisterView(AbstractView view) {
-		registeredViews.remove(view);
+	public void deregisterView(AbstractView view) throws MVCException {
+		if (registeredViews.remove(view)) {
+			throw new MVCException("Unable to deregister view, view was not registered"
+					+ " (AbstractController)");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -77,58 +98,13 @@ public abstract class AbstractController implements PropertyChangeListener {
 		}
 	}
 
-	/**
-	 * @param request
-	 */
-	public void processRequest(Request request) {
+	public void setProperty(String propertyName, Object value) {
+		String methodName =  "set" + propertyName;
+		for (AbstractModel model: getRegisteredModels()) {
+			Method methods[] = model.getClass().getMethods();
+			for (Method method: methods) {
 
-		switch (request.type) {
-		case CHANGE_PROPERTY:
-			//Fall through on purpose
-		case CLEAR_PROPERTY:
-			processPropertyRequest(request);
-			break;
-		case DEREGISTER:
-			if (request.propertyName.equals(MODEL)) {
-				deregisterModel((AbstractModel) request.value);
-			}
-			else if (request.propertyName.equals(VIEW)) {
-				deregisterView((AbstractView) request.value);
-			}
-			break;
-		case REGISTER:
-			if (request.propertyName.equals(MODEL)) {
-				registerModel((AbstractModel) request.value);
-			}
-			else if (request.propertyName.equals(VIEW)) {
-				registerView((AbstractView) request.value);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	
-	/**
-	 * @param request
-	 */
-	private void processPropertyRequest(Request request) {
-		try {
-			String methodName = "";
-			switch (request.type) {
-			case CHANGE_PROPERTY:
-				methodName =  "set" + request.propertyName;
-				break;
-			case CLEAR_PROPERTY:
-				methodName =  "clear" + request.propertyName;
-				break;
-			default:
-				throw new Exception();			
-			}
-
-			for (AbstractModel model: registeredModels) {
-				Method methods[] = model.getClass().getMethods();
-				for (Method method: methods) {
+				try {
 					if (!method.getName().equals(methodName)) {
 						continue;
 					}
@@ -136,15 +112,18 @@ public abstract class AbstractController implements PropertyChangeListener {
 					if (paramTypes.length != 1) {
 						continue;
 					}
-					else if (!paramTypes[0].isAssignableFrom((request.value).getClass())) {
+					else if (!paramTypes[0].isAssignableFrom(value.getClass())) {
 						continue;
 					}
-					method.invoke(model, request.value);
+					method.invoke(model, value);
+
 					break;
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-		} catch (Exception e) {
-			//NULL BODY
 		}
 	}
 
@@ -155,6 +134,24 @@ public abstract class AbstractController implements PropertyChangeListener {
 		for (AbstractView view: registeredViews) {
 			view.refresh();
 		}
+	}
+
+	/**
+	 * Get the registeredViews
+	 *
+	 * @return the registeredViews
+	 */
+	public ArrayList<AbstractView> getRegisteredViews() {
+		return registeredViews;
+	}
+
+	/**
+	 * Get the registeredModels
+	 *
+	 * @return the registeredModels
+	 */
+	public ArrayList<AbstractModel> getRegisteredModels() {
+		return registeredModels;
 	}
 
 }

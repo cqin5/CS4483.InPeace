@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.inpeace.events.AbstractEvent;
+import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 
 /**
@@ -19,13 +20,13 @@ public abstract class Level implements Serializable {
 	private static final long serialVersionUID = -7604971177826975662L;
 	
 	/**   */
-	private String musicName = null;
+	private AudioModel audio = null;
 	
 	/**   */
 	private DefaultGraphicsModel graphicsModel = null;
 	
 	/**   */
-	private ArrayList<AbstractEvent> events = null;
+	private ArrayList<AbstractEvent> events;
 	
 	/**
 	 * Constructs a new Level object.
@@ -53,23 +54,22 @@ public abstract class Level implements Serializable {
 		this.graphicsModel = graphicsModel;
 	}
 	
-
 	/**
-	 * Get the musicName
+	 * Get the audio
 	 *
-	 * @return the musicName
+	 * @return the audio
 	 */
-	public String getMusicName() {
-		return musicName;
+	public AudioModel getAudio() {
+		return audio;
 	}
 
 	/**
-	 * Set the musicName
+	 * Set the audio
 	 *
-	 * @param musicName the musicName to set
+	 * @param audio the audio to set
 	 */
-	public void setMusicName(String audioModel) {
-		this.musicName = audioModel;
+	public void setAudio(AudioModel audio) {
+		this.audio = audio;
 	}
 
 	/**
@@ -94,5 +94,10 @@ public abstract class Level implements Serializable {
 	 * 
 	 */
 	public abstract void construct();
+	
+	/**
+	 * 
+	 */
+	public abstract void load();
 	
 }

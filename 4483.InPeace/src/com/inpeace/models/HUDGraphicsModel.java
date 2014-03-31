@@ -4,8 +4,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import com.inpeace.controllers.DefaultController;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.NullEntity;
 import com.inpeace.graphics.SpriteCode;
 
 /**
@@ -16,6 +17,9 @@ import com.inpeace.graphics.SpriteCode;
  * @since   23 Mar 2014
  */
 public class HUDGraphicsModel extends AbstractModel {
+
+	/**   */
+	private static final long serialVersionUID = 1226733423590414874L;
 
 	/**   */
 	private SpriteCode spriteCode;
@@ -31,6 +35,7 @@ public class HUDGraphicsModel extends AbstractModel {
 	 *
 	 */
 	public HUDGraphicsModel() {
+		super();
 		spriteCode = null;
 		objects = new TreeMap<Integer, AbstractEntity>();
 		screenCoverage = new ArrayList<Rectangle>();
@@ -42,15 +47,8 @@ public class HUDGraphicsModel extends AbstractModel {
 	public void setHUDSpriteCode(SpriteCode spriteCode) {
 		if (this.spriteCode != spriteCode) {
 			this.spriteCode = spriteCode;
-			fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
+			fireChange(PropertyName.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void clearHUDSpriteCode() {
-		setHUDSpriteCode(null);
 	}
 
 	/**
@@ -60,44 +58,20 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	public void setHUDScreenCoverage(ArrayList<Rectangle> screenCoverage) {
 		this.screenCoverage = screenCoverage;
-		fireChange(DefaultController.HUD_SCREEN_COVERAGE, this.screenCoverage);
-	}
-
-	/**
-	 * 
-	 */
-	public void clearHUDScreenCoverage() {
-		setHUDScreenCoverage(new ArrayList<Rectangle>());
+		fireChange(PropertyName.HUD_SCREEN_COVERAGE, this.screenCoverage);
 	}
 
 	/**
 	 * @param entity
 	 */
 	public void setHUDObjectEntity(AbstractEntity entity) {
-		objects.put(entity.getDepth(), entity);
-		fireChange(DefaultController.HUD_OBJECTS, 
-				new ArrayList<AbstractEntity>(objects.values()));
-	}
-
-	/**
-	 * @param depth
-	 */
-	public void clearHUDObjectEntity(Integer depth) {
-		if (objects.containsKey(depth)) {
-			objects.remove(depth);
-			fireChange(DefaultController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntity>(objects.values()));
+		if (entity.getClass().equals(NullEntity.class)) {
+			objects.remove(entity.getDepth());
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void clearHUDObjects() {
-		if (objects != null) {
-			objects.clear();
-			fireChange(DefaultController.HUD_OBJECTS, 
-					new ArrayList<AbstractEntity>());
+		else {
+			objects.put(entity.getDepth(), entity);
+			fireChange(PropertyName.HUD_OBJECTS, 
+					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}
 
@@ -106,13 +80,13 @@ public class HUDGraphicsModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(DefaultController.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
+		fireChange(PropertyName.HUD_GRAPHIC_SPRITE_CODE, spriteCode);
 		if (objects == null || objects.isEmpty()) {
-			fireChange(DefaultController.HUD_OBJECTS, 
+			fireChange(PropertyName.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>());
 		}
 		else {
-			fireChange(DefaultController.HUD_OBJECTS, 
+			fireChange(PropertyName.HUD_OBJECTS, 
 					new ArrayList<AbstractEntity>(objects.values()));
 		}
 	}

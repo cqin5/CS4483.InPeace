@@ -5,7 +5,7 @@ import java.awt.Point;
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.SoundFXAction;
-import com.inpeace.engine.DataManager;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
@@ -83,7 +83,7 @@ public class MainMenuState extends AbstractState {
 		}
 		model.setForegroundObjectEntity(entity);
 		
-		MailRoom.getInstance().postRequest(DataManager.DEFAULT_GRAPHICS_MODEL, model,
+		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
 		
 	}

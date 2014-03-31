@@ -44,8 +44,19 @@ public class History {
 		if (history.isEmpty()) {
 			throw new StateException("State History: unable to go back, no historical views registered");
 		}
+		current.close();
 		current = history.pop();
 		return current.getStateID();
+	}
+	
+	/**
+	 * 
+	 */
+	public void closeAll() {
+		while (!history.isEmpty()) {
+			current.close();
+			current = history.pop();
+		}
 	}
 
 	/**

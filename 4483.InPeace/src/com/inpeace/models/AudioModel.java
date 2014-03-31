@@ -1,6 +1,6 @@
 package com.inpeace.models;
 
-import com.inpeace.controllers.DefaultController;
+import com.inpeace.controllers.PropertyName;
 
 /**
  * 
@@ -12,15 +12,17 @@ import com.inpeace.controllers.DefaultController;
 public class AudioModel extends AbstractModel {
 
 	/**   */
+	private static final long serialVersionUID = 1205423385254211930L;
+
+	/**   */
 	private String musicName;
 
-	/**   */
-	private float musicVolume;
-
-	/**   */
-	private float fxVolume;
-
+	/**
+	 * Constructs a new AudioModel object.
+	 *
+	 */
 	public AudioModel() {
+		super();
 		setMusicName("");
 	}
 
@@ -32,60 +34,15 @@ public class AudioModel extends AbstractModel {
 	public void setMusicName(String musicName) {
 		if (this.musicName != musicName) {
 			this.musicName = musicName;
-			fireChange(DefaultController.BACKGROUND_MUSIC_NAME, musicName);
+			fireChange(PropertyName.BACKGROUND_MUSIC_NAME, musicName);
 		}
-	}
-
-	/**
-	 *
-	 */
-	public void clearMusicName() {
-		musicName = null;
 	}
 
 	/**
 	 * @param effectName
 	 */
 	public void setSoundEffect(String effectName) {
-		fireChange(DefaultController.SOUND_EFFECT, effectName);
-	}
-
-	/**
-	 * Set the musicVolume
-	 *
-	 * @param musicVolume the musicVolume to set
-	 */
-	public void setMusicVolume(float musicVolume) {
-		if (this.musicVolume != musicVolume) {
-			this.musicVolume = musicVolume;
-			fireChange(DefaultController.BACKGROUND_MUSIC_VOLUME, musicVolume);
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	public void clearMusicVolume() {
-		setMusicVolume(-5.0f);
-	}
-
-	/**
-	 * Set the fxVolume
-	 *
-	 * @param fxVolume the fxVolume to set
-	 */
-	public void setFXVolume(float fxVolume) {
-		if (this.fxVolume != fxVolume) {
-			this.fxVolume = fxVolume;
-			fireChange(DefaultController.SOUND_EFFECTS_VOLUME, fxVolume);
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void clearFXVolume() {
-		setFXVolume(0.0f);
+		fireChange(PropertyName.SOUND_EFFECT, effectName);
 	}
 	
 	/* (non-Javadoc)
@@ -93,9 +50,7 @@ public class AudioModel extends AbstractModel {
 	 */
 	@Override
 	public void fireAll() {
-		fireChange(DefaultController.BACKGROUND_MUSIC_NAME, musicName);
-		fireChange(DefaultController.BACKGROUND_MUSIC_VOLUME, musicVolume);
-		fireChange(DefaultController.SOUND_EFFECTS_VOLUME, fxVolume);
+		fireChange(PropertyName.BACKGROUND_MUSIC_NAME, musicName);
 	}
 
 }

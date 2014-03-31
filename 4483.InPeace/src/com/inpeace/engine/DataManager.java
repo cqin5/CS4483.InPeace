@@ -1,97 +1,178 @@
 package com.inpeace.engine;
 
-import com.inpeace.controllers.DefaultController;
-import com.inpeace.engine.Request.RequestType;
+import java.util.ArrayList;
+
+import com.inpeace.data.SaveData;
+import com.inpeace.events.AbstractEvent;
+import com.inpeace.levels.Level;
+import com.inpeace.levels.LevelFactory;
 import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
 import com.inpeace.models.HUDGraphicsModel;
 import com.inpeace.models.OverlayGraphicsModel;
-import com.inpeace.views.AbstractView;
+import com.inpeace.models.PlayerModel;
+import com.inpeace.models.SettingsModel;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 1.0
+ * @version 2.0
  * @since   24 Mar 2014
  */
 public class DataManager {
+
+	/**   */
+	private static DataManager instance = null;
 	
 	/**   */
-	public static final String VIEW = "View";
-	public static final String DEFAULT_GRAPHICS_MODEL = "DefaultGraphicsModel";
-	public static final String HUD_GRAPHICS_MODEL = "HUDModel";
-	public static final String OVERLAY_GRAPHICS_MODEL = "OverlayModel";
-	public static final String AUDIO_MODEL = "AudioModel";
-	
-	/**   */
-	private DefaultController controller;
-	
-	/**   */
-	private DefaultGraphicsModel graphicsModel;
-	private HUDGraphicsModel hudModel;
-	private OverlayGraphicsModel overlayModel;
-	private AudioModel audioModel;
+	private SaveData save;
 	
 	/**
-	 * Constructs a new DataManager object.
+	 * Constructs a new PersistentDataHandler object.
 	 *
 	 */
-	public DataManager() {
-		controller = new DefaultController();
-		graphicsModel = null;
-		hudModel = null;
-		overlayModel = null;
-		audioModel = null;
+	private DataManager() {
+		save = new SaveData();
+	}
+	
+	public static DataManager getInstance() {
+		if (instance == null) {
+			instance = new DataManager();
+		}
+		return instance;
+	}
+	
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getEvents()
+	 */
+	public ArrayList<AbstractEvent> getEvents() {
+		return save.getEvents();
 	}
 
 	/**
-	 * @param request
+	 * @param events
+	 * @see com.inpeace.data.SaveData#setEvents(java.util.ArrayList)
 	 */
-	public void processRequest(Request request) {
-		if (request.type == RequestType.REGISTER) {
-			if (request.propertyName == VIEW) {
-				controller.registerView((AbstractView) request.value);
-			}
-			else if (request.propertyName == DEFAULT_GRAPHICS_MODEL) {
-				if (graphicsModel != null) {
-					controller.deregisterModel(graphicsModel);
-				}
-				graphicsModel = (DefaultGraphicsModel) request.value;
-				controller.registerModel(graphicsModel);
-			}
-			else if (request.propertyName == HUD_GRAPHICS_MODEL) {
-				if (hudModel != null) {
-					controller.deregisterModel(hudModel);
-				}
-				hudModel = (HUDGraphicsModel) request.value;
-				controller.registerModel(hudModel);
-			}
-			else if (request.propertyName == OVERLAY_GRAPHICS_MODEL) {
-				if (overlayModel != null) {
-					controller.deregisterModel(overlayModel);
-				}
-				overlayModel = (OverlayGraphicsModel) request.value;
-				controller.registerModel(overlayModel);
-			}
-			else if (request.propertyName == AUDIO_MODEL) {
-				if (audioModel != null) {
-					controller.deregisterModel(audioModel);
-				}
-				audioModel = (AudioModel) request.value;
-				controller.registerModel(audioModel);
-			}
-		}
-		else {
-			controller.processRequest(request);
-		}
+	public void setEvents(ArrayList<AbstractEvent> events) {
+		save.setEvents(events);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getPlayerModel()
+	 */
+	public PlayerModel getPlayerModel() {
+		return save.getPlayerModel();
+	}
+
+	/**
+	 * @param playerModel
+	 * @see com.inpeace.data.SaveData#setPlayerModel(com.inpeace.models.PlayerModel)
+	 */
+	public void setPlayerModel(PlayerModel playerModel) {
+		save.setPlayerModel(playerModel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getSettingsModel()
+	 */
+	public SettingsModel getSettingsModel() {
+		return save.getSettingsModel();
+	}
+
+	/**
+	 * @param settingsModel
+	 * @see com.inpeace.data.SaveData#setSettingsModel(com.inpeace.models.SettingsModel)
+	 */
+	public void setSettingsModel(SettingsModel settingsModel) {
+		save.setSettingsModel(settingsModel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getDefaultGraphicsModel()
+	 */
+	public DefaultGraphicsModel getDefaultGraphicsModel() {
+		return save.getDefaultGraphicsModel();
+	}
+
+	/**
+	 * @param defaultGraphicsModel
+	 * @see com.inpeace.data.SaveData#setDefaultGraphicsModel(com.inpeace.models.DefaultGraphicsModel)
+	 */
+	public void setDefaultGraphicsModel(
+			DefaultGraphicsModel defaultGraphicsModel) {
+		save.setDefaultGraphicsModel(defaultGraphicsModel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getHudGraphicsModel()
+	 */
+	public HUDGraphicsModel getHudGraphicsModel() {
+		return save.getHudGraphicsModel();
+	}
+
+	/**
+	 * @param hudGraphicsModel
+	 * @see com.inpeace.data.SaveData#setHudGraphicsModel(com.inpeace.models.HUDGraphicsModel)
+	 */
+	public void setHudGraphicsModel(HUDGraphicsModel hudGraphicsModel) {
+		save.setHudGraphicsModel(hudGraphicsModel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getOverlayGraphicsModel()
+	 */
+	public OverlayGraphicsModel getOverlayGraphicsModel() {
+		return save.getOverlayGraphicsModel();
+	}
+
+	/**
+	 * @param overlayGraphicsModel
+	 * @see com.inpeace.data.SaveData#setOverlayGraphicsModel(com.inpeace.models.OverlayGraphicsModel)
+	 */
+	public void setOverlayGraphicsModel(
+			OverlayGraphicsModel overlayGraphicsModel) {
+		save.setOverlayGraphicsModel(overlayGraphicsModel);
+	}
+
+	/**
+	 * @return
+	 * @see com.inpeace.data.SaveData#getAudioModel()
+	 */
+	public AudioModel getAudioModel() {
+		return save.getAudioModel();
+	}
+
+	/**
+	 * @param audioModel
+	 * @see com.inpeace.data.SaveData#setAudioModel(com.inpeace.models.AudioModel)
+	 */
+	public void setAudioModel(AudioModel audioModel) {
+		save.setAudioModel(audioModel);
+	}
+
+	/**
+	 * @param LevelNum
+	 * @return
+	 */
+	public Level loadLevel(int levelNum) {
+		Level level = LevelFactory.buildLevel(levelNum);
+		level.load();
+		getPlayerModel().setCurrentLevel(levelNum);
+		return level;
 	}
 	
 	/**
-	 * 
+	 * @param collectibleIndex
 	 */
-	public void callRefresh() {
-		controller.refresh();
+	public void foundCollectible(int collectibleIndex) {
+		getPlayerModel().setCollected(collectibleIndex);
 	}
-	
+
 }

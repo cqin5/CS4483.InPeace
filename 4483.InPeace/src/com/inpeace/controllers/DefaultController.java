@@ -1,5 +1,15 @@
 package com.inpeace.controllers;
 
+import com.inpeace.engine.DataManager;
+import com.inpeace.engine.MailRoom;
+import com.inpeace.engine.Request;
+import com.inpeace.exceptions.MVCException;
+import com.inpeace.models.AbstractModel;
+import com.inpeace.models.AudioModel;
+import com.inpeace.models.DefaultGraphicsModel;
+import com.inpeace.models.HUDGraphicsModel;
+import com.inpeace.models.OverlayGraphicsModel;
+import com.inpeace.views.AbstractView;
 
 /**
  * 
@@ -8,22 +18,81 @@ package com.inpeace.controllers;
  * @version 1.0
  * @since   23 Mar 2014
  */
-public class DefaultController extends AbstractController {
-	
-	public static final String HORIZONTAL_SCROLL_POSITION = "HorizontalScrollPosition";
-	public static final String BACKGROUND_IMAGE_NAME = "BackgroundName";
-	public static final String FOREGROUND_OBJECTS = "ForegroundObjects";
-	public static final String FOREGROUND_OBJECT_ENTITY = "ForegroundObjectEntity";
-	public static final String HUD_GRAPHIC_SPRITE_CODE = "HUDSpriteCode";
-	public static final String HUD_OBJECTS = "HUDObjects";
-	public static final String HUD_OBJECT_ENTITY = "HUDObjectEntity";
-	public static final String HUD_SCREEN_COVERAGE = "HUDScreenCoverage";
-	public static final String OVERLAY_GRAPHIC_SPRITE_CODE = "OverlaySpriteCode";
-	public static final String OVERLAY_OBJECTS = "OverlayObjects";
-	public static final String OVERLAY_OBJECT_ENTITY = "OverlayObjectEntity";
-	public static final String BACKGROUND_MUSIC_NAME = "MusicName";
-	public static final String BACKGROUND_MUSIC_VOLUME = "MusicVolume";
-	public static final String SOUND_EFFECT = "SoundEffect";
-	public static final String SOUND_EFFECTS_VOLUME = "FXVolume";
-	
+public class DefaultController extends AbstractController {	
+
+	/**
+	 * @param request
+	 */
+	public void processRequests() {
+		Request request = null;
+		while ((request = MailRoom.getInstance().getRequest()) != null) {
+			try {
+				switch (request.type) {
+				case CHANGE_PROPERTY:
+					setProperty(request.propertyName.toString(), request.value);
+					break;
+				case DEREGISTER:
+					if (request.propertyName.equals(MODEL)) {
+						deregisterModel((AbstractModel) request.value);
+					}
+					else if (request.propertyName.equals(VIEW)) {
+						deregisterView((AbstractView) request.value);
+					}
+					break;
+				case REGISTER:
+					processRegistration(request);
+					break;
+				default:
+					break;
+				}
+			} catch (MVCException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * @param request
+	 */
+	public void processRegistration(Request request) {
+		try {
+			DataManager instance = DataManager.getInstance();
+			if (request.propertyName == PropertyName.VIEW) {
+				registerView((AbstractView) request.value);
+			}
+			else if (request.propertyName == PropertyName.DEFAULT_GRAPHICS_MODEL) {
+				if (instance.getDefaultGraphicsModel() != null) {
+					deregisterModel(instance.getDefaultGraphicsModel());
+				}
+				instance.setDefaultGraphicsModel((DefaultGraphicsModel) request.value);
+				registerModel(instance.getDefaultGraphicsModel());
+			}
+			else if (request.propertyName == PropertyName.HUD_GRAPHICS_MODEL) {
+				if (instance.getHudGraphicsModel() != null) {
+					deregisterModel(instance.getHudGraphicsModel());
+				}
+				instance.setHudGraphicsModel((HUDGraphicsModel) request.value);
+				registerModel(instance.getHudGraphicsModel());
+			}
+			else if (request.propertyName == PropertyName.OVERLAY_GRAPHICS_MODEL) {
+				if (instance.getOverlayGraphicsModel() != null) {
+					deregisterModel(instance.getOverlayGraphicsModel());
+				}
+				instance.setOverlayGraphicsModel((OverlayGraphicsModel) request.value);
+				registerModel(instance.getOverlayGraphicsModel());
+			}
+			else if (request.propertyName == PropertyName.AUDIO_MODEL) {
+				if (instance.getAudioModel() != null) {
+					deregisterModel(instance.getAudioModel());
+				}
+				instance.setAudioModel((AudioModel) request.value);
+				registerModel(instance.getAudioModel());
+			}
+		} catch (MVCException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

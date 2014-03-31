@@ -1,32 +1,22 @@
-package com.inpeace.data;
-
-import java.io.Serializable;
-
-import com.inpeace.levels.Level;
+package com.inpeace.models;
 
 /**
  * 
  * 
  * @author  James Anderson
- * @version 1.0
- * @since   18 Mar 2014
+ * @version 0.0
+ * @since   31 Mar 2014
  */
-public class Player implements Serializable {
+public class PlayerModel {
 
-	/** Eclipse generated version ID.  */
-	private static final long serialVersionUID = 8771165689031839746L;
-	
 	/**   */
 	private String username = null;
 	
 	/**   */
-	private Settings settings = null;
+	private int currentLevel = 1;
 	
 	/**   */
-	private Level currentLevel = null;
-	
-	/**   */
-	private boolean[] collectibles = null;
+	private boolean[] collectibles = {false};
 
 	/**
 	 * Get the username
@@ -47,29 +37,11 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Get the settings
-	 *
-	 * @return the settings
-	 */
-	public Settings getSettings() {
-		return settings;
-	}
-
-	/**
-	 * Set the settings
-	 *
-	 * @param settings the settings to set
-	 */
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
-
-	/**
 	 * Get the currentLevel
 	 *
 	 * @return the currentLevel
 	 */
-	public Level getCurrentLevel() {
+	public int getCurrentLevel() {
 		return currentLevel;
 	}
 
@@ -78,7 +50,7 @@ public class Player implements Serializable {
 	 *
 	 * @param currentLevel the currentLevel to set
 	 */
-	public void setCurrentLevel(Level currentLevel) {
+	public void setCurrentLevel(int currentLevel) {
 		this.currentLevel = currentLevel;
 	}
 
@@ -105,5 +77,5 @@ public class Player implements Serializable {
 			collectibles[index] = true;
 		}
 	}
-
+	
 }

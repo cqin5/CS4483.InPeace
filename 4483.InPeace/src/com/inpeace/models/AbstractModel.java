@@ -2,6 +2,9 @@ package com.inpeace.models;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
+
+import com.inpeace.controllers.PropertyName;
 
 /**
  * 
@@ -10,8 +13,11 @@ import java.beans.PropertyChangeSupport;
  * @version 1.0
  * @since   23 Mar 2014
  */
-public abstract class AbstractModel {
+public abstract class AbstractModel implements Serializable {
 
+	/**   */
+	private static final long serialVersionUID = 3207142051740234508L;
+	
 	/**   */
 	protected PropertyChangeSupport propertyChangeSupport;
 	 
@@ -42,8 +48,8 @@ public abstract class AbstractModel {
      * @param propertyName
      * @param newValue
      */
-    protected void fireChange(String propertyName, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, null, newValue);
+    protected void fireChange(PropertyName propertyName, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName.toString(), null, newValue);
     }
     
     /**

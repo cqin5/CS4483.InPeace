@@ -21,7 +21,7 @@ public abstract class AbstractEntity {
 	private int depth;
 
 	/**   */
-	protected Rectangle bounds;
+	private Rectangle bounds;
 
 	/**   */
 	private boolean pressed;

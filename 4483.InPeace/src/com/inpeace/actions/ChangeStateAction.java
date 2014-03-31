@@ -1,10 +1,8 @@
 package com.inpeace.actions;
 
-import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request.RequestType;
-import com.inpeace.engine.Request.RouteTo;
 import com.inpeace.engine.StateManager;
 import com.inpeace.engine.StateManager.StateID;
+import com.inpeace.exceptions.StateException;
 
 /**
  * 
@@ -32,9 +30,12 @@ public class ChangeStateAction extends AbstractAction {
 	 */
 	@Override
 	public void execute() {
-		MailRoom.getInstance().postRequest(StateManager.STATE, newID, 
-				RequestType.CHANGE_PROPERTY, RouteTo.STATES);
-		
+		try {
+			StateManager.getInstance().changeState(newID);
+		} catch (StateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

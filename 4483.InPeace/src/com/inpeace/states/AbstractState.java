@@ -12,9 +12,6 @@ import com.inpeace.engine.StateManager.StateID;
  */
 public abstract class AbstractState {
 	
-	/** Property names.  */
-	public static final String STATE_TYPE = "StateType";
-	
 	/** State type codes. */
 	public static enum StateType {
 		NONE, SPLASH, DEFAULT, IN_GAME, OVERLAY

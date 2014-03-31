@@ -2,7 +2,7 @@ package com.inpeace.states;
 
 import java.util.ArrayList;
 
-import com.inpeace.engine.DataManager;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
@@ -69,7 +69,7 @@ public class ScrollState extends AbstractState {
 			e.printStackTrace();
 		}
 
-		MailRoom.getInstance().postRequest(DataManager.OVERLAY_GRAPHICS_MODEL, model, 
+		MailRoom.getInstance().postRequest(PropertyName.OVERLAY_GRAPHICS_MODEL, model, 
 				RequestType.REGISTER);
 		
 		// TODO Auto-generated method stub

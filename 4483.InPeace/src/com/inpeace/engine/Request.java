@@ -1,5 +1,7 @@
 package com.inpeace.engine;
 
+import com.inpeace.controllers.PropertyName;
+
 /**
  * The class responsible for carrying requests to the various parts of the game engine.  Think of
  * this object like an office memo.
@@ -14,20 +16,12 @@ public class Request {
 	public static enum RequestType {
 		CLEAR_PROPERTY, CHANGE_PROPERTY, REGISTER, DEREGISTER, SAVE, LOAD
 	}
-	
-	/** Routing codes.  */
-	public static enum RouteTo {
-		STATES, DATA
-	}
 
 	/**   */
 	public final RequestType type;
 	
 	/**   */
-	public final RouteTo routingCode;
-	
-	/**   */
-	public final String propertyName;
+	public final PropertyName propertyName;
 	
 	/**   */
 	public final Object value;
@@ -38,11 +32,10 @@ public class Request {
 	 * @param propertyName
 	 * @param value
 	 */
-	public Request(String propertyName, Object value, RequestType type, RouteTo routingCode) {
+	public Request(PropertyName propertyName, Object value, RequestType type) {
 		this.propertyName = propertyName;
 		this.value = value;
 		this.type = type;
-		this.routingCode = routingCode;
 	}
 	
 }

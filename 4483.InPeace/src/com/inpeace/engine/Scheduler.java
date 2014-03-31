@@ -17,16 +17,15 @@ public class Scheduler {
 	private final Schedule schedule;
 	
 	/**   */
-	private Integer lastIssuedID = 0;
-	
-	private long runTime = 0;
-	
+	private Integer lastIssuedID;
+		
 	/**
 	 * Constructs a new Scheduler object.
 	 *
 	 */
 	private Scheduler() {
-		this.schedule = new Schedule();
+		schedule = new Schedule();
+		lastIssuedID = 0;
 	}
 	
 	/**
@@ -44,7 +43,7 @@ public class Scheduler {
 	 */
 	public Integer registerEvent(AbstractEvent event, double secondsUntil) {
 		event.setEventID(++lastIssuedID);
-		event.setTime(runTime + (long)(1000 * secondsUntil));
+		event.setTime(System.currentTimeMillis() + (long)(1000 * secondsUntil));
 		schedule.add(event);
 		return lastIssuedID;
 	}
@@ -62,17 +61,20 @@ public class Scheduler {
 	 */
 	public AbstractEvent getMaturedEvent() {
 		if (schedule.size() > 0) {
-			if (schedule.get(0).getTime().compareTo(runTime) <= 0) {
+			if (schedule.get(0).getTime().compareTo(System.currentTimeMillis()) <= 0) {
 				return schedule.removeFirst();
 			}
 		}
 		return null;
 	}
-	
+
 	/**
-	 * @param time
+	 * 
 	 */
-	public void updateRunTime(Long time) {
-		runTime = time;
+	public void executeMaturedEvents() {
+		AbstractEvent event = null;
+		while ((event = getMaturedEvent()) != null) {
+			event.execute();
+		}
 	}
 }

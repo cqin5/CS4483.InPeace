@@ -8,23 +8,29 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.inpeace.controllers.DefaultController;
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.GameProperties;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
+import com.inpeace.engine.StateManager;
 import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;
 import com.inpeace.library.Librarian;
-import com.inpeace.states.AbstractState;
 import com.inpeace.states.AbstractState.StateType;
 
 /**
@@ -90,7 +96,23 @@ public class DefaultView extends Canvas implements AbstractView {
 
 	/**   */
 	private ArrayList<AbstractEntity> overlayObjects = null;
+	
+	/*
+	 * Audio variables.
+	 */
 
+	/**   */
+	private Clip backgroundMusic = null;
+
+	/**   */
+	private Queue<Clip> soundEffects = new LinkedList<Clip>();
+
+	/**   */
+	private float musicVolume = -10f;
+
+	/**   */
+	private float fxVolume = -5f;
+	
 
 	/**
 	 * Constructs a new View object.
@@ -106,6 +128,11 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	public void initialiser() {
 		JFrame window = new JFrame(GameProperties.TITLE);
+		window.addWindowListener(new WindowAdapter() {
+	         public void windowClosing(WindowEvent windowEvent){
+	             StateManager.getInstance().quit();
+	          }        
+	       });
 		JPanel panel = (JPanel) window.getContentPane();
 		Dimension size = new Dimension(GameProperties.DEFAULT_WIDTH, 
 				GameProperties.DEFAULT_HEIGHT);
@@ -240,7 +267,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			active = true;
 		}
 		if (overlayObjects != null) {
-			for (AbstractEntity object: hudObjects) {
+			for (AbstractEntity object: overlayObjects) {
 				object.paint(g, scrollPosition, mousePosition, active);
 			}
 		}
@@ -254,13 +281,13 @@ public class DefaultView extends Canvas implements AbstractView {
 	@Override
 	public void update(PropertyChangeEvent e) {
 
-		if (e.getPropertyName().equals(AbstractState.STATE_TYPE)) {
+		if (e.getPropertyName().equals(PropertyName.STATE_TYPE.toString())) {
 			stateType = (StateType) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(DefaultController.HORIZONTAL_SCROLL_POSITION)) {
+		else if (e.getPropertyName().equals(PropertyName.HORIZONTAL_SCROLL_POSITION.toString())) {
 			scrollPosition = (Integer) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(DefaultController.BACKGROUND_IMAGE_NAME)) {
+		else if (e.getPropertyName().equals(PropertyName.BACKGROUND_IMAGE_NAME.toString())) {
 			try {
 				background = Librarian.getInstance().getBackground(e.getNewValue().toString());
 			} catch (ResourceAccessException e1) {
@@ -268,11 +295,10 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-
-		else if (e.getPropertyName().equals(DefaultController.FOREGROUND_OBJECTS)) {
+		else if (e.getPropertyName().equals(PropertyName.FOREGROUND_OBJECTS.toString())) {
 			foregroundObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(DefaultController.HUD_GRAPHIC_SPRITE_CODE)) {
+		else if (e.getPropertyName().equals(PropertyName.HUD_GRAPHIC_SPRITE_CODE.toString())) {
 			try {
 				hudGraphic = Librarian.getInstance().getSprite((SpriteCode) e.getNewValue());
 			} catch (ResourceAccessException e1) {
@@ -280,10 +306,10 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(DefaultController.HUD_OBJECTS)) {
+		else if (e.getPropertyName().equals(PropertyName.HUD_OBJECTS.toString())) {
 			hudObjects = (ArrayList<AbstractEntity>) e.getNewValue();
 		}
-		else if (e.getPropertyName().equals(DefaultController.OVERLAY_GRAPHIC_SPRITE_CODE)) {
+		else if (e.getPropertyName().equals(PropertyName.OVERLAY_GRAPHIC_SPRITE_CODE.toString())) {
 			try {
 				overlayGraphic = Librarian.getInstance().getSprite((SpriteCode) e.getNewValue());
 			} catch (ResourceAccessException e1) {
@@ -291,8 +317,41 @@ public class DefaultView extends Canvas implements AbstractView {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getPropertyName().equals(DefaultController.OVERLAY_OBJECTS)) {
+		else if (e.getPropertyName().equals(PropertyName.OVERLAY_OBJECTS.toString())) {
 			overlayObjects = (ArrayList<AbstractEntity>) e.getNewValue();
+		}
+		if (e.getPropertyName().equals(PropertyName.BACKGROUND_MUSIC_NAME.toString())) {
+			try {
+				if (backgroundMusic != null) {
+					backgroundMusic.stop();
+				}
+				backgroundMusic = Librarian.getInstance().getSound((String) e.getNewValue());
+				if (backgroundMusic != null) {
+					FloatControl volume = (FloatControl) backgroundMusic.getControl(FloatControl.Type.MASTER_GAIN);
+					volume.setValue(musicVolume);
+					backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+				}
+			} catch (ResourceAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if (e.getPropertyName().equals(PropertyName.SOUND_EFFECT.toString())) {
+			try {
+				Clip clip = Librarian.getInstance().getSound((String) e.getNewValue());
+				if (clip != null) {
+					soundEffects.add(clip);
+				}
+			} catch (ResourceAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if (e.getPropertyName().equals(PropertyName.BACKGROUND_MUSIC_VOLUME.toString())) {
+			musicVolume = (float) e.getNewValue();
+		}
+		else if (e.getPropertyName().equals(PropertyName.SOUND_EFFECTS_VOLUME.toString())) {
+			fxVolume = (float) e.getNewValue();
 		}
 	}
 
@@ -353,6 +412,14 @@ public class DefaultView extends Canvas implements AbstractView {
 	@Override
 	public void refresh() {
 		repaint();
+		
+		if (soundEffects != null) {
+			for (Clip clip: soundEffects) {
+				FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				volume.setValue(fxVolume);
+				clip.start();
+			}
+		}
 	}
 
 	/**
@@ -363,7 +430,7 @@ public class DefaultView extends Canvas implements AbstractView {
 		if ((background.getWidth() - newScroll) < GameProperties.DEFAULT_WIDTH) {
 			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
 		}
-		MailRoom.getInstance().postRequest(DefaultController.HORIZONTAL_SCROLL_POSITION, newScroll, 
+		MailRoom.getInstance().postRequest(PropertyName.HORIZONTAL_SCROLL_POSITION, newScroll, 
 				RequestType.CHANGE_PROPERTY);
 	}
 

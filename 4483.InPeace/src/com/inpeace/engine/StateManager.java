@@ -1,5 +1,6 @@
 package com.inpeace.engine;
 
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.exceptions.StateException;
 import com.inpeace.states.AbstractState;
@@ -33,8 +34,8 @@ public class StateManager {
 		SETTINGS_OVERLAY, SCROLL
 	}
 
-	/** A request property name.  */
-	public static final String STATE = "State";
+	/**   */
+	private static StateManager instance = null;
 
 	/**   */
 	private History history;
@@ -46,9 +47,19 @@ public class StateManager {
 	 * Constructs a new StateManager object.
 	 *
 	 */
-	public StateManager() {
+	private StateManager() {
 		history = new History();
 		currentStateID = null;
+	}
+
+	/**
+	 * @return
+	 */
+	public static StateManager getInstance() {
+		if (instance == null) {
+			instance = new StateManager();
+		}
+		return instance;
 	}
 
 	/**
@@ -59,7 +70,7 @@ public class StateManager {
 	 * @param stateID
 	 * @throws StateException
 	 */
-	public void loadState(StateID stateID) throws StateException {
+	public void changeState(StateID stateID) throws StateException {
 
 		AbstractState oldState = history.getCurrentState();
 
@@ -69,7 +80,7 @@ public class StateManager {
 				throw new StateException("State change failed, already in state");
 			}
 		}
-		else {
+		{
 			if (currentStateID == stateID) {
 				throw new StateException("State change failed, already in state");
 			}
@@ -129,8 +140,13 @@ public class StateManager {
 			}
 		}
 
-		MailRoom.getInstance().postRequest(AbstractState.STATE_TYPE, history.getCurrentState().getType(), 
+		MailRoom.getInstance().postRequest(PropertyName.STATE_TYPE, history.getCurrentState().getType(), 
 				RequestType.CHANGE_PROPERTY);
+	}
+
+	public void quit() {
+		history.closeAll();
+		System.exit(0);
 	}
 
 }

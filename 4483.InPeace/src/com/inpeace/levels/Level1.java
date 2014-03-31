@@ -22,4 +22,13 @@ public class Level1 extends Level {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.inpeace.levels.Level#load()
+	 */
+	@Override
+	public void load() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
