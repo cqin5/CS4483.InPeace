@@ -1,6 +1,9 @@
 package com.inpeace.views;
 
+import java.awt.Point;
 import java.beans.PropertyChangeEvent;
+
+import com.inpeace.entities.AbstractEntity;
 
 /**
  * 
@@ -20,5 +23,22 @@ public interface AbstractView  {
 	 * 
 	 */
 	public void refresh();
+	
+	/**
+	 * @param p
+	 * @return
+	 */
+	public AbstractEntity getEntityAt(Point p);
+	
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void scroll(int x, int y);
+	
+	/**
+	 * @param p
+	 */
+	public void setMousePosition(Point p);
 	
 }

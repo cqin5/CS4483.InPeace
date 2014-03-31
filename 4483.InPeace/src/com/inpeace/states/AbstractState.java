@@ -17,7 +17,7 @@ import com.inpeace.input.HotKey;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   31 Mar 2014
  */
 public abstract class AbstractState {
@@ -93,14 +93,6 @@ public abstract class AbstractState {
 	 */
 	public void setHotKeys(ArrayList<HotKey> hotKeys) {
 		this.hotKeys = hotKeys;
-	}
-	
-	/**
-	 * @param hotKey
-	 * @return
-	 */
-	public boolean addHotKey(HotKey hotKey) {
-		return hotKeys.add(hotKey);
 	}
 	
 	/**

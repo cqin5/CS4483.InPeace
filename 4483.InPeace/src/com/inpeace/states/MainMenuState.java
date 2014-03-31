@@ -6,6 +6,7 @@ import java.awt.Point;
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.SoundFXAction;
+import com.inpeace.characterfilter.UsernameCharacterFilter;
 import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
@@ -90,19 +91,20 @@ public class MainMenuState extends AbstractState {
 		}
 		model.setForegroundObjectEntity(entity);
 		
-		/*
+		
 		TextFieldEntity text = null;
 		try {
 			text = new TextFieldEntity(2, SpriteCode.get("1-0-0-128-128-4-4"),
 					new Point(200,200), entity, 20);
 			text.setFontColour(Color.red);
-			text.setKeyboardFocus(true);
+			//text.setKeyboardFocus(true);
+			text.setFilter(new UsernameCharacterFilter());
 		} catch (SpriteCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		model.setForegroundObjectEntity(text);
-		*/
+		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
 		

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 
 import com.inpeace.GameProperties;
 import com.inpeace.exceptions.ResourceAccessException;
@@ -96,7 +95,8 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 			str += text[i];
 		}
 		if (isKeyboardFocus()) {
-			if (getNextFlash() >= System.currentTimeMillis()) {
+			if (getNextFlash() <= System.currentTimeMillis()) {
+				setNextFlash();
 				cursor = !cursor;
 			}
 			if (cursor) {
@@ -106,39 +106,39 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 		
 		g.setColor(fontColour);
 		g.setFont(font);
-		g.drawString(str, getPosition().x, getPosition().y);
+		g.drawString(str, getPosition().x, getPosition().y - font.getSize());
 	}
 
 	/* (non-Javadoc)
-	 * @see com.inpeace.entities.AbstractTextInputEntity#keyPress(char)
+	 * @see com.inpeace.entities.AbstractTextInputEntity#enter()
 	 */
 	@Override
-	public void keyPress(KeyEvent e) {
-		char key = e.getKeyChar();
-		if (key == '\u0008') {
-			charCount--;
-			if (charCount < 0) {
-				charCount = 0;
-			}
-			text[charCount] = '\u0000';
+	public void enter() {
+		setKeyboardFocus(false);
+		enterButton.press();		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.entities.AbstractTextInputEntity#backspace()
+	 */
+	@Override
+	public void backspace() {
+		charCount--;
+		if (charCount < 0) {
+			charCount = 0;
 		}
-		else if (e.getKeyCode() == '\n') {
-			setKeyboardFocus(false);
-			enterButton.press();
-		}
-		else if ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') 
-				|| (key >= 'A' && key <= 'Z')) {
-			if (charCount + 1 < text.length) {
-				text[charCount] =  key;
-				charCount++;
-			}
-		}
-		else if (key == '_' || key == '-' || key == '@' || key == '#' || key == '$') {
-			if (charCount + 1 < text.length) {
-				text[charCount] =  key;
-				charCount++;
-			}
-		}
+		text[charCount] = '\u0000';		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.inpeace.entities.AbstractTextInputEntity#key(char)
+	 */
+	@Override
+	public void key(char c) {
+		if (charCount + 1 < text.length) {
+			text[charCount] = c;
+			charCount++;
+		}		
 	}
 
 }

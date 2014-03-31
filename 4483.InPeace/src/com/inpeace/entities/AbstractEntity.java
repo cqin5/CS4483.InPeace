@@ -42,7 +42,7 @@ public abstract class AbstractEntity {
 	public AbstractEntity(int depth, AbstractAction pressAction, char hotKey, 
 			Rectangle bounds) {
 		setDepth(depth);
-		setPressed(false);
+		setDepressed(false);
 		setMousePressAction(pressAction);
 		setHotKey(hotKey);
 		setBounds(bounds);
@@ -103,7 +103,7 @@ public abstract class AbstractEntity {
 	 *
 	 * @param pressed the pressed to set
 	 */
-	public void setPressed(boolean pressed) {
+	public void setDepressed(boolean pressed) {
 		this.pressed = pressed;
 	}
 

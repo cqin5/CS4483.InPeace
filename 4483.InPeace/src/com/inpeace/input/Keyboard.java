@@ -2,6 +2,7 @@ package com.inpeace.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.inpeace.entities.AbstractTextInputEntity;
@@ -10,7 +11,7 @@ import com.inpeace.entities.AbstractTextInputEntity;
  * 
  * 
  * @author  James Anderson
- * @version 0.0
+ * @version 1.0
  * @since   31 Mar 2014
  */
 public class Keyboard implements KeyListener {
@@ -91,6 +92,15 @@ public class Keyboard implements KeyListener {
 	}
 
 	/**
+	 * 
+	 */
+	public void clearFocus() {
+		if (focus != null) {
+			focus.setKeyboardFocus(false);
+		}
+	}
+
+	/**
 	 * @param hotKey
 	 */
 	public void registerHotKey(HotKey hotKey) {
@@ -102,6 +112,29 @@ public class Keyboard implements KeyListener {
 	 */
 	public void deregisterHotKey(HotKey hotKey) {
 		hotkeys.remove(hotKey.getKey());
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList<HotKey> getHotKeys() {
+		return new ArrayList<HotKey>(hotkeys.values());
+	}
+
+	/**
+	 * @param hotKeys
+	 */
+	public void setHotKeys(ArrayList<HotKey> hotKeys) {
+		for (HotKey hotKey: hotKeys) {
+			registerHotKey(hotKey);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void clearHotKeys() {
+		hotkeys.clear();
 	}
 
 }

@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -32,6 +30,7 @@ import com.inpeace.entities.AbstractEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;
 import com.inpeace.input.Keyboard;
+import com.inpeace.input.Mouse;
 import com.inpeace.library.Librarian;
 import com.inpeace.states.AbstractState.StateType;
 
@@ -146,11 +145,12 @@ public class DefaultView extends Canvas implements AbstractView {
 		
 		setBounds(0, 0, size.width, size.height);
 		setBackground(Color.BLACK);
-		DefaultMouseAdapter adapter = new DefaultMouseAdapter(this);
-		addMouseListener(adapter);
-		addMouseMotionListener(adapter);
-		addKeyListener(Keyboard.getInstance());
 		setIgnoreRepaint(true);
+		
+		addMouseListener(Mouse.getInstance());
+		addMouseMotionListener(Mouse.getInstance());
+		Mouse.getInstance().setCurrentView(this);
+		addKeyListener(Keyboard.getInstance());
 
 		panel.add(this);
 		
@@ -366,10 +366,10 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 	}
 
-	/**
-	 * @param p
-	 * @return
+	/* (non-Javadoc)
+	 * @see com.inpeace.views.AbstractView#getEntityAt(java.awt.Point)
 	 */
+	@Override
 	public AbstractEntity getEntityAt(Point p) {
 		switch (stateType) {
 		case IN_GAME:
@@ -433,10 +433,11 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 	}
 
-	/**
-	 * @param x
+	/* (non-Javadoc)
+	 * @see com.inpeace.views.AbstractView#scroll(int, int)
 	 */
-	public void sideScroll(int x) {
+	@Override
+	public void scroll(int x, int y) {
 		int newScroll = scrollPosition + x;
 		int max = background.getWidth() - GameProperties.DEFAULT_WIDTH - 1;
 		if (newScroll > max) {
@@ -451,74 +452,12 @@ public class DefaultView extends Canvas implements AbstractView {
 		}
 	}
 
-
-	/**
-	 * 
-	 * 
-	 * @author  James Anderson
-	 * @version 1.0
-	 * @since   26 Mar 2014
+	/* (non-Javadoc)
+	 * @see com.inpeace.views.AbstractView#setMousePosition(java.awt.Point)
 	 */
-	private class DefaultMouseAdapter extends MouseAdapter {
-
-		/**   */
-		private DefaultView view;
-
-		/**   */
-		private AbstractEntity pressedEntity;
-
-		/**   */
-		private int dragPosX;
-
-		/**
-		 * Constructs a new DefaultMouseAdapter object.
-		 *
-		 * @param view
-		 */
-		public DefaultMouseAdapter(DefaultView view) {
-			this.view = view;
-			dragPosX = -1;
-		}
-
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
-		 */
-		public void mousePressed(MouseEvent e) {
-			pressedEntity = view.getEntityAt(e.getPoint());
-			if (pressedEntity != null) {
-				pressedEntity.setPressed(true);
-				pressedEntity.press();
-			}
-		}
-
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
-		 */
-		public void mouseReleased(MouseEvent e) {
-			if (pressedEntity != null) {
-				pressedEntity.setPressed(false);
-
-			}
-			dragPosX = -1;
-
-		}
-
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseAdapter#mouseDragged(java.awt.event.MouseEvent)
-		 */
-		public void mouseDragged(MouseEvent e) {
-			if (dragPosX >= 0) {
-				view.sideScroll(dragPosX - e.getX());
-			}
-			dragPosX = e.getX();
-		}
-
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseAdapter#mouseMoved(java.awt.event.MouseEvent)
-		 */
-		public void mouseMoved(MouseEvent e) {
-			mousePosition = e.getPoint();
-		}
+	@Override
+	public void setMousePosition(Point p) {
+		this.mousePosition = p;		
 	}
 
 }
