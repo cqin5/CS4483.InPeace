@@ -3,26 +3,26 @@ package com.inpeace.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
+import com.inpeace.entities.ImageEntity;
 
 /**
  * The class EnterListener, a key listener.
  * 
  * @author	James Anderson
- * @version 1.0
+ * @version 1.1
  * @since	4 November 2013
  */
 public class EnterListener implements KeyListener {
 	
 	/** The button to act on. */
-	private JButton button;
+	private ImageEntity button;
 	
 	/**
 	 * Instantiates an EnterListener instance.
 	 *
 	 * @param button	the button
 	 */
-	public EnterListener(JButton button) {
+	public EnterListener(ImageEntity button) {
 		super();
 		this.button = button;
 	}
@@ -33,7 +33,7 @@ public class EnterListener implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-			button.doClick();
+			button.press();
 		}
 	}
 

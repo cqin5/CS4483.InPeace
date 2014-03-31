@@ -1,6 +1,8 @@
  package com.inpeace.states;
 
+import java.awt.Color;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MultiAction;
@@ -9,6 +11,7 @@ import com.inpeace.controllers.PropertyName;
 import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager.StateID;
+import com.inpeace.entities.AlphaNumTextFieldEntity;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.SpriteCodeException;
@@ -82,6 +85,10 @@ public class MainMenuState extends AbstractState {
 			e.printStackTrace();
 		}
 		model.setForegroundObjectEntity(entity);
+		
+		AlphaNumTextFieldEntity text = new AlphaNumTextFieldEntity(2, new Rectangle(200,200,200,30), entity,
+				"Test...", Color.RED, 20);
+		model.setForegroundObjectEntity(text);
 		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);

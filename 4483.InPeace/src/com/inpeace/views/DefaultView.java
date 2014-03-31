@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -205,8 +206,13 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	private void repaintBackground(Graphics2D g) {
 		if (background != null) {
+			try {
 			g.drawImage(background.getSubimage(scrollPosition, 0, GameProperties.DEFAULT_WIDTH,
 					GameProperties.DEFAULT_HEIGHT), 0, 0, null);
+			} catch (RasterFormatException e) {
+				System.out.print(background.getWidth() + ", " + GameProperties.DEFAULT_WIDTH + ", " + scrollPosition + "\n");
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -430,11 +436,17 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	public void sideScroll(int x) {
 		int newScroll = scrollPosition + x;
-		if ((background.getWidth() - newScroll) < GameProperties.DEFAULT_WIDTH) {
-			newScroll = background.getWidth() - GameProperties.DEFAULT_WIDTH;
+		int max = background.getWidth() - GameProperties.DEFAULT_WIDTH - 1;
+		if (newScroll > max) {
+			newScroll = max;
 		}
-		MailRoom.getInstance().postRequest(PropertyName.HORIZONTAL_SCROLL_POSITION, newScroll, 
-				RequestType.CHANGE_PROPERTY);
+		else if (newScroll < 0) {
+			newScroll = 0;
+		}
+		if (newScroll != scrollPosition) {
+			MailRoom.getInstance().postRequest(PropertyName.HORIZONTAL_SCROLL_POSITION, newScroll, 
+					RequestType.CHANGE_PROPERTY);
+		}
 	}
 
 

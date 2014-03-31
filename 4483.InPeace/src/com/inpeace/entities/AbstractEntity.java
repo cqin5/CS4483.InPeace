@@ -29,19 +29,15 @@ public abstract class AbstractEntity {
 	/**   */
 	private Integer mousePressID = null;
 
-	/**   */
-	private Integer enterID = null;
-
 	/**
 	 * Constructs a new AbstractEntityGraphic object.
 	 *
 	 * @param depth
 	 */
-	public AbstractEntity(int depth, AbstractAction pressAction, AbstractAction enterAction, Rectangle bounds) {
+	public AbstractEntity(int depth, AbstractAction pressAction, Rectangle bounds) {
 		setDepth(depth);
 		setPressed(false);
 		setMousePressAction(pressAction);
-		setEnterAction(enterAction);
 		this.bounds = bounds;
 	}
 
@@ -118,18 +114,6 @@ public abstract class AbstractEntity {
 	}
 
 	/**
-	 * @param action
-	 */
-	public void setEnterAction(AbstractAction action) {
-		if (action != null) {
-			enterID = ActionRegistrar.getInstance().registerAction(action);
-		}
-		else {
-			enterID = null;
-		}
-	}
-
-	/**
 	 * Get the position
 	 *
 	 * @return the position
@@ -160,15 +144,6 @@ public abstract class AbstractEntity {
 	public void press() {
 		if (mousePressID != null && mousePressID != 0) {
 			ActionRegistrar.getInstance().getAction(mousePressID).execute();
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public void enter() {
-		if (enterID != null && enterID != 0) {
-			ActionRegistrar.getInstance().getAction(enterID).execute();
 		}
 	}
 
