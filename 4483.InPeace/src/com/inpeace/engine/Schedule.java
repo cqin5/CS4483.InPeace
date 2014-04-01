@@ -101,4 +101,18 @@ public class Schedule {
 		return schedule.size();
 	}
 	
+	/**
+	 * @return
+	 */
+	public ArrayList<AbstractEvent> getSnapshot() {
+		return schedule;
+	}
+	
+	/**
+	 * @param snapshot
+	 */
+	public void restoreSnapshot(ArrayList<AbstractEvent> snapshot) {
+		schedule = snapshot;
+	}
+	
 }

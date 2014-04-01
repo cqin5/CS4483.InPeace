@@ -14,6 +14,9 @@ import com.inpeace.exceptions.ResourceAccessException;
  */
 public class NullEntity extends AbstractEntity {
 
+	/**   */
+	private static final long serialVersionUID = -5089781489513416478L;
+
 	/**
 	 * Constructs a new NullEntity object.
 	 *

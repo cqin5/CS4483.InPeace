@@ -14,6 +14,9 @@ import com.inpeace.engine.Request.RequestType;
 public class SoundFXAction extends AbstractAction {
 	
 	/**   */
+	private static final long serialVersionUID = 3504108628097649308L;
+	
+	/**   */
 	private String soundName;
 	
 	/**

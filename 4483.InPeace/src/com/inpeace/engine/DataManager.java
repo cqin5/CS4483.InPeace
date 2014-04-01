@@ -1,9 +1,8 @@
 package com.inpeace.engine;
 
-import java.util.ArrayList;
-
+import com.inpeace.controllers.PropertyName;
 import com.inpeace.data.SaveData;
-import com.inpeace.events.AbstractEvent;
+import com.inpeace.engine.Request.RequestType;
 import com.inpeace.levels.Level;
 import com.inpeace.levels.LevelFactory;
 import com.inpeace.models.AudioModel;
@@ -27,12 +26,23 @@ public class DataManager {
 	/**   */
 	private SaveData save;
 	
+	/**   */
+	private DefaultGraphicsModel defaultGraphicsModel;
+	private AudioModel audioModel;
+	private HUDGraphicsModel hudGraphicsModel;
+	private OverlayGraphicsModel overlayGraphicsModel;
+	
 	/**
 	 * Constructs a new PersistentDataHandler object.
 	 *
 	 */
 	private DataManager() {
 		save = new SaveData();
+		defaultGraphicsModel = null;
+		audioModel = null;
+		hudGraphicsModel = null;
+		overlayGraphicsModel = null;
+		
 	}
 	
 	public static DataManager getInstance() {
@@ -100,22 +110,6 @@ public class DataManager {
 
 	/**
 	 * @return
-	 * @see com.inpeace.data.SaveData#getEvents()
-	 */
-	public ArrayList<AbstractEvent> getEvents() {
-		return save.getEvents();
-	}
-
-	/**
-	 * @param events
-	 * @see com.inpeace.data.SaveData#setEvents(java.util.ArrayList)
-	 */
-	public void setEvents(ArrayList<AbstractEvent> events) {
-		save.setEvents(events);
-	}
-
-	/**
-	 * @return
 	 * @see com.inpeace.data.SaveData#getSettingsModel()
 	 */
 	public SettingsModel getSettingsModel() {
@@ -131,80 +125,120 @@ public class DataManager {
 	}
 
 	/**
-	 * @return
-	 * @see com.inpeace.data.SaveData#getDefaultGraphicsModel()
+	 * Get the defaultGraphicsModel
+	 *
+	 * @return the defaultGraphicsModel
 	 */
 	public DefaultGraphicsModel getDefaultGraphicsModel() {
-		return save.getDefaultGraphicsModel();
+		return defaultGraphicsModel;
 	}
 
 	/**
-	 * @param defaultGraphicsModel
-	 * @see com.inpeace.data.SaveData#setDefaultGraphicsModel(com.inpeace.models.DefaultGraphicsModel)
+	 * Set the defaultGraphicsModel
+	 *
+	 * @param defaultGraphicsModel the defaultGraphicsModel to set
 	 */
-	public void setDefaultGraphicsModel(
-			DefaultGraphicsModel defaultGraphicsModel) {
-		save.setDefaultGraphicsModel(defaultGraphicsModel);
+	public void setDefaultGraphicsModel(DefaultGraphicsModel defaultGraphicsModel) {
+		this.defaultGraphicsModel = defaultGraphicsModel;
 	}
 
 	/**
-	 * @return
-	 * @see com.inpeace.data.SaveData#getHudGraphicsModel()
+	 * Get the hudGraphicsModel
+	 *
+	 * @return the hudGraphicsModel
 	 */
 	public HUDGraphicsModel getHudGraphicsModel() {
-		return save.getHudGraphicsModel();
+		return hudGraphicsModel;
 	}
 
 	/**
-	 * @param hudGraphicsModel
-	 * @see com.inpeace.data.SaveData#setHudGraphicsModel(com.inpeace.models.HUDGraphicsModel)
+	 * Set the hudGraphicsModel
+	 *
+	 * @param hudGraphicsModel the hudGraphicsModel to set
 	 */
 	public void setHudGraphicsModel(HUDGraphicsModel hudGraphicsModel) {
-		save.setHudGraphicsModel(hudGraphicsModel);
+		this.hudGraphicsModel = hudGraphicsModel;
 	}
 
 	/**
-	 * @return
-	 * @see com.inpeace.data.SaveData#getOverlayGraphicsModel()
+	 * Get the overlayGraphicsModel
+	 *
+	 * @return the overlayGraphicsModel
 	 */
 	public OverlayGraphicsModel getOverlayGraphicsModel() {
-		return save.getOverlayGraphicsModel();
+		return overlayGraphicsModel;
 	}
 
 	/**
-	 * @param overlayGraphicsModel
-	 * @see com.inpeace.data.SaveData#setOverlayGraphicsModel(com.inpeace.models.OverlayGraphicsModel)
+	 * Set the overlayGraphicsModel
+	 *
+	 * @param overlayGraphicsModel the overlayGraphicsModel to set
 	 */
-	public void setOverlayGraphicsModel(
-			OverlayGraphicsModel overlayGraphicsModel) {
-		save.setOverlayGraphicsModel(overlayGraphicsModel);
+	public void setOverlayGraphicsModel(OverlayGraphicsModel overlayGraphicsModel) {
+		this.overlayGraphicsModel = overlayGraphicsModel;
 	}
 
 	/**
-	 * @return
-	 * @see com.inpeace.data.SaveData#getAudioModel()
+	 * Get the audioModel
+	 *
+	 * @return the audioModel
 	 */
 	public AudioModel getAudioModel() {
-		return save.getAudioModel();
+		return audioModel;
 	}
 
 	/**
-	 * @param audioModel
-	 * @see com.inpeace.data.SaveData#setAudioModel(com.inpeace.models.AudioModel)
+	 * Set the audioModel
+	 *
+	 * @param audioModel the audioModel to set
 	 */
 	public void setAudioModel(AudioModel audioModel) {
-		save.setAudioModel(audioModel);
+		this.audioModel = audioModel;
 	}
 
 	/**
 	 * @param LevelNum
 	 * @return
 	 */
-	public Level loadLevel(int levelNum) {
+	public Level createLevel(int levelNum) {
 		Level level = LevelFactory.buildLevel(levelNum);
 		level.load();
 		setCurrentLevel(levelNum);
 		return level;
+	}
+	
+	/**
+	 * 
+	 */
+	public void storeGameProgress() {
+		save.setAudioModel(getAudioModel());
+		save.setDefaultGraphicsModel(getDefaultGraphicsModel());
+		save.setEvents(Scheduler.getInstance().getSnapshot());
+	}
+	
+	/**
+	 * 
+	 */
+	public void restoreGameProgress() {
+		MailRoom mail = MailRoom.getInstance();
+		mail.postRequest(PropertyName.AUDIO_MODEL, save.getAudioModel(), RequestType.REGISTER);
+		mail.postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, save.getDefaultGraphicsModel(),
+				RequestType.REGISTER);
+		Scheduler.getInstance().restoreSnapshot(save.getEvents());
+	}
+	
+	/**
+	 * 
+	 */
+	public void save() {
+		//TODO
+	}
+	
+	/**
+	 * @param username
+	 */
+	public void load(String username) {
+		//TODO
 	}
 
 }

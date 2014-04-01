@@ -22,6 +22,9 @@ import com.inpeace.graphics.SpriteCode;
 public class CharacterEntity extends AbstractImageEntity {
 
 	/**   */
+	private static final long serialVersionUID = 1397270678712927129L;
+	
+	/**   */
 	private final double animationSpeed = 0.5f;
 	private final double idleSpeed = 5f;
 

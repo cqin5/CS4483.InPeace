@@ -129,19 +129,20 @@ public class StateManager {
 		else {
 			oldState.setHotKeys(Keyboard.getInstance().getHotKeys());
 			Keyboard.getInstance().clearFocus();
-			if (oldState.getType() != StateType.OVERLAY) {
-				oldState.close();
-				history.getCurrentState().load();
-			} else {
-				oldState.close();
-				if (history.getCurrentState().getType() != StateType.OVERLAY) {
-					history.getCurrentState().load();
+
+			if (history.getCurrentState().getType() == StateType.OVERLAY) {
+				if (oldState.getType() == StateType.OVERLAY) {
+					oldState.close();
 				}
 			}
-		}
+			else {
+				oldState.close();
+			}
+			history.getCurrentState().load();
 
-		MailRoom.getInstance().postRequest(PropertyName.STATE_TYPE, history.getCurrentState().getType(), 
-				RequestType.CHANGE_PROPERTY);
+			MailRoom.getInstance().postRequest(PropertyName.STATE_TYPE, history.getCurrentState().getType(), 
+					RequestType.CHANGE_PROPERTY);
+		}
 	}
 
 	/**

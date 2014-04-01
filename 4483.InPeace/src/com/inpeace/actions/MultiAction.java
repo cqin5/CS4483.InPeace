@@ -12,8 +12,16 @@ import com.inpeace.engine.LogicElement;
 public class MultiAction extends AbstractAction {
 	
 	/**   */
+	private static final long serialVersionUID = 7217423871009853359L;
+	
+	/**   */
 	private LogicElement[] elements;
 	
+	/**
+	 * Constructs a new MultiAction object.
+	 *
+	 * @param elements
+	 */
 	public MultiAction(LogicElement... elements) {
 		this.elements = elements;
 	}

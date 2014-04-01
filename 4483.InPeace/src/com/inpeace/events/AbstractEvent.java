@@ -1,5 +1,7 @@
 package com.inpeace.events;
 
+import java.io.Serializable;
+
 import com.inpeace.engine.LogicElement;
 
 
@@ -12,7 +14,10 @@ import com.inpeace.engine.LogicElement;
  * @version 1.0
  * @since   26 Mar 2014
  */
-public abstract class AbstractEvent implements LogicElement {
+public abstract class AbstractEvent implements LogicElement, Serializable {
+
+	/**   */
+	private static final long serialVersionUID = -9149657309433908902L;
 
 	/**   */
 	private Long time;

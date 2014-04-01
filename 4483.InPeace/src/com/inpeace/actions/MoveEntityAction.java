@@ -15,6 +15,9 @@ import com.inpeace.entities.AbstractEntity;
 public class MoveEntityAction extends AbstractEntityAction {
 
 	/**   */
+	private static final long serialVersionUID = 583886807605079651L;
+
+	/**   */
 	private Rectangle confines;
 	
 	/**   */

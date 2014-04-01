@@ -12,6 +12,9 @@ import com.inpeace.actions.AbstractAction;
 public class Event extends AbstractEvent {
 	
 	/**   */
+	private static final long serialVersionUID = 7758256709134369525L;
+	
+	/**   */
 	private final AbstractAction[] actions;
 	
 	/**

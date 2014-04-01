@@ -14,6 +14,9 @@ import com.inpeace.exceptions.StateException;
 public class ChangeStateAction extends AbstractAction {
 
 	/**   */
+	private static final long serialVersionUID = 5615058738363842034L;
+	
+	/**   */
 	private StateID newID;
 	
 	/**

@@ -1,5 +1,7 @@
 package com.inpeace.engine;
 
+import java.util.ArrayList;
+
 import com.inpeace.events.AbstractEvent;
 
 /**
@@ -76,5 +78,19 @@ public class Scheduler {
 		while ((event = getMaturedEvent()) != null) {
 			event.execute();
 		}
+	}
+	
+	/**
+	 * @return
+	 */
+	public ArrayList<AbstractEvent> getSnapshot() {
+		return schedule.getSnapshot();
+	}
+	
+	/**
+	 * @param snapshot
+	 */
+	public void restoreSnapshot(ArrayList<AbstractEvent> snapshot) {
+		schedule.restoreSnapshot(snapshot);
 	}
 }

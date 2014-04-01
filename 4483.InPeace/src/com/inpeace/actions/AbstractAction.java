@@ -1,5 +1,7 @@
 package com.inpeace.actions;
 
+import java.io.Serializable;
+
 import com.inpeace.engine.LogicElement;
 
 
@@ -13,7 +15,10 @@ import com.inpeace.engine.LogicElement;
  * @version 1.0
  * @since   18 Mar 2014
  */
-public abstract class AbstractAction implements LogicElement {
+public abstract class AbstractAction implements LogicElement, Serializable {
+	
+	/**   */
+	private static final long serialVersionUID = 8313239751623656863L;
 	
 	/**   */
 	private Integer actionID = 0;

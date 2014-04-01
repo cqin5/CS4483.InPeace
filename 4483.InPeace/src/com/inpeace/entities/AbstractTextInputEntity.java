@@ -18,6 +18,9 @@ import com.inpeace.input.Keyboard;
 public abstract class AbstractTextInputEntity extends AbstractImageEntity {
 
 	/**   */
+	private static final long serialVersionUID = 4129178755241848920L;
+
+	/**   */
 	private boolean keyboardFocus;
 
 	/**   */
@@ -26,6 +29,7 @@ public abstract class AbstractTextInputEntity extends AbstractImageEntity {
 	/**   */
 	private long nextFlash;
 
+	/**   */
 	private AbstractCharacterFilter filter;
 
 	/**

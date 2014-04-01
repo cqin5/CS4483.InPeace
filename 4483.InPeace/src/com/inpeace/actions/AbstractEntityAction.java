@@ -13,6 +13,9 @@ import com.inpeace.entities.AbstractEntity;
 public abstract class AbstractEntityAction extends AbstractAction {
 	
 	/**   */
+	private static final long serialVersionUID = -6176374354197819032L;
+	
+	/**   */
 	private final AbstractEntity entity;
 	
 	/**

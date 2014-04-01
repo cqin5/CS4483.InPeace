@@ -13,6 +13,9 @@ import com.inpeace.engine.Scheduler;
 public class RecurringEvent extends Event {
 
 	/**   */
+	private static final long serialVersionUID = -3797944356892119567L;
+
+	/**   */
 	private double period;
 
 	/**   */

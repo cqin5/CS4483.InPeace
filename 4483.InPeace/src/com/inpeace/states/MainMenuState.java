@@ -97,7 +97,7 @@ public class MainMenuState extends AbstractState {
 			text = new TextFieldEntity(2, SpriteCode.get("1-0-0-128-128-4-4"),
 					new Point(200,200), entity, 20);
 			text.setFontColour(Color.red);
-			//text.setKeyboardFocus(true);
+			text.setKeyboardFocus(true);
 			text.setFilter(new UsernameCharacterFilter());
 		} catch (SpriteCodeException e) {
 			// TODO Auto-generated catch block

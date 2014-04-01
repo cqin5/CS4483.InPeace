@@ -13,6 +13,9 @@ import com.inpeace.engine.Scheduler;
 public class PeriodicEventSeries extends AbstractEvent {
 	
 	/**   */
+	private static final long serialVersionUID = 8130076132623092479L;
+
+	/**   */
 	private final AbstractAction[] actions;
 	
 	/**   */

@@ -19,6 +19,9 @@ import com.inpeace.exceptions.ResourceAccessException;
 public class TextEntity extends AbstractEntity {
 
 	/**   */
+	private static final long serialVersionUID = -4902629258857434286L;
+
+	/**   */
 	private String text;
 
 	/**   */
@@ -87,7 +90,7 @@ public class TextEntity extends AbstractEntity {
 
 			g.setColor(fontColour);
 			g.setFont(font);
-			g.drawString(text, getPosition().x, getPosition().y - font.getSize());
+			g.drawString(text, getPosition().x - scrollPosition, getPosition().y - font.getSize());
 		}
 	}
 

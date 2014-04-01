@@ -1,5 +1,7 @@
 package com.inpeace.characterfilter;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -8,12 +10,15 @@ package com.inpeace.characterfilter;
  * @version 1.0
  * @since   31 Mar 2014
  */
-public interface AbstractCharacterFilter {
+public abstract class AbstractCharacterFilter implements Serializable {
 	
+	/**   */
+	private static final long serialVersionUID = -3423690587521955998L;
+
 	/**
 	 * @param e
 	 * @return
 	 */
-	public boolean filter(char c);
+	public abstract boolean filter(char c);
 
 }

@@ -19,7 +19,7 @@ public abstract class AbstractModel implements Serializable {
 	private static final long serialVersionUID = 3207142051740234508L;
 	
 	/**   */
-	protected PropertyChangeSupport propertyChangeSupport;
+	protected transient PropertyChangeSupport propertyChangeSupport;
 	 
     /**
      * Constructs a new AbstractModel object.

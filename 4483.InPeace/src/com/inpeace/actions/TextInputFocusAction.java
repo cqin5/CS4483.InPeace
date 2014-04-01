@@ -11,6 +11,9 @@ import com.inpeace.entities.AbstractTextInputEntity;
  */
 public class TextInputFocusAction extends AbstractEntityAction {
 
+	/**   */
+	private static final long serialVersionUID = 122512561979149907L;
+
 	/**
 	 * Constructs a new MakeTextBoxActiveAction object.
 	 *

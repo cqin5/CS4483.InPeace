@@ -20,6 +20,9 @@ import com.inpeace.graphics.SpriteCode;
 public class TextFieldEntity extends AbstractTextInputEntity {
 
 	/**   */
+	private static final long serialVersionUID = -5394640191673076467L;
+
+	/**   */
 	private ImageEntity enterButton;
 
 	/**   */
@@ -119,7 +122,7 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 
 			g.setColor(fontColour);
 			g.setFont(font);
-			g.drawString(str, getPosition().x, getPosition().y - font.getSize());
+			g.drawString(str, getPosition().x - scrollPosition, getPosition().y - font.getSize());
 		}
 	}
 

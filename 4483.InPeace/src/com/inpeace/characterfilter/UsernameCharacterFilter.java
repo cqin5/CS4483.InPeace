@@ -8,7 +8,10 @@ package com.inpeace.characterfilter;
  * @version 1.0
  * @since   31 Mar 2014
  */
-public class UsernameCharacterFilter implements AbstractCharacterFilter {
+public class UsernameCharacterFilter extends AbstractCharacterFilter {
+
+	/**   */
+	private static final long serialVersionUID = 1350722826329553071L;
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.characterfilter.AbstractCharacterFilter#filter(java.awt.event.KeyEvent)

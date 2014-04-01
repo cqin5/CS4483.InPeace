@@ -20,6 +20,9 @@ import com.inpeace.graphics.SpriteCode;
 public class ImageEntity extends AbstractImageEntity {
 
 	/**   */
+	private static final long serialVersionUID = -6252618730561183678L;
+	
+	/**   */
 	private int highlightLine;
 	private int pressedLine;
 

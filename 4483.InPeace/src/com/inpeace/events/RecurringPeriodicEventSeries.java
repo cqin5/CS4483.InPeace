@@ -13,6 +13,9 @@ import com.inpeace.engine.Scheduler;
 public class RecurringPeriodicEventSeries extends PeriodicEventSeries {
 	
 	/**   */
+	private static final long serialVersionUID = 6270752215495458032L;
+	
+	/**   */
 	private int stopAt;
 	private int count;
 

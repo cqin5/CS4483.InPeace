@@ -3,6 +3,7 @@ package com.inpeace.entities;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import com.inpeace.actions.AbstractAction;
 import com.inpeace.exceptions.KeyboardException;
@@ -17,7 +18,10 @@ import com.inpeace.input.Keyboard;
  * @version 1.0
  * @since   25 Mar 2014
  */
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable {
+
+	/**   */
+	private static final long serialVersionUID = 2569633124871128287L;
 
 	/**   */
 	private int depth;

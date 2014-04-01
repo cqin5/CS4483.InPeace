@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import com.inpeace.events.AbstractEvent;
 import com.inpeace.models.AudioModel;
 import com.inpeace.models.DefaultGraphicsModel;
-import com.inpeace.models.HUDGraphicsModel;
-import com.inpeace.models.OverlayGraphicsModel;
 import com.inpeace.models.SettingsModel;
 
 /**
@@ -21,24 +19,22 @@ public class SaveData implements Serializable {
 
 	/** Eclipse generated version ID.  */
 	private static final long serialVersionUID = 8771165689031839746L;
-	
+
 	/**   */
 	private String username = null;
-	
+
 	/**   */
 	private int currentLevel = 1;
-	
+
 	/**   */
 	private boolean[] collectibles = {false};
-	
+
 	/**   */
 	private ArrayList<AbstractEvent> events;
-	
+
 	/**   */
 	private SettingsModel settingsModel = null;
 	private DefaultGraphicsModel defaultGraphicsModel = null;
-	private HUDGraphicsModel hudGraphicsModel = null;
-	private OverlayGraphicsModel overlayGraphicsModel = null;
 	private AudioModel audioModel = null;
 
 	/**
@@ -94,13 +90,16 @@ public class SaveData implements Serializable {
 	public void setCollectibles(boolean[] collectibles) {
 		this.collectibles = collectibles;
 	}
-	
+
+	/**
+	 * @param index
+	 */
 	public void setCollected(int index) {
 		if (index < collectibles.length && index >= 0) {
 			collectibles[index] = true;
 		}
 	}
-	
+
 	/**
 	 * Get the events
 	 *
@@ -109,6 +108,7 @@ public class SaveData implements Serializable {
 	public ArrayList<AbstractEvent> getEvents() {
 		return events;
 	}
+
 	/**
 	 * Set the events
 	 *
@@ -126,6 +126,7 @@ public class SaveData implements Serializable {
 	public SettingsModel getSettingsModel() {
 		return settingsModel;
 	}
+
 	/**
 	 * Set the settingsModel
 	 *
@@ -134,6 +135,7 @@ public class SaveData implements Serializable {
 	public void setSettingsModel(SettingsModel settingsModel) {
 		this.settingsModel = settingsModel;
 	}
+
 	/**
 	 * Get the defaultGraphicsModel
 	 *
@@ -142,6 +144,7 @@ public class SaveData implements Serializable {
 	public DefaultGraphicsModel getDefaultGraphicsModel() {
 		return defaultGraphicsModel;
 	}
+
 	/**
 	 * Set the defaultGraphicsModel
 	 *
@@ -150,38 +153,7 @@ public class SaveData implements Serializable {
 	public void setDefaultGraphicsModel(DefaultGraphicsModel defaultGraphicsModel) {
 		this.defaultGraphicsModel = defaultGraphicsModel;
 	}
-	/**
-	 * Get the hudGraphicsModel
-	 *
-	 * @return the hudGraphicsModel
-	 */
-	public HUDGraphicsModel getHudGraphicsModel() {
-		return hudGraphicsModel;
-	}
-	/**
-	 * Set the hudGraphicsModel
-	 *
-	 * @param hudGraphicsModel the hudGraphicsModel to set
-	 */
-	public void setHudGraphicsModel(HUDGraphicsModel hudGraphicsModel) {
-		this.hudGraphicsModel = hudGraphicsModel;
-	}
-	/**
-	 * Get the overlayGraphicsModel
-	 *
-	 * @return the overlayGraphicsModel
-	 */
-	public OverlayGraphicsModel getOverlayGraphicsModel() {
-		return overlayGraphicsModel;
-	}
-	/**
-	 * Set the overlayGraphicsModel
-	 *
-	 * @param overlayGraphicsModel the overlayGraphicsModel to set
-	 */
-	public void setOverlayGraphicsModel(OverlayGraphicsModel overlayGraphicsModel) {
-		this.overlayGraphicsModel = overlayGraphicsModel;
-	}
+
 	/**
 	 * Get the audioModel
 	 *
@@ -190,6 +162,7 @@ public class SaveData implements Serializable {
 	public AudioModel getAudioModel() {
 		return audioModel;
 	}
+
 	/**
 	 * Set the audioModel
 	 *
@@ -198,5 +171,5 @@ public class SaveData implements Serializable {
 	public void setAudioModel(AudioModel audioModel) {
 		this.audioModel = audioModel;
 	}
-	
+
 }

@@ -1,6 +1,7 @@
 package com.inpeace.graphics;
 
 import java.awt.Dimension;
+import java.io.Serializable;
 
 import com.inpeace.exceptions.SpriteCodeException;
 
@@ -11,8 +12,12 @@ import com.inpeace.exceptions.SpriteCodeException;
  * @version 1.0
  * @since   28 Mar 2014
  */
-public class SpriteCode {
+public class SpriteCode implements Serializable {
 
+	/**   */
+	private static final long serialVersionUID = 4414129811394561762L;
+	
+	/**   */
 	public final int sheet;
 	public final int x;
 	public final int y;

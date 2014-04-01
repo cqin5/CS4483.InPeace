@@ -12,6 +12,9 @@ import com.inpeace.exceptions.EntityException;
  */
 public class CycleImageAction extends AbstractEntityAction {
 
+	/**   */
+	private static final long serialVersionUID = 1683425432120377758L;
+
 	/**
 	 * Constructs a new CycleImageAction object.
 	 *

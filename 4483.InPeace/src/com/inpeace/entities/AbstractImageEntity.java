@@ -20,10 +20,13 @@ import com.inpeace.library.Librarian;
 public abstract class AbstractImageEntity extends AbstractEntity {
 
 	/**   */
+	private static final long serialVersionUID = 4824452739810549135L;
+
+	/**   */
 	private final SpriteCode spriteCode;
 
 	/**   */
-	private final BufferedImage[][] images;
+	private transient final BufferedImage[][] images;
 	
 	/**   */
 	private int currentVersion;
