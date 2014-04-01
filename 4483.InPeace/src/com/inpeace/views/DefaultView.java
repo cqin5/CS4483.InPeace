@@ -52,7 +52,11 @@ public class DefaultView extends Canvas implements AbstractView {
 	/**   */
 	private BufferStrategy buffer;
 	
+	/**   */
 	private Point origin = new Point(0,0);
+	
+	/**   */
+	private double scaleRatio = 1.0;
 
 	/**   */
 	private Point mousePosition = new Point(-1, -1);
@@ -177,6 +181,10 @@ public class DefaultView extends Canvas implements AbstractView {
 		origin.x = x;
 		origin.y = y;
 	}
+	
+	public void setScaleRatio(double ratio) {
+		scaleRatio = ratio;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.Component#repaint()
@@ -203,6 +211,7 @@ public class DefaultView extends Canvas implements AbstractView {
         int y = (size.height - (int) (GameProperties.DEFAULT_HEIGHT * ratio)) / 2;
         
         setOrigin(x, y);
+        setScaleRatio(ratio);
         
         g.translate(x, y);
         g.scale(ratio, ratio);
@@ -479,7 +488,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	@Override
 	public void scroll(int x, int y) {
-		int newScroll = scrollPosition + x;
+		int newScroll = scrollPosition + (int) (x / scaleRatio);
 		int max = background.getWidth() - GameProperties.DEFAULT_WIDTH - 1;
 		if (newScroll > max) {
 			newScroll = max;

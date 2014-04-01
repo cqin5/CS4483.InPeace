@@ -2,6 +2,7 @@ package com.inpeace.entities;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import com.inpeace.GameProperties;
 import com.inpeace.actions.AbstractAction;
@@ -61,18 +62,43 @@ public class ImageEntity extends AbstractImageEntity {
 			throws ResourceAccessException {
 		
 		int x = getPosition().x - scrollPosition;
-		if (x < (GameProperties.DEFAULT_WIDTH + getSpriteCode().width) 
-				&& x > (0 - getSpriteCode().width)) {
+		int y = getPosition().y;
+		int width = getSpriteCode().width;
+		int cutx = 0;
+		int height = getSpriteCode().height;
+		int cuty = 0;
+
+		if (x < (GameProperties.DEFAULT_WIDTH + width) && x > (0 - width) 
+				&& y < (GameProperties.DEFAULT_HEIGHT + height) && y > (0 - height)) {
 			
+			BufferedImage img = null;
 			if (active && isPressed()) {
-				g.drawImage(getImage(pressedLine, getCurrentVersion()), x, getPosition().y, null);
+				img = getImage(pressedLine, getCurrentVersion());
 			}
 			else if (active && contains(mouse)) {
-				g.drawImage(getImage(highlightLine, getCurrentVersion()) , x, getPosition().y, null);
+				img = getImage(highlightLine, getCurrentVersion());
 			}
 			else {
-				g.drawImage(getImage(0, getCurrentVersion()) , x, getPosition().y, null);
+				img = getImage(0, getCurrentVersion());
 			}
+			
+			if ((x + width) > GameProperties.DEFAULT_WIDTH) {
+				width = GameProperties.DEFAULT_WIDTH - x;
+			}
+			else if (x < 0) {
+				cutx = -x;
+				width -= cutx;
+			}
+			
+			if ((y + height) > GameProperties.DEFAULT_HEIGHT) {
+				height = GameProperties.DEFAULT_HEIGHT - y;
+			}
+			else if (y < 0) {
+				cuty = -y;
+				height -= cuty;
+			}
+			
+			g.drawImage(img.getSubimage(cutx, 0, width, height), x + cutx, y + cuty, null);
 		}
 	}
 
