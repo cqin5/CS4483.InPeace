@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import com.inpeace.GameProperties;
 import com.inpeace.exceptions.ResourceAccessException;
@@ -17,20 +18,20 @@ import com.inpeace.graphics.SpriteCode;
  * @since   30 Mar 2014
  */
 public class TextFieldEntity extends AbstractTextInputEntity {
-	
+
 	/**   */
 	private ImageEntity enterButton;
 
 	/**   */
 	private char[] text;
 	private int charCount;
-	
+
 	/**   */
 	private Color fontColour;
-	
+
 	/**   */
 	private Font font;
-	
+
 	/**   */
 	private boolean cursor;
 
@@ -48,16 +49,16 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 	 */
 	public TextFieldEntity(int depth, SpriteCode backgroundSpriteCode, Point position, 
 			ImageEntity enterButton, int maxChar) {
-		
+
 		super(depth, backgroundSpriteCode, position);
-		
+
 		this.enterButton = enterButton;
 		text = new char[maxChar];
 		charCount = 0;
 		this.fontColour = Color.BLACK;
 		this.font = GameProperties.DEFAULT_FONT;
 	}
-	
+
 	/**
 	 * @param size
 	 */
@@ -82,6 +83,17 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 	public void setFont(Font font) {
 		this.font = font;
 	}
+	
+	/**
+	 * @return
+	 */
+	public String getText() {
+		String str = "";
+		for (int i = 0; i < charCount; i++) {
+			str += text[i];
+		}
+		return str;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.entities.AbstractEntity#paint(java.awt.Graphics2D, int, java.awt.Point, boolean)
@@ -89,24 +101,26 @@ public class TextFieldEntity extends AbstractTextInputEntity {
 	@Override
 	public void paint(Graphics2D g, int scrollPosition, Point mousePosition,
 			boolean active) throws ResourceAccessException {
-		
-		String str = "";
-		for (int i = 0; i < charCount; i++) {
-			str += text[i];
-		}
-		if (isKeyboardFocus()) {
-			if (getNextFlash() <= System.currentTimeMillis()) {
-				setNextFlash();
-				cursor = !cursor;
+		if (new Rectangle(scrollPosition, 0, GameProperties.DEFAULT_WIDTH, GameProperties.DEFAULT_HEIGHT).
+				contains(getBounds())) {
+			String str = "";
+			for (int i = 0; i < charCount; i++) {
+				str += text[i];
 			}
-			if (cursor) {
-				str += "|";
+			if (isKeyboardFocus()) {
+				if (getNextFlash() <= System.currentTimeMillis()) {
+					setNextFlash();
+					cursor = !cursor;
+				}
+				if (cursor) {
+					str += "|";
+				}
 			}
+
+			g.setColor(fontColour);
+			g.setFont(font);
+			g.drawString(str, getPosition().x, getPosition().y - font.getSize());
 		}
-		
-		g.setColor(fontColour);
-		g.setFont(font);
-		g.drawString(str, getPosition().x, getPosition().y - font.getSize());
 	}
 
 	/* (non-Javadoc)

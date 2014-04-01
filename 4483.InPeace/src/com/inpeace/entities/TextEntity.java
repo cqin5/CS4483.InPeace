@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import com.inpeace.GameProperties;
 import com.inpeace.exceptions.ResourceAccessException;
 
 /**
@@ -16,16 +17,16 @@ import com.inpeace.exceptions.ResourceAccessException;
  * @since   31 Mar 2014
  */
 public class TextEntity extends AbstractEntity {
-	
+
 	/**   */
 	private String text;
-	
+
 	/**   */
 	private Color fontColour;
-	
+
 	/**   */
 	private Font font;
-	
+
 	/**
 	 * Constructs a new TextEntity object.
 	 *
@@ -35,9 +36,9 @@ public class TextEntity extends AbstractEntity {
 	 * @param bounds
 	 */
 	public TextEntity(int depth, Point position, String text) {
-		
+
 		super(depth, null, '\u0000', new Rectangle(position.x, position.y, 0, 0));
-		
+
 		setText(text);
 	}
 
@@ -67,7 +68,7 @@ public class TextEntity extends AbstractEntity {
 	public void setFont(Font font) {
 		this.font = font;
 	}
-	
+
 	/**
 	 * @param size
 	 */
@@ -81,11 +82,13 @@ public class TextEntity extends AbstractEntity {
 	@Override
 	public void paint(Graphics2D g, int scrollPosition, Point mousePosition,
 			boolean active) throws ResourceAccessException {
-		
-		g.setColor(fontColour);
-		g.setFont(font);
-		g.drawString(text, getPosition().x, getPosition().y - font.getSize());
-		
+		if (new Rectangle(scrollPosition, 0, GameProperties.DEFAULT_WIDTH, GameProperties.DEFAULT_HEIGHT).
+				contains(getBounds())) {
+
+			g.setColor(fontColour);
+			g.setFont(font);
+			g.drawString(text, getPosition().x, getPosition().y - font.getSize());
+		}
 	}
 
 }
