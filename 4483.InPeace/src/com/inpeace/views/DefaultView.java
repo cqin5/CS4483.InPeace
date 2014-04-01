@@ -1,11 +1,14 @@
 package com.inpeace.views;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -48,6 +51,8 @@ public class DefaultView extends Canvas implements AbstractView {
 
 	/**   */
 	private BufferStrategy buffer;
+	
+	private Point origin = new Point(0,0);
 
 	/**   */
 	private Point mousePosition = new Point(-1, -1);
@@ -97,7 +102,7 @@ public class DefaultView extends Canvas implements AbstractView {
 
 	/**   */
 	private ArrayList<AbstractEntity> overlayObjects = null;
-	
+
 	/*
 	 * Audio variables.
 	 */
@@ -111,7 +116,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	/*
 	 * Settings variables.
 	 */
-	
+
 	/**   */
 	private float musicVolume;
 
@@ -131,37 +136,46 @@ public class DefaultView extends Canvas implements AbstractView {
 	 * 
 	 */
 	public void initialiser() {
-		JFrame window = new JFrame(GameProperties.TITLE);
+		JFrame window = GameProperties.DEFAULT_FRAME;
+		window.setTitle(GameProperties.TITLE);
 		window.addWindowListener(new WindowAdapter() {
-	         public void windowClosing(WindowEvent windowEvent){
-	             StateManager.getInstance().quit();
-	          }        
-	       });
+			public void windowClosing(WindowEvent windowEvent){
+				StateManager.getInstance().quit();
+			}        
+		});
+		window.setExtendedState( window.getExtendedState() | Frame.MAXIMIZED_VERT | Frame.MAXIMIZED_HORIZ);
+
 		JPanel panel = (JPanel) window.getContentPane();
-		Dimension size = new Dimension(GameProperties.DEFAULT_WIDTH, 
-				GameProperties.DEFAULT_HEIGHT);
-		panel.setPreferredSize(size);
-		panel.setLayout(null);
-		
-		setBounds(0, 0, size.width, size.height);
-		setBackground(Color.BLACK);
+		panel.setLayout(new BorderLayout());
+
+		setBounds(0, 0, 600, (int) (600 / 1.778));
+		panel.setBackground(Color.BLACK);
 		setIgnoreRepaint(true);
-		
+
 		addMouseListener(Mouse.getInstance());
 		addMouseMotionListener(Mouse.getInstance());
 		Mouse.getInstance().setCurrentView(this);
 		addKeyListener(Keyboard.getInstance());
 
-		panel.add(this);
-		
+		panel.add(this, BorderLayout.CENTER);
+
 		window.pack();
-		window.setResizable(false);
+		//window.setResizable(false);
 		window.setVisible(true);
-		
+
 		createBufferStrategy(2);
 		buffer = getBufferStrategy();
-		
+
 		requestFocus();
+	}
+	
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void setOrigin(int x, int y) {
+		origin.x = x;
+		origin.y = y;
 	}
 
 	/* (non-Javadoc)
@@ -169,37 +183,62 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	@Override
 	public void repaint() {
-		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
-
-		try {
-			switch (stateType) {
-			case SPLASH:
-				repaintBackground(g);
-				break;
-			case DEFAULT:
-				repaintBackground(g);
-				repaintForeground(g);
-				break;
-			case IN_GAME:
-				repaintBackground(g);
-				repaintForeground(g);
-				repaintHUD(g);
-				break;
-			case OVERLAY:
-				repaintBackground(g);
-				repaintForeground(g);
-				repaintHUD(g);
-				repaintOverlay(g);
-				break;
-			default:
-				break;
-			}
-		} catch (ResourceAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		g.dispose();
+		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+		
+		Dimension size = getSize();
+		g.drawRect(0, 0, size.width, size.width);
+		
+		double ratiox = (double) size.width / (double) GameProperties.DEFAULT_WIDTH;
+		double ratioy = (double) size.height / (double) GameProperties.DEFAULT_HEIGHT;
+		double ratio = 1.0;
+        if (ratiox <= ratioy) {
+        	ratio = ratiox;
+        }
+        else {
+        	ratio = ratioy;
+        }
+        
+        int x = (size.width - (int) (GameProperties.DEFAULT_WIDTH * ratio)) /2;
+        int y = (size.height - (int) (GameProperties.DEFAULT_HEIGHT * ratio)) / 2;
+        
+        setOrigin(x, y);
+        
+        g.translate(x, y);
+        g.scale(ratio, ratio);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        
+		try {
+			try {
+				switch (stateType) {
+				case SPLASH:
+					repaintBackground(g);
+					break;
+				case DEFAULT:
+					repaintBackground(g);
+					repaintForeground(g);
+					break;
+				case IN_GAME:
+					repaintBackground(g);
+					repaintForeground(g);
+					repaintHUD(g);
+					break;
+				case OVERLAY:
+					repaintBackground(g);
+					repaintForeground(g);
+					repaintHUD(g);
+					repaintOverlay(g);
+					break;
+				default:
+					break;
+				}
+			} catch (ResourceAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} finally {	
+			g.dispose();
+		}
 		buffer.show();
 	}
 
@@ -209,8 +248,8 @@ public class DefaultView extends Canvas implements AbstractView {
 	private void repaintBackground(Graphics2D g) {
 		if (background != null) {
 			try {
-			g.drawImage(background.getSubimage(scrollPosition, 0, GameProperties.DEFAULT_WIDTH,
-					GameProperties.DEFAULT_HEIGHT), 0, 0, null);
+				g.drawImage(background.getSubimage(scrollPosition, 0, GameProperties.DEFAULT_WIDTH,
+						GameProperties.DEFAULT_HEIGHT), 0, 0, null);
 			} catch (RasterFormatException e) {
 				System.out.print(background.getWidth() + ", " + GameProperties.DEFAULT_WIDTH + ", " + scrollPosition + "\n");
 				e.printStackTrace();
@@ -272,7 +311,7 @@ public class DefaultView extends Canvas implements AbstractView {
 			int y = (GameProperties.DEFAULT_HEIGHT / 2) - (overlayGraphic.getHeight() / 2);
 			g.drawImage(overlayGraphic, x, y, null);
 		}
-		
+
 		boolean active = false;
 		if (stateType == StateType.OVERLAY) {
 			active = true;
@@ -371,6 +410,8 @@ public class DefaultView extends Canvas implements AbstractView {
 	 */
 	@Override
 	public AbstractEntity getEntityAt(Point p) {
+		p.x -= origin.x;
+		p.y -= origin.y;
 		switch (stateType) {
 		case IN_GAME:
 			boolean hudSpace = false;
@@ -423,7 +464,7 @@ public class DefaultView extends Canvas implements AbstractView {
 	@Override
 	public void refresh() {
 		repaint();
-		
+
 		if (soundEffects != null) {
 			for (Clip clip: soundEffects) {
 				FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

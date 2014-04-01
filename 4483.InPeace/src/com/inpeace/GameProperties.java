@@ -2,6 +2,8 @@ package com.inpeace;
 
 import java.awt.Font;
 
+import javax.swing.JFrame;
+
 import com.inpeace.engine.StateManager.StateID;
 
 /**
@@ -14,7 +16,7 @@ import com.inpeace.engine.StateManager.StateID;
 public class GameProperties {
 
 	/**   */
-	public static final int FPS = 60;
+	public static final int FPS = 50;
 	
 	public static final String TITLE = "In Peace: A Ghost Story (Demo)";
 	
@@ -27,5 +29,7 @@ public class GameProperties {
 	public static final int DEFAULT_VERTICAL_ALIGNMENT = 0;
 	
 	public static final Font DEFAULT_FONT = new Font(Font.SANS_SERIF, Font.PLAIN , 20);
+	
+	public static final JFrame DEFAULT_FRAME = new JFrame();
 	
 }
