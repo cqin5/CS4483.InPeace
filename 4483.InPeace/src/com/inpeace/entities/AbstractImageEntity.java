@@ -69,7 +69,7 @@ public abstract class AbstractImageEntity extends AbstractEntity {
 	 * @throws EntityException 
 	 */
 	public void setCurrentVersion(int currentVersion) throws EntityException {
-		if (currentVersion < 0 || currentVersion > spriteCode.versions) {
+		if (currentVersion < 0 || currentVersion >= spriteCode.versions) {
 			throw new EntityException("Unable to set image version to " + currentVersion + ", the version"
 					+ " must be between 0 and " + spriteCode.versions + " (ImageEntity)");
 		}

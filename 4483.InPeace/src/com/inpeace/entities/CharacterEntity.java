@@ -4,10 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import com.inpeace.actions.CycleImageAction;
-import com.inpeace.actions.MoveEntityAction;
-import com.inpeace.engine.Scheduler;
-import com.inpeace.events.RecurringEvent;
+import com.inpeace.GameProperties;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;
@@ -23,10 +20,13 @@ public class CharacterEntity extends AbstractImageEntity {
 
 	/**   */
 	private static final long serialVersionUID = 1397270678712927129L;
-	
+
 	/**   */
 	private final double animationSpeed = 0.5f;
 	private final double idleSpeed = 5f;
+
+	/**   */
+	private long imageChange;
 
 	/**   */
 	private int motionState;
@@ -35,11 +35,11 @@ public class CharacterEntity extends AbstractImageEntity {
 	private boolean canRun;
 
 	/**   */
-	private int movementEventID;
+	private Rectangle confines;
 
 	/**   */
-	private Rectangle confines;
-	
+	private int speed;
+
 	/**
 	 * Constructs a new CharacterEntity object.
 	 *
@@ -51,14 +51,13 @@ public class CharacterEntity extends AbstractImageEntity {
 	 */
 	public CharacterEntity(int depth, SpriteCode spriteCode, Point position, boolean canRun,
 			Rectangle movementConfines) {
-		
+
 		super(depth, null, (char) 0, spriteCode, position);
 		this.canRun = canRun;
 		this.confines = movementConfines;
 		this.motionState = 0;
-		
-		movementEventID = Scheduler.getInstance().registerEvent(
-				new RecurringEvent(idleSpeed, new CycleImageAction(this)), idleSpeed);
+		this.imageChange = 0;
+		this.speed = 0;
 	}
 
 	/**
@@ -116,16 +115,13 @@ public class CharacterEntity extends AbstractImageEntity {
 	 */
 	public void run(int speed) throws EntityException {
 		if (canRun) {
+			this.speed = speed;
 			if (speed < 0) {
 				motionState = 4;
 			}
 			else {
 				motionState = 3;
 			}
-			Point translation = new Point(speed, 0);
-			movementEventID = Scheduler.getInstance().registerEvent(
-					new RecurringEvent(animationSpeed, new CycleImageAction(this), 
-							new MoveEntityAction(this, translation, confines)), animationSpeed);
 		}
 		else {
 			throw new EntityException("Character can not run");
@@ -137,34 +133,82 @@ public class CharacterEntity extends AbstractImageEntity {
 	 * @throws EntityException
 	 */
 	public void walk(int speed) throws EntityException {
+		this.speed = speed;
 		if (speed < 0) {
 			motionState = 2;
 		}
 		else {
 			motionState = 1;
 		}
-		Point translation = new Point(speed, 0);
-		movementEventID = Scheduler.getInstance().registerEvent(
-				new RecurringEvent(animationSpeed, new CycleImageAction(this), 
-						new MoveEntityAction(this, translation, confines)), animationSpeed);
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void stop() {
-		Scheduler.getInstance().deregisterEvent(movementEventID);
 		motionState = 0;
+		speed = 0;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.inpeace.entities.AbstractEntity#paint(java.awt.Graphics2D, int, java.awt.Point, boolean)
 	 */
 	@Override
 	public void paint(Graphics2D g, int scrollPosition, Point mousePosition,
 			boolean active) throws ResourceAccessException {
-		// TODO Auto-generated method stub
 
+		if (imageChange <= System.currentTimeMillis()) {
+			try {
+				setCurrentVersion(getCurrentVersion() + 1);
+			} catch (EntityException e) {
+				try {
+					setCurrentVersion(0);
+				} catch (EntityException e1) {
+					//NULL BODY
+				}
+			}
+
+			if (motionState == 0) {
+				imageChange = System.currentTimeMillis() + (long)(idleSpeed * 1000);
+			}
+			else {
+				imageChange = System.currentTimeMillis() + (long)(animationSpeed * 1000);
+			}
+		}
+		Point newPosition = new Point(getPosition().x + speed, getPosition().y);
+		if (confines.contains(newPosition)) {
+			setPosition(newPosition);
+		}
+		
+		int x = getPosition().x - scrollPosition;
+		int y = getPosition().y;
+		int width = getSpriteCode().width;
+		int cutx = 0;
+		int height = getSpriteCode().height;
+		int cuty = 0;
+
+		if (x < (GameProperties.DEFAULT_WIDTH + width) && x > (0 - width) 
+				&& y < (GameProperties.DEFAULT_HEIGHT + height) && y > (0 - height)) {	
+
+			if ((x + width) > GameProperties.DEFAULT_WIDTH) {
+				width = GameProperties.DEFAULT_WIDTH - x;
+			}
+			else if (x < 0) {
+				cutx = -x;
+				width -= cutx;
+			}
+			
+			if ((y + height) > GameProperties.DEFAULT_HEIGHT) {
+				height = GameProperties.DEFAULT_HEIGHT - y;
+			}
+			else if (y < 0) {
+				cuty = -y;
+				height -= cuty;
+			}
+			
+			g.drawImage(getImage(motionState, getCurrentVersion()).getSubimage(cutx, 0, width, height),
+					x + cutx, y + cuty, null);
+		}
 	}
-	
+
 }
