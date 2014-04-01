@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.AbstractScrollableEntity;
 import com.inpeace.views.AbstractView;
 
 /**
@@ -87,12 +88,18 @@ public class Mouse extends MouseAdapter {
 	 * @see java.awt.event.MouseAdapter#mouseDragged(java.awt.event.MouseEvent)
 	 */
 	public void mouseDragged(MouseEvent e) {
-		if (dragPosX >= 0) {
-			view.scroll(dragPosX - e.getX(), dragPosY - e.getY());
+		AbstractScrollableEntity scrollable = view.getScrollableAt(e.getPoint());
+		if (scrollable != null) {
+			scrollable.scroll(e.getPoint());
 		}
-		if (pressedEntity != null) {
-			pressedEntity.setDepressed(false);
-			pressedEntity = null;
+		else {
+			if (dragPosX >= 0) {
+				view.scroll(dragPosX - e.getX(), dragPosY - e.getY());
+			}
+			if (pressedEntity != null) {
+				pressedEntity.setDepressed(false);
+				pressedEntity = null;
+			}
 		}
 		dragPosX = e.getX();
 		dragPosY = e.getY();

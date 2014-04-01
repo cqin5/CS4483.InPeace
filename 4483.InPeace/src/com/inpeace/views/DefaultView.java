@@ -30,6 +30,7 @@ import com.inpeace.engine.MailRoom;
 import com.inpeace.engine.Request.RequestType;
 import com.inpeace.engine.StateManager;
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.AbstractScrollableEntity;
 import com.inpeace.exceptions.ResourceAccessException;
 import com.inpeace.graphics.SpriteCode;
 import com.inpeace.input.Keyboard;
@@ -463,6 +464,18 @@ public class DefaultView extends Canvas implements AbstractView {
 			break;
 		default:
 			break;
+		}
+		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.inpeace.views.AbstractView#getScrollableAt(java.awt.Point)
+	 */
+	@Override
+	public AbstractScrollableEntity getScrollableAt(Point p) {
+		AbstractEntity entity = getEntityAt(p);
+		if (entity instanceof AbstractScrollableEntity) {
+			return (AbstractScrollableEntity) entity;
 		}
 		return null;
 	}

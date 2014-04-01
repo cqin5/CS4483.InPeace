@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 
 import com.inpeace.entities.AbstractEntity;
+import com.inpeace.entities.AbstractScrollableEntity;
 
 /**
  * 
@@ -29,6 +30,12 @@ public interface AbstractView  {
 	 * @return
 	 */
 	public AbstractEntity getEntityAt(Point p);
+	
+	/**
+	 * @param p
+	 * @return
+	 */
+	public AbstractScrollableEntity getScrollableAt(Point p);
 	
 	/**
 	 * @param x

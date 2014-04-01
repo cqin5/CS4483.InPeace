@@ -14,7 +14,7 @@ public class Request {
 	
 	/** Request type codes.  */
 	public static enum RequestType {
-		CLEAR_PROPERTY, CHANGE_PROPERTY, REGISTER, DEREGISTER, SAVE, LOAD
+		CHANGE_PROPERTY, REGISTER, DEREGISTER
 	}
 
 	/**   */

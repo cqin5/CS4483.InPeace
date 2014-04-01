@@ -9,7 +9,7 @@ import java.awt.Point;
  * @version 1.0
  * @since   1 Apr 2014
  */
-public interface ScrollableEntity {
+public interface AbstractScrollableEntity {
 
 	/**
 	 * @param scroll
