@@ -1,5 +1,11 @@
 package com.inpeace.engine;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import com.inpeace.controllers.PropertyName;
 import com.inpeace.data.SaveData;
 import com.inpeace.engine.Request.RequestType;
@@ -20,18 +26,20 @@ import com.inpeace.models.SettingsModel;
  */
 public class DataManager {
 
+	private static final String saveLocation = "";//TODO
+
 	/**   */
 	private static DataManager instance = null;
-	
+
 	/**   */
 	private SaveData save;
-	
+
 	/**   */
 	private DefaultGraphicsModel defaultGraphicsModel;
 	private AudioModel audioModel;
 	private HUDGraphicsModel hudGraphicsModel;
 	private OverlayGraphicsModel overlayGraphicsModel;
-	
+
 	/**
 	 * Constructs a new PersistentDataHandler object.
 	 *
@@ -42,16 +50,16 @@ public class DataManager {
 		audioModel = null;
 		hudGraphicsModel = null;
 		overlayGraphicsModel = null;
-		
+
 	}
-	
+
 	public static DataManager getInstance() {
 		if (instance == null) {
 			instance = new DataManager();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * @return
 	 * @see com.inpeace.data.SaveData#getUsername()
@@ -206,7 +214,7 @@ public class DataManager {
 		setCurrentLevel(levelNum);
 		return level;
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -215,7 +223,7 @@ public class DataManager {
 		save.setDefaultGraphicsModel(getDefaultGraphicsModel());
 		save.setEvents(Scheduler.getInstance().getSnapshot());
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -226,19 +234,43 @@ public class DataManager {
 				RequestType.REGISTER);
 		Scheduler.getInstance().restoreSnapshot(save.getEvents());
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void save() {
-		//TODO
+		String filename = ""; //TODO proper filename
+
+		try {
+			FileOutputStream fos = new FileOutputStream(saveLocation + filename + ".data");
+			ObjectOutputStream out = new ObjectOutputStream(fos);
+			out.writeObject(save);
+			out.close();
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	/**
 	 * @param username
 	 */
-	public void load(String username) {
-		//TODO
+	public void load(String filename) { //TODO: input does not have to be filename
+		
+        try {
+        	FileInputStream fin = new FileInputStream(saveLocation + filename + ".data");
+            ObjectInputStream in = new ObjectInputStream(fin);
+            save = (SaveData) in.readObject();
+            in.close();
+			fin.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
