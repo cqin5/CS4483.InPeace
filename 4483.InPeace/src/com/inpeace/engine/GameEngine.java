@@ -50,6 +50,7 @@ public class GameEngine implements Runnable {
 		controller.processRequests();
 		
 		try {
+			//StateManager.getInstance().changeState(GameProperties.LAUNCH_STATE);
 			StateManager.getInstance().changeState(GameProperties.LAUNCH_STATE);
 		} catch (StateException e1) {
 			// TODO Auto-generated catch block

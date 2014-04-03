@@ -10,14 +10,10 @@ import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MoveEntityAction;
 import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.TextAction;
-import com.inpeace.controllers.PropertyName;
-import com.inpeace.engine.MailRoom;
-import com.inpeace.engine.Request.RequestType;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.entities.TextEntity;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.graphics.SpriteCode;
-import com.inpeace.models.DefaultGraphicsModel;
 
 
 /**
@@ -25,46 +21,24 @@ import com.inpeace.models.DefaultGraphicsModel;
  * @version 0.1
  * @since   28 Mar 2014
  */
-public class Level1Basement extends Level {
+public class Level2Room extends Level {
 
 	/**   */
-	private static final long serialVersionUID = 1L;
-	
-	/**   */
-	DefaultGraphicsModel model;
-	
+	private static final long serialVersionUID = 2L;
 	//private ImageEntity[] leftShelf = new ImageEntity[4];
 	//private ImageEntity[] rightShelf = new ImageEntity[4];
 
-	
-	
 	/* (non-Javadoc)
 	 * @see com.inpeace.data.Level#construct()
 	 */
 	@Override
 	public void construct() {
-		// TODO Auto-generated method stub
+
 		
-		/* NOTE: These entities need to have added
-		 * 
-		 * 1. Accurate positions
-		 * 
-		 * 2. Proper actions
-		 *    a. Multiple, context dependent actions (drop down menu)
-		 *    b. Proper type of actions
-		 * 
-		 * 3. Correct depths and images
-		 */
 		
-		// Create LANTERN
-		
-		// NOTE: To make this easier I'm only having one lantern
-		
-		// descriptive text for lantern
-		
-		TextEntity lanternDescription = new TextEntity(1, new Point(200, 200), "An old lantern. Looks heavy.");
-		lanternDescription.setFontSize((float) 0);
-		TextAction lanternText = new TextAction(lanternDescription);
+		TextEntity firstNoteDescription = new TextEntity(1, new Point(200, 200), "[1 4");
+		firstNoteDescription.setFontSize((float) 0);
+		TextAction lanternText = new TextAction(firstNoteDescription);
 		
 		ImageEntity lantern = null;
 		SpriteCode lanternSprite = null;
@@ -87,21 +61,6 @@ public class Level1Basement extends Level {
 		
 		MultiAction lanternLeft = new MultiAction(pushLeft, lanternPositionLeft);
 		MultiAction lanternRight = new MultiAction(pushRight, lanternPositionRight);
-		
-		ImageEntity lanternL = null;
-		ImageEntity lanternR = null; 
-		
-		try {
-			lanternL = new ImageEntity(2, pushLeft, 'l', lanternSprite, true, true, new Point(100, 100));
-		} catch (EntityException e1) {
-			e1.printStackTrace();
-		}
-		
-		try {
-			lanternR = new ImageEntity(2, pushRight, 'l', lanternSprite, true, true, new Point(100, 100));
-		} catch (EntityException e1) {
-			e1.printStackTrace();
-		}
 
 		
 		// Create SHELF
@@ -168,23 +127,6 @@ public class Level1Basement extends Level {
 		}
 		
 		
-		model = new DefaultGraphicsModel();
-		
-		model.setForegroundObjectEntity(lantern);
-		model.setForegroundObjectEntity(lanternDescription);
-		
-		model.setForegroundObjectEntity(shelf);
-		model.setForegroundObjectEntity(shelfDescription);
-		
-		model.setForegroundObjectEntity(rock);
-		model.setForegroundObjectEntity(rockDescription);
-		
-		model.setForegroundObjectEntity(door);
-		model.setForegroundObjectEntity(doorDescription);
-		
-		model.setForegroundObjectEntity(lanternR);
-		model.setForegroundObjectEntity(lanternL);
-		
 		
 	}
 
@@ -193,10 +135,7 @@ public class Level1Basement extends Level {
 	 */
 	@Override
 	public void load() {
-		
-		
-		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
-				RequestType.REGISTER);
+		// TODO Auto-generated method stub
 		
 	}
 

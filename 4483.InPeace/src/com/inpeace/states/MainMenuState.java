@@ -80,7 +80,7 @@ public class MainMenuState extends AbstractState {
 			MultiAction action = new MultiAction(new ChangeStateAction(StateID.SCROLL),
 					new SoundFXAction("woow"));
 			entity = new ImageEntity(1, action, '1', SpriteCode.get("1-0-0-128-128-4-4"),
-					true, true, new Point(400,0));
+					true, true, new Point(200,0));
 			entity.registerHotKey();
 		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
@@ -90,6 +90,22 @@ public class MainMenuState extends AbstractState {
 			e.printStackTrace();
 		}
 		model.setForegroundObjectEntity(entity);
+		
+		ImageEntity changeLevel = null;
+		
+		try {
+			ChangeStateAction change = new ChangeStateAction(StateID.GAME_PLAY);
+			changeLevel = new ImageEntity(3, change, '2', SpriteCode.get("1-0-0-128-128-3-4"),
+					true, true, new Point(400,0));
+			changeLevel.registerHotKey();
+		} catch (EntityException | SpriteCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyboardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.setForegroundObjectEntity(changeLevel);
 		
 		
 		TextFieldEntity text = null;
