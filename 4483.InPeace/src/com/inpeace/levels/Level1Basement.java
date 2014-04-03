@@ -27,8 +27,8 @@ public class Level1Basement extends Level {
 
 	/**   */
 	private static final long serialVersionUID = 1L;
-	private ImageEntity[] leftShelf = new ImageEntity[4];
-	private ImageEntity[] rightShelf = new ImageEntity[4];
+	//private ImageEntity[] leftShelf = new ImageEntity[4];
+	//private ImageEntity[] rightShelf = new ImageEntity[4];
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.data.Level#construct()
@@ -84,7 +84,7 @@ public class Level1Basement extends Level {
 		// Create SHELF
 		
 		TextEntity shelfDescription = new TextEntity(1, new Point(200, 200), "The left support looks weak.");
-		lanternDescription.setFontSize((float) 0);
+		shelfDescription.setFontSize((float) 0);
 		TextAction shelfText = new TextAction(shelfDescription);
 		
 		ImageEntity shelf = null;
@@ -100,7 +100,7 @@ public class Level1Basement extends Level {
 		// Create ROCKS
 		
 		TextEntity rockDescription = new TextEntity(1, new Point(200, 200), "A pile of rocks. I could probably throw them.");
-		lanternDescription.setFontSize((float) 0);
+		rockDescription.setFontSize((float) 0);
 		TextAction rockText = new TextAction(rockDescription);
 		
 		ImageEntity rock = null;
@@ -114,23 +114,31 @@ public class Level1Basement extends Level {
 	
 		// Create DOOR
 		
+		TextEntity doorDescription = new TextEntity(1, new Point(200, 200), "It's barred from the other side.");
+		doorDescription.setFontSize((float) 0);
+		TextAction doorText = new TextAction(doorDescription);
+		
 		ImageEntity door = null;
 		SpriteCode doorSprite = null;
-		MoveEntityAction openDoor = null;
+
 		try {
-			door = new ImageEntity(2, openDoor, 'd', doorSprite, true, true, new Point(100, 100));
+			door = new ImageEntity(2, doorText, 'd', doorSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
 		// Create CORPSE
+
+		TextEntity corpseDescription = new TextEntity(1, new Point(200, 200), "Is this...me?");
+		corpseDescription.setFontSize((float) 0);
+		TextAction corpseText = new TextAction(corpseDescription);
 		
 		ImageEntity corpse = null;
 		SpriteCode corpseSprite = null;
-		AbstractEntityAction displayText = null;
+
 		try {
-			corpse = new ImageEntity(2, displayText, 'd', corpseSprite, true, true, new Point(100, 100));
+			corpse = new ImageEntity(2, corpseText, 'd', corpseSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
