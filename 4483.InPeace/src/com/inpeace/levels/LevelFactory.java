@@ -14,7 +14,7 @@ public class LevelFactory {
 
 		switch (levelNum) {
 		case 1:
-			return new Level1();
+			return new Level1Basement();
 			//TODO: add any subsequent cases
 		}
 		return null;
