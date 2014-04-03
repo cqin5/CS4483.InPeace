@@ -6,7 +6,9 @@ import java.awt.Rectangle;
 import com.inpeace.actions.AbstractEntityAction;
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MoveEntityAction;
+import com.inpeace.actions.TextAction;
 import com.inpeace.entities.ImageEntity;
+import com.inpeace.entities.TextEntity;
 import com.inpeace.exceptions.EntityException;
 import com.inpeace.graphics.SpriteCode;
 
@@ -22,6 +24,8 @@ public class Level1Basement extends Level {
 
 	/**   */
 	private static final long serialVersionUID = 1L;
+	private ImageEntity[] leftShelf = new ImageEntity[4];
+	private ImageEntity[] rightShelf = new ImageEntity[4];
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.data.Level#construct()
@@ -43,13 +47,30 @@ public class Level1Basement extends Level {
 		
 		// Create LANTERNS
 		
-		// only have one created so far
+		// descriptive text for lantern
+		
+		TextEntity lanternDescription = new TextEntity(1, new Point(200, 200), "An old lantern. Looks heavy.");
+		lanternDescription.setFontSize((float) 0);
+		TextAction lanternText = new TextAction(lanternDescription);
 		
 		ImageEntity lantern1 = null;
 		SpriteCode lanternSprite = null;
-		MoveEntityAction pushLeft = new MoveEntityAction(lantern1, new Point(200, 100), new Rectangle(20, 80));
+		
+		// create lantern
+		
 		try {
-			lantern1 = new ImageEntity(2, pushLeft, 'l', lanternSprite, true, true, new Point(100, 100));
+			lantern1 = new ImageEntity(2, lanternText, 'l', lanternSprite, true, true, new Point(100, 100));
+		} catch (EntityException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		
+		MoveEntityAction pushLeft = new MoveEntityAction(lantern1, new Point(200, 100), new Rectangle(20, 80));
+		
+		MoveEntityAction pushRight = new MoveEntityAction(lantern1, new Point(200, 300), new Rectangle(20, 80));
+		try {
+			lantern1 = new ImageEntity(2, pushLeft, 'l', lanternSprite, true, true, new Point(100, 100));	
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

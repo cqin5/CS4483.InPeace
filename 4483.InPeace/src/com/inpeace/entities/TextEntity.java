@@ -29,6 +29,8 @@ public class TextEntity extends AbstractEntity {
 
 	/**   */
 	private Font font;
+	
+	private float fontSize;
 
 	/**
 	 * Constructs a new TextEntity object.
@@ -76,8 +78,24 @@ public class TextEntity extends AbstractEntity {
 	 * @param size
 	 */
 	public void setFontSize(float size) {
+		this.fontSize = size;
 		font = font.deriveFont(size);
 	}
+	
+	/**
+	 * Toggle visibility
+	 */
+	public void toggleVisible() {
+		
+		if (this.font.getSize() >= 0) {
+			this.font = font.deriveFont(this.fontSize);
+		}
+		else {
+			this.setFontSize((float) 0.0);
+		}
+		
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.inpeace.entities.AbstractEntity#paint(java.awt.Graphics2D, int, java.awt.Point, boolean)
