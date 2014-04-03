@@ -4,8 +4,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.inpeace.actions.AbstractEntityAction;
+import com.inpeace.actions.BooleanFalseAction;
+import com.inpeace.actions.BooleanTrueAction;
 import com.inpeace.actions.ChangeStateAction;
 import com.inpeace.actions.MoveEntityAction;
+import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.TextAction;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.entities.TextEntity;
@@ -45,7 +48,9 @@ public class Level1Basement extends Level {
 		 * 3. Correct depths and images
 		 */
 		
-		// Create LANTERNS
+		// Create LANTERN
+		
+		// NOTE: To make this easier I'm only having one lantern
 		
 		// descriptive text for lantern
 		
@@ -53,36 +58,40 @@ public class Level1Basement extends Level {
 		lanternDescription.setFontSize((float) 0);
 		TextAction lanternText = new TextAction(lanternDescription);
 		
-		ImageEntity lantern1 = null;
+		ImageEntity lantern = null;
 		SpriteCode lanternSprite = null;
 		
 		// create lantern
 		
 		try {
-			lantern1 = new ImageEntity(2, lanternText, 'l', lanternSprite, true, true, new Point(100, 100));
+			lantern = new ImageEntity(2, lanternText, 'l', lanternSprite, true, true, new Point(100, 100));
 		} catch (EntityException e1) {
 			e1.printStackTrace();
 		}
 		
+		boolean right = true;
 		
+		BooleanTrueAction lanternPositionRight = new BooleanTrueAction(right);
+		BooleanFalseAction lanternPositionLeft = new BooleanFalseAction(right);
 		
-		MoveEntityAction pushLeft = new MoveEntityAction(lantern1, new Point(200, 100), new Rectangle(20, 80));
+		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(200, 100), new Rectangle(20, 80));
+		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(200, 300), new Rectangle(20, 80));
 		
-		MoveEntityAction pushRight = new MoveEntityAction(lantern1, new Point(200, 300), new Rectangle(20, 80));
-		try {
-			lantern1 = new ImageEntity(2, pushLeft, 'l', lanternSprite, true, true, new Point(100, 100));	
-		} catch (EntityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		MultiAction lanternLeft = new MultiAction(pushLeft, lanternPositionLeft);
+		MultiAction lanternRight = new MultiAction(pushRight, lanternPositionRight);
+
 		
 		// Create SHELF
 		
+		TextEntity shelfDescription = new TextEntity(1, new Point(200, 200), "The left support looks weak.");
+		lanternDescription.setFontSize((float) 0);
+		TextAction shelfText = new TextAction(shelfDescription);
+		
 		ImageEntity shelf = null;
 		SpriteCode shelfSprite = null;
-		ChangeStateAction shelfBreak = null;
+
 		try {
-			shelf = new ImageEntity(2, shelfBreak, 's', shelfSprite, true, true, new Point(100, 100));
+			shelf = new ImageEntity(2, shelfText, 's', shelfSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,11 +99,14 @@ public class Level1Basement extends Level {
 			
 		// Create ROCKS
 		
+		TextEntity rockDescription = new TextEntity(1, new Point(200, 200), "A pile of rocks. I could probably throw them.");
+		lanternDescription.setFontSize((float) 0);
+		TextAction rockText = new TextAction(rockDescription);
+		
 		ImageEntity rock = null;
 		SpriteCode rockSprite = null;
-		MoveEntityAction throwRock = null;
 		try {
-			rock = new ImageEntity(3, shelfBreak, 'r', rockSprite, true, true, new Point(100, 100));
+			rock = new ImageEntity(3, rockText, 'r', rockSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
