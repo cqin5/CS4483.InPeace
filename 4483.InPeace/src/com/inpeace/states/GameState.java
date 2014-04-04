@@ -1,6 +1,7 @@
 package com.inpeace.states;
 
 import com.inpeace.engine.StateManager.StateID;
+import com.inpeace.levels.Level1Basement;
 
 
 
@@ -30,7 +31,7 @@ public class GameState extends AbstractState {
 	 */
 	@Override
 	public void load() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

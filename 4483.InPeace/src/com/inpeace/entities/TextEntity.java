@@ -28,7 +28,7 @@ public class TextEntity extends AbstractEntity {
 	private Color fontColour;
 
 	/**   */
-	private Font font;
+	private Font font = null;
 	
 	private float fontSize;
 

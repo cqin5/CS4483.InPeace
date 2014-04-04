@@ -94,7 +94,7 @@ public class MainMenuState extends AbstractState {
 		ImageEntity changeLevel = null;
 		
 		try {
-			ChangeStateAction change = new ChangeStateAction(StateID.GAME_PLAY);
+			ChangeStateAction change = new ChangeStateAction(StateID.NEW_GAME);
 			changeLevel = new ImageEntity(3, change, '2', SpriteCode.get("1-0-0-128-128-3-4"),
 					true, true, new Point(400,0));
 			changeLevel.registerHotKey();

@@ -16,6 +16,7 @@ import com.inpeace.engine.Request.RequestType;
 import com.inpeace.entities.ImageEntity;
 import com.inpeace.entities.TextEntity;
 import com.inpeace.exceptions.EntityException;
+import com.inpeace.exceptions.SpriteCodeException;
 import com.inpeace.graphics.SpriteCode;
 import com.inpeace.models.DefaultGraphicsModel;
 
@@ -57,8 +58,10 @@ public class Level1Basement extends Level {
 		
 		// descriptive text for lantern
 		
-		TextEntity lanternDescription = new TextEntity(1, new Point(200, 200), "An old lantern. Looks heavy.");
-		lanternDescription.setFontSize((float) 0);
+		int lanternX = 600;
+		
+		TextEntity lanternDescription = new TextEntity(1, new Point(lanternX, 200), "An old lantern. Looks heavy.");
+		//lanternDescription.setFontSize((float) 0);
 		TextAction lanternText = new TextAction(lanternDescription);
 		
 		ImageEntity lantern = null;
@@ -67,8 +70,8 @@ public class Level1Basement extends Level {
 		// create lantern
 		
 		try {
-			lantern = new ImageEntity(2, lanternText, 'l', lanternSprite, true, true, new Point(100, 100));
-		} catch (EntityException e1) {
+			lantern = new ImageEntity(2, lanternText, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 		
@@ -77,40 +80,56 @@ public class Level1Basement extends Level {
 		BooleanTrueAction lanternPositionRight = new BooleanTrueAction(right);
 		BooleanFalseAction lanternPositionLeft = new BooleanFalseAction(right);
 		
-		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(200, 100), new Rectangle(20, 80));
-		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(200, 300), new Rectangle(20, 80));
+		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(lanternX-100, 200), new Rectangle(20, 80));
+		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(lanternX+100, 200), new Rectangle(20, 80));
+		MoveEntityAction moveUp = new MoveEntityAction(lantern, new Point(lanternX, 300), new Rectangle(20, 80));
+		MoveEntityAction moveDown = new MoveEntityAction(lantern, new Point(lanternX, 200), new Rectangle(20, 80));
 		
 		MultiAction lanternLeft = new MultiAction(pushLeft, lanternPositionLeft);
 		MultiAction lanternRight = new MultiAction(pushRight, lanternPositionRight);
 		
+		MultiAction lanternLevitate = new MultiAction(moveUp, moveDown);
+		
+		// move lantern left button
 		ImageEntity lanternL = null;
+		
+		// move lantern right button
 		ImageEntity lanternR = null; 
 		
+		// levitate lantern button
+		ImageEntity lanternLev = null; 
+		
 		try {
-			lanternL = new ImageEntity(2, pushLeft, 'l', lanternSprite, true, true, new Point(100, 100));
-		} catch (EntityException e1) {
+			lanternL = new ImageEntity(2, lanternLeft, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			lanternR = new ImageEntity(3, pushRight, 'l', lanternSprite, true, true, new Point(100, 100));
-		} catch (EntityException e1) {
+			lanternR = new ImageEntity(3, lanternRight, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 100));
+		} catch (EntityException | SpriteCodeException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			lanternLev = new ImageEntity(10, lanternLevitate, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 100));
+		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 
 		
 		// Create SHELF
 		
-		TextEntity shelfDescription = new TextEntity(4, new Point(200, 200), "The left support looks weak.");
-		shelfDescription.setFontSize((float) 0);
+		TextEntity shelfDescription = new TextEntity(4, new Point(600, 300), "The left support looks weak.");
+		//shelfDescription.setFontSize((float) 0);
 		TextAction shelfText = new TextAction(shelfDescription);
 		
 		ImageEntity shelf = null;
 		SpriteCode shelfSprite = null;
 
 		try {
-			shelf = new ImageEntity(2, shelfText, 's', shelfSprite, true, true, new Point(100, 100));
-		} catch (EntityException e) {
+			shelf = new ImageEntity(2, shelfText, 's', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(600, 200));
+		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -118,30 +137,35 @@ public class Level1Basement extends Level {
 		// Create ROCKS
 		
 		TextEntity rockDescription = new TextEntity(5, new Point(200, 200), "A pile of rocks. I could probably throw them.");
-		rockDescription.setFontSize((float) 0);
+		//rockDescription.setFontSize((float) 0);
 		TextAction rockText = new TextAction(rockDescription);
+		
+		
+		ImageEntity throwRockDoor = null;
+		ImageEntity throwRockShelf = null;
+		ImageEntity throwRockLantern = null;
 		
 		ImageEntity rock = null;
 		SpriteCode rockSprite = null;
 		try {
-			rock = new ImageEntity(3, rockText, 'r', rockSprite, true, true, new Point(100, 100));
-		} catch (EntityException e) {
+			rock = new ImageEntity(3, rockText, 'r', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(300, 500));
+		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
 		// Create DOOR
 		
-		TextEntity doorDescription = new TextEntity(6, new Point(200, 200), "It's barred from the other side.");
-		doorDescription.setFontSize((float) 0);
+		TextEntity doorDescription = new TextEntity(6, new Point(25, 200), "It's barred from the other side.");
+		//doorDescription.setFontSize((float) 0);
 		TextAction doorText = new TextAction(doorDescription);
 		
 		ImageEntity door = null;
 		SpriteCode doorSprite = null;
 
 		try {
-			door = new ImageEntity(7, doorText, 'd', doorSprite, true, true, new Point(100, 100));
-		} catch (EntityException e) {
+			door = new ImageEntity(7, doorText, 'd', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
@@ -149,15 +173,15 @@ public class Level1Basement extends Level {
 		// Create CORPSE
 
 		TextEntity corpseDescription = new TextEntity(8, new Point(200, 200), "Is this...me?");
-		corpseDescription.setFontSize((float) 0);
+		//corpseDescription.setFontSize((float) 0);
 		TextAction corpseText = new TextAction(corpseDescription);
 		
 		ImageEntity corpse = null;
 		SpriteCode corpseSprite = null;
 
 		try {
-			corpse = new ImageEntity(9, corpseText, 'd', corpseSprite, true, true, new Point(100, 100));
-		} catch (EntityException e) {
+			corpse = new ImageEntity(9, corpseText, 'd', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+		} catch (EntityException | SpriteCodeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -179,6 +203,9 @@ public class Level1Basement extends Level {
 		
 		model.setForegroundObjectEntity(lanternR);
 		model.setForegroundObjectEntity(lanternL);
+		
+		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
+				RequestType.REGISTER);
 		
 		
 	}
