@@ -7,6 +7,7 @@ import com.inpeace.actions.AbstractEntityAction;
 import com.inpeace.actions.BooleanFalseAction;
 import com.inpeace.actions.BooleanTrueAction;
 import com.inpeace.actions.ChangeStateAction;
+import com.inpeace.actions.ConditionalAction;
 import com.inpeace.actions.MoveEntityAction;
 import com.inpeace.actions.MultiAction;
 import com.inpeace.actions.TextAction;
@@ -39,6 +40,17 @@ public class Level1Basement extends Level {
 	 */
 	@Override
 	public void construct() {
+		
+		// whether the lantern is in the left position
+		boolean left = false;
+		
+		// whether the shelf has been weakened
+		boolean weaken = false;
+		
+		// whether the shelf has fallen
+		boolean fallen = false;
+		
+		
 		// TODO Auto-generated method stub
 		
 		/* NOTE: These entities need to have added
@@ -58,7 +70,7 @@ public class Level1Basement extends Level {
 		
 		// descriptive text for lantern
 		
-		int lanternX = 600;
+		int lanternX = 200;
 		
 		TextEntity lanternDescription = new TextEntity(1, new Point(lanternX, 200), "An old lantern. Looks heavy.");
 		//lanternDescription.setFontSize((float) 0);
@@ -70,22 +82,30 @@ public class Level1Basement extends Level {
 		// create lantern
 		
 		try {
-			lantern = new ImageEntity(2, lanternText, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+			lantern = new ImageEntity(1, lanternText, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 100));
 		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 		
-		boolean right = true;
 		
-		BooleanTrueAction lanternPositionRight = new BooleanTrueAction(right);
-		BooleanFalseAction lanternPositionLeft = new BooleanFalseAction(right);
 		
-		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(lanternX-100, 200), new Rectangle(20, 80));
-		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(lanternX+100, 200), new Rectangle(20, 80));
-		MoveEntityAction moveUp = new MoveEntityAction(lantern, new Point(lanternX, 300), new Rectangle(20, 80));
-		MoveEntityAction moveDown = new MoveEntityAction(lantern, new Point(lanternX, 200), new Rectangle(20, 80));
+		BooleanFalseAction lanternPositionRight = new BooleanFalseAction(left);
+		BooleanTrueAction lanternPositionLeft = new BooleanTrueAction(left);
 		
+		
+		//MultiAction 
+		
+		//ConditionalAction lanternIsLeft = new ConditionalAction(lantern)
+		
+		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(-50, 0), new Rectangle(0, 0));
+		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(50, 0), new Rectangle(0, 0));
+		MoveEntityAction moveUp = new MoveEntityAction(lantern, new Point(0, -100), new Rectangle(70, 800));
+		MoveEntityAction moveDown = new MoveEntityAction(lantern, new Point(0, 100), new Rectangle(70, 800));
+		
+		// lantern moves left
 		MultiAction lanternLeft = new MultiAction(pushLeft, lanternPositionLeft);
+		
+		// lantern moves 
 		MultiAction lanternRight = new MultiAction(pushRight, lanternPositionRight);
 		
 		MultiAction lanternLevitate = new MultiAction(moveUp, moveDown);
@@ -100,19 +120,19 @@ public class Level1Basement extends Level {
 		ImageEntity lanternLev = null; 
 		
 		try {
-			lanternL = new ImageEntity(2, lanternLeft, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 100));
+			lanternL = new ImageEntity(2, lanternLeft, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(100, 400));
 		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			lanternR = new ImageEntity(3, lanternRight, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 100));
+			lanternR = new ImageEntity(3, lanternRight, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(300, 400));
 		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			lanternLev = new ImageEntity(10, lanternLevitate, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 100));
+			lanternLev = new ImageEntity(10, lanternLevitate, 'l', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(200, 400));
 		} catch (EntityException | SpriteCodeException e1) {
 			e1.printStackTrace();
 		}
@@ -198,16 +218,16 @@ public class Level1Basement extends Level {
 		model = new DefaultGraphicsModel();
 		
 		model.setForegroundObjectEntity(lantern);
-		model.setForegroundObjectEntity(lanternDescription);
+		//model.setForegroundObjectEntity(lanternDescription);
 		
-		model.setForegroundObjectEntity(shelf);
-		model.setForegroundObjectEntity(shelfDescription);
+		//model.setForegroundObjectEntity(shelf);
+		//model.setForegroundObjectEntity(shelfDescription);
 		
-		model.setForegroundObjectEntity(rock);
-		model.setForegroundObjectEntity(rockDescription);
+		//model.setForegroundObjectEntity(rock);
+		//model.setForegroundObjectEntity(rockDescription);
 		
-		model.setForegroundObjectEntity(door);
-		model.setForegroundObjectEntity(doorDescription);
+		//model.setForegroundObjectEntity(door);
+		//model.setForegroundObjectEntity(doorDescription);
 		
 		model.setForegroundObjectEntity(lanternR);
 		model.setForegroundObjectEntity(lanternL);
@@ -227,6 +247,7 @@ public class Level1Basement extends Level {
 		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
+		model.setBackgroundName("test");
 		
 	}
 

@@ -1,25 +1,38 @@
 package com.inpeace.actions;
 
-public class ConditionalAction  extends AbstractAction {
+/**
+ * This class executes a different action depenending on whether or not a condition is true
+ * @author Taylor
+ *
+ */
+
+public class ConditionalAction extends AbstractAction {
 
 	BooleanTrueAction condition;
-	AbstractAction exec;
-	
-	public ConditionalAction(BooleanTrueAction i, AbstractAction j) {
-		
+	MultiAction execTrue;
+	MultiAction execFalse;
+
+	public ConditionalAction(BooleanTrueAction i, MultiAction cTrue, MultiAction cFalse) {
+
 		condition = i;
-		exec = j;
-		
+		execTrue = cTrue;
+		execFalse = cFalse;
+
 	}
 
 	@Override
 	public void execute() {
-		
+
 		if (condition.getBoolean(0)) {
-			exec.execute();
+			execTrue.execute();
+
+		}
+		else {
+			
+			execTrue.execute();
 			
 		}
-		
+
 	}
-	
+
 }

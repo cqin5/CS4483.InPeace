@@ -134,7 +134,9 @@ public abstract class AbstractEntity implements Serializable {
 	 * @param position the position to set
 	 */
 	public void setPosition(Point position) {
-		bounds.add(position);
+		//bounds.add(position);
+		bounds.setLocation(position);
+
 	}
 
 	/**
