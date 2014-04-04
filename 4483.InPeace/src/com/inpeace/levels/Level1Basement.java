@@ -33,11 +33,6 @@ public class Level1Basement extends Level {
 	/**   */
 	DefaultGraphicsModel model;
 	
-	//private ImageEntity[] leftShelf = new ImageEntity[4];
-	//private ImageEntity[] rightShelf = new ImageEntity[4];
-
-	
-	
 	/* (non-Javadoc)
 	 * @see com.inpeace.data.Level#construct()
 	 */
@@ -98,7 +93,7 @@ public class Level1Basement extends Level {
 		}
 		
 		try {
-			lanternR = new ImageEntity(2, pushRight, 'l', lanternSprite, true, true, new Point(100, 100));
+			lanternR = new ImageEntity(3, pushRight, 'l', lanternSprite, true, true, new Point(100, 100));
 		} catch (EntityException e1) {
 			e1.printStackTrace();
 		}
@@ -106,7 +101,7 @@ public class Level1Basement extends Level {
 		
 		// Create SHELF
 		
-		TextEntity shelfDescription = new TextEntity(1, new Point(200, 200), "The left support looks weak.");
+		TextEntity shelfDescription = new TextEntity(4, new Point(200, 200), "The left support looks weak.");
 		shelfDescription.setFontSize((float) 0);
 		TextAction shelfText = new TextAction(shelfDescription);
 		
@@ -122,7 +117,7 @@ public class Level1Basement extends Level {
 			
 		// Create ROCKS
 		
-		TextEntity rockDescription = new TextEntity(1, new Point(200, 200), "A pile of rocks. I could probably throw them.");
+		TextEntity rockDescription = new TextEntity(5, new Point(200, 200), "A pile of rocks. I could probably throw them.");
 		rockDescription.setFontSize((float) 0);
 		TextAction rockText = new TextAction(rockDescription);
 		
@@ -137,7 +132,7 @@ public class Level1Basement extends Level {
 	
 		// Create DOOR
 		
-		TextEntity doorDescription = new TextEntity(1, new Point(200, 200), "It's barred from the other side.");
+		TextEntity doorDescription = new TextEntity(6, new Point(200, 200), "It's barred from the other side.");
 		doorDescription.setFontSize((float) 0);
 		TextAction doorText = new TextAction(doorDescription);
 		
@@ -145,7 +140,7 @@ public class Level1Basement extends Level {
 		SpriteCode doorSprite = null;
 
 		try {
-			door = new ImageEntity(2, doorText, 'd', doorSprite, true, true, new Point(100, 100));
+			door = new ImageEntity(7, doorText, 'd', doorSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,7 +148,7 @@ public class Level1Basement extends Level {
 		
 		// Create CORPSE
 
-		TextEntity corpseDescription = new TextEntity(1, new Point(200, 200), "Is this...me?");
+		TextEntity corpseDescription = new TextEntity(8, new Point(200, 200), "Is this...me?");
 		corpseDescription.setFontSize((float) 0);
 		TextAction corpseText = new TextAction(corpseDescription);
 		
@@ -161,7 +156,7 @@ public class Level1Basement extends Level {
 		SpriteCode corpseSprite = null;
 
 		try {
-			corpse = new ImageEntity(2, corpseText, 'd', corpseSprite, true, true, new Point(100, 100));
+			corpse = new ImageEntity(9, corpseText, 'd', corpseSprite, true, true, new Point(100, 100));
 		} catch (EntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
