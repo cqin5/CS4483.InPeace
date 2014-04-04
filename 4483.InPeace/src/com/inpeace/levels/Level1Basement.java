@@ -140,6 +140,10 @@ public class Level1Basement extends Level {
 		//rockDescription.setFontSize((float) 0);
 		TextAction rockText = new TextAction(rockDescription);
 		
+		/* Still working on how to do the rock throwing
+		 * 
+		 * I'm thinking a MixedAction that involves 
+		 */
 		
 		ImageEntity throwRockDoor = null;
 		ImageEntity throwRockShelf = null;
@@ -186,6 +190,10 @@ public class Level1Basement extends Level {
 			e.printStackTrace();
 		}
 		
+		
+		/**
+		 * Add entities to foreground
+		 */
 		
 		model = new DefaultGraphicsModel();
 		
