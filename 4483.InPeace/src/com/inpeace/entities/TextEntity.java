@@ -31,6 +31,8 @@ public class TextEntity extends AbstractEntity {
 	private Font font = null;
 	
 	private float fontSize;
+	
+	private boolean visible = false;
 
 	/**
 	 * Constructs a new TextEntity object.
@@ -79,7 +81,6 @@ public class TextEntity extends AbstractEntity {
 	 */
 	public void setFontSize(float size) {
 		this.fontSize = size;
-		font = font.deriveFont(size);
 	}
 	
 	/**
@@ -87,11 +88,13 @@ public class TextEntity extends AbstractEntity {
 	 */
 	public void toggleVisible() {
 		
-		if (this.font.getSize() >= 0) {
+		if (this.visible = false) {
 			this.font = font.deriveFont(this.fontSize);
+			this.visible = true;
 		}
 		else {
 			this.setFontSize((float) 0.0);
+			this.visible = false;
 		}
 		
 	}

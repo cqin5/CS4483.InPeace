@@ -1,5 +1,7 @@
 package com.inpeace.levels;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -72,8 +74,10 @@ public class Level1Basement extends Level {
 		
 		int lanternX = 200;
 		
-		TextEntity lanternDescription = new TextEntity(1, new Point(lanternX, 200), "An old lantern. Looks heavy.");
-		//lanternDescription.setFontSize((float) 0);
+		TextEntity lanternDescription = new TextEntity(99, new Point(400, 400), "An old lantern. Looks heavy.");
+		lanternDescription.setFontSize((float) 50);
+		lanternDescription.setFont(new Font ("sanserif", Font.PLAIN, 32));
+		lanternDescription.setFontColour(Color.WHITE);
 		TextAction lanternText = new TextAction(lanternDescription);
 		
 		ImageEntity lantern = null;
@@ -97,8 +101,8 @@ public class Level1Basement extends Level {
 		
 		//ConditionalAction lanternIsLeft = new ConditionalAction(lantern)
 		
-		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(-50, 0), new Rectangle(0, 0));
-		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(50, 0), new Rectangle(0, 0));
+		MoveEntityAction pushLeft = new MoveEntityAction(lantern, new Point(-50, 0), new Rectangle(100, 200));
+		MoveEntityAction pushRight = new MoveEntityAction(lantern, new Point(50, 0), new Rectangle(800, 800));
 		MoveEntityAction moveUp = new MoveEntityAction(lantern, new Point(0, -100), new Rectangle(70, 800));
 		MoveEntityAction moveDown = new MoveEntityAction(lantern, new Point(0, 100), new Rectangle(70, 800));
 		
@@ -218,7 +222,7 @@ public class Level1Basement extends Level {
 		model = new DefaultGraphicsModel();
 		
 		model.setForegroundObjectEntity(lantern);
-		//model.setForegroundObjectEntity(lanternDescription);
+		
 		
 		//model.setForegroundObjectEntity(shelf);
 		//model.setForegroundObjectEntity(shelfDescription);
@@ -231,6 +235,8 @@ public class Level1Basement extends Level {
 		
 		model.setForegroundObjectEntity(lanternR);
 		model.setForegroundObjectEntity(lanternL);
+		
+		model.setForegroundObjectEntity(lanternDescription);
 		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
