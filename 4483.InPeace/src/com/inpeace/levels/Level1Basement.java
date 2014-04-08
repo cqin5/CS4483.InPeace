@@ -149,7 +149,7 @@ public class Level1Basement extends Level {
 		TextAction shelfText = new TextAction(shelfDescription);
 		
 		ImageEntity shelf = null;
-		SpriteCode shelfSprite = null;
+		//SpriteCode shelfSprite = null;
 
 		try {
 			shelf = new ImageEntity(2, shelfText, 's', SpriteCode.get("1-0-0-128-128-4-4"), true, true, new Point(600, 200));
@@ -223,24 +223,22 @@ public class Level1Basement extends Level {
 		
 		model.setForegroundObjectEntity(lantern);
 		
+		model.setBackgroundName("test");
 		
-		//model.setForegroundObjectEntity(shelf);
-		//model.setForegroundObjectEntity(shelfDescription);
 		
-		//model.setForegroundObjectEntity(rock);
-		//model.setForegroundObjectEntity(rockDescription);
+		model.setForegroundObjectEntity(shelf);
+		model.setForegroundObjectEntity(shelfDescription);
 		
-		//model.setForegroundObjectEntity(door);
-		//model.setForegroundObjectEntity(doorDescription);
+		model.setForegroundObjectEntity(rock);
+		model.setForegroundObjectEntity(rockDescription);
+		
+		model.setForegroundObjectEntity(door);
+		model.setForegroundObjectEntity(doorDescription);
 		
 		model.setForegroundObjectEntity(lanternR);
 		model.setForegroundObjectEntity(lanternL);
 		
 		model.setForegroundObjectEntity(lanternDescription);
-		
-		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
-				RequestType.REGISTER);
-		
 		
 	}
 
@@ -250,10 +248,8 @@ public class Level1Basement extends Level {
 	@Override
 	public void load() {
 		
-		
 		MailRoom.getInstance().postRequest(PropertyName.DEFAULT_GRAPHICS_MODEL, model,
 				RequestType.REGISTER);
-		model.setBackgroundName("test");
 		
 	}
 

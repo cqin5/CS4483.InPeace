@@ -25,6 +25,9 @@ public class ImageEntity extends AbstractImageEntity {
 	/**   */
 	private int highlightLine;
 	private int pressedLine;
+	
+	private Point[] translations;
+	private int currentTrans;
 
 	/**
 	 * Constructs a new ImageEntity object.
@@ -41,6 +44,9 @@ public class ImageEntity extends AbstractImageEntity {
 
 		super(depth, pressAction, hotKey, spriteCode, position);
 		
+		translations = null;
+		currentTrans = 0;
+		
 		highlightLine = 0;
 		pressedLine = 0;
 		if (highlightable && pressable) {
@@ -55,6 +61,10 @@ public class ImageEntity extends AbstractImageEntity {
 				pressedLine = 1;
 			}
 		}
+	}
+	
+	void setAnimation(Point... translations) {
+		this.translations = translations;
 	}
 
 	/* (non-Javadoc)
